@@ -1,6 +1,9 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -50,7 +53,38 @@ class _MyHomePageState extends State<MyHomePage> {
   //   setState(() {});
   // }
 
-  Widget question = Column(
+   var  items = [];
+
+
+
+  /********** Function to read Json file **************************/
+  @override
+  void initState() {
+    super.initState();
+    readJson();
+
+
+  }
+  Future<void> readJson() async
+  {
+
+    final String response = await rootBundle.loadString('assets/questions.json');
+    final data = await json.decode(response);
+
+    setState(() {
+      items = data["Questions"];
+
+    });
+
+    print(items);
+    print(items[0]);
+/*****************************************************************/
+
+
+  }
+
+  Widget question () => Column(
+    
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
       Container(
@@ -66,8 +100,136 @@ class _MyHomePageState extends State<MyHomePage> {
       Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.only(bottom: 80),
+        child:   Text(
+          items[0]["description"],
+         style: TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 30, color: Colors.white),
+        ),
+      )
+    ],
+  );
+
+  Widget answers() => Container(
+    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+    height: 100,
+    child: Row(
+      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          child: Container(
+            height: 60,
+            padding: const EdgeInsets.only(right: 8.0),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8), // <-- Radius
+                  ),
+                ),
+                onPressed: () {
+                  print('Test no');
+                },
+                child: const Text("Yes", style: TextStyle(fontSize: 16))),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: 60,
+            padding: const EdgeInsets.only(left: 8.0),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8), // <-- Radius
+                  ),
+                ),
+                onPressed: () {Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Question2()),
+                );},
+                child: const Text("No", style: TextStyle(fontSize: 16))),
+          ),
+        ),
+      ],
+    ),
+  );
+  @override
+  Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
+    return DefaultTabController(
+      initialIndex: 1,
+      length: 2,
+     child:  Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
+        /*leading: IconButton(
+          icon: const Icon(Icons.account_circle),
+          onPressed: () {
+            print('going to profile');
+          },
+        ),*/
+        bottom: const TabBar(
+          tabs: <Widget>[
+
+            Tab(
+              icon: Icon(Icons.account_circle_sharp),
+            ),
+            Tab(
+              icon: Icon(Icons.account_tree_outlined),
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                "assets/background_image.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[question(), answers()],
+        ),
+      ),
+    ),
+    );
+  }
+}
+
+class Question2 extends StatefulWidget {
+  const Question2({Key? key}) : super(key: key);
+
+  @override
+  State<Question2> createState() => _Question2State();
+}
+
+class _Question2State extends State<Question2> {
+  Widget question = Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Container(
+        margin:
+        const EdgeInsets.only(left: 20.0, right: 20.0, top: 40, bottom: 30),
+        alignment: Alignment.centerLeft,
         child: const Text(
-          "Are you thicc?",
+          "Question 1:",
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+        ),
+      ),
+      Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(bottom: 80),
+        child: const Text(
+          "Test page navigation?",
           style: TextStyle(
               fontWeight: FontWeight.w500, fontSize: 30, color: Colors.white),
         ),
@@ -92,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 onPressed: () {
-                  print('Show me that ass baby girl');
+                  print('Test no');
                 },
                 child: const Text("Yes", style: TextStyle(fontSize: 16))),
           ),
@@ -108,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 onPressed: () {
-                  print('Skinny bitch');
+                  print('Test yes');
                 },
                 child: const Text("No", style: TextStyle(fontSize: 16))),
           ),
@@ -128,7 +290,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("Test"),
         leading: IconButton(
           icon: const Icon(Icons.account_circle),
           onPressed: () {
@@ -140,7 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-                "/home/hassan_louazri/Documents/3A/S9/IT363/project/project_basic_quiz/assets/background_image.jpg"),
+                "assets/background_image.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -153,3 +315,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
