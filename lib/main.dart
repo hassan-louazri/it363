@@ -1,10 +1,31 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'login.dart';
+import 'register.dart';
 
-void main() {
-  runApp(const MaterialApp(
+import 'package:firebase_core/firebase_core.dart';
+
+
+
+
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  List items = [];
+
+  final String response = await rootBundle.loadString('assets/questions.json');
+  final data = await json.decode(response);
+
+  items = await data["Questions"];
+
+
+  
+  runApp( const MaterialApp(
     home: MyLogin(),
   ));
 }
