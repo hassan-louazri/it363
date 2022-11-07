@@ -3,8 +3,20 @@
     {
       "id": "1",
       "type": "dichotomous",
-      "description": "Have you ever used our service",
-      "answers": [{"yes":  "yes", "no":"no"}]
+      "description": "Have you ever used our service?",
+      "answers": {"yes":  "yes", "no":"no"}
+    },
+    {
+      "id": "2",
+      "type": "dichotomous",
+      "description": "Have you ever used our service??",
+      "answers": {"yes":  "yes", "no":"no"}
+    },
+    {
+      "id": "3",
+      "type": "dichotomous",
+      "description": "Is is true?",
+      "answers": {"yes":  "yes", "no":"no"}
     }
   ]
 }
