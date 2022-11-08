@@ -4,31 +4,31 @@
       "id": "1",
       "type": "dicho",
       "description": "Have you ever used our service?",
-      "answers": {"one": "yes", "two": "no"}
+      "answers": {"yes": "4", "no": "3"}
     },
     {
       "id": "2",
       "type": "dicho",
       "description": "Have you ever used our service??",
-      "answers": {"one": "yes", "two": "no"}
+      "answers": {"yes": "yes", "non": "no"}
     },
     {
       "id": "3",
       "type": "dicho",
       "description": "Is is true?",
-      "answers": {"one": "yes", "two": "no"}
+      "answers": {"yes": "yes", "non": "no"}
     },
     {
       "id": "4",
       "type": "qcm",
       "description": "what is the mass of the sun?",
-      "answers": {"one": "1 Kg", "two": "1 g", "three":"a lot"}
+      "answers": {"1 Kg": "1 Kg", "1 g": "1 g", "a lot":"a lot"}
     },
     {
       "id": "5",
       "type": "qcm",
       "description": "what is the mass of an atom?",
-      "answers": {"one": "1 Kg", "two": "1 g", "three":"very tiny"}
+      "answers": {"1 Kg": "1 Kg", "1 g": "1 g", "very tiny":"very tiny"}
     }
   ]
 }

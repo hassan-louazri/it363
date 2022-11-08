@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project_basic_quiz/home.dart';
 
 import 'login.dart';
 // import 'register.dart';
@@ -18,9 +19,7 @@ Future<void> main() async {
 
   items = await data["Questions"];
 
-  runApp(const MaterialApp(
-    home: MyLogin(),
-  ));
+  runApp(MyApp(items: items));
 }
 
 // ignore_for_file: avoid_print
