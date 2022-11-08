@@ -1,9 +1,5 @@
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'readJson.dart' ;
-
-import 'main.dart' ;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.items});
@@ -21,7 +17,6 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blueGrey,
       ),
-
       home: MyHomePage(title: 'Charles Consel', items: items),
       debugShowCheckedModeBanner: false,
     );
@@ -29,10 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
   const MyHomePage({super.key, required this.title, required this.items});
-
-
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -51,9 +43,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
-
   int id = 0;
 
   void incrementId() {
@@ -143,71 +132,67 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget qcm = items[id]["type"] == "qcm"
         ? Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            height: 300,
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(right: 0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+            height: 220,
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId();
-                        },
-                        child: Text(items[id]["answers"]["one"],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(left: 0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+                          onPressed: () {
+                            incrementId();
+                          },
+                          child: Text(items[id]["answers"]["one"],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId();
-                        },
-                        child: Text(items[id]["answers"]["two"],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+                          onPressed: () {
+                            incrementId();
+                          },
+                          child: Text(items[id]["answers"]["two"],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20), // NEW
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId();
-                        },
-                        child: Text(items[id]["answers"]["three"],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
+                          onPressed: () {
+                            incrementId();
+                          },
+                          child: Text(items[id]["answers"]["three"],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           )
         : Column();
     return items[id]["type"] == "dicho" ? dicho : qcm;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -218,11 +203,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
 
-
     return DefaultTabController(
       initialIndex: 1,
       length: 2,
-
       child: Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -254,4 +237,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
