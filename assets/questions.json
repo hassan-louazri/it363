@@ -2,21 +2,33 @@
   "Questions": [
     {
       "id": "1",
-      "type": "dichotomous",
+      "type": "dicho",
       "description": "Have you ever used our service?",
-      "answers": {"yes":  "yes", "no":"no"}
+      "answers": {"one": "yes", "two": "no"}
     },
     {
       "id": "2",
-      "type": "dichotomous",
+      "type": "dicho",
       "description": "Have you ever used our service??",
-      "answers": {"yes":  "yes", "no":"no"}
+      "answers": {"one": "yes", "two": "no"}
     },
     {
       "id": "3",
-      "type": "dichotomous",
+      "type": "dicho",
       "description": "Is is true?",
-      "answers": {"yes":  "yes", "no":"no"}
+      "answers": {"one": "yes", "two": "no"}
+    },
+    {
+      "id": "4",
+      "type": "qcm",
+      "description": "what is the mass of the sun?",
+      "answers": {"one": "1 Kg", "two": "1 g", "three":"a lot"}
+    },
+    {
+      "id": "5",
+      "type": "qcm",
+      "description": "what is the mass of an atom?",
+      "answers": {"one": "1 Kg", "two": "1 g", "three":"very tiny"}
     }
   ]
 }
