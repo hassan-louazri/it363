@@ -1,8 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'readJson.dart';
-
-import 'main.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.items});
@@ -141,65 +138,62 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget qcm = items[id]["type"] == "qcm"
         ? Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            height: 300,
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(right: 0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+            height: 220,
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId("null");
-                        },
-                        child: Text(items[id]["answers"].keys.toList()[0],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(left: 0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+                          onPressed: () {
+                            incrementId("null");
+                          },
+                          child: Text(items[id]["answers"].keys.toList()[0],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId("null");
-                        },
-                        child: Text(items[id]["answers"].keys.toList()[1],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+                          onPressed: () {
+                            incrementId("null");
+                          },
+                          child: Text(items[id]["answers"].keys.toList()[1],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20), // NEW
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId("null");
-                        },
-                        child: Text(items[id]["answers"].keys.toList()[2],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
+                          onPressed: () {
+                            incrementId("null");
+                          },
+                          child: Text(items[id]["answers"].keys.toList()[2],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           )
         : Column();
