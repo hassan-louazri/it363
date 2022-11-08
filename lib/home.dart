@@ -54,10 +54,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget question(List items) {
-    return Column(
+    Widget dicho = Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
+          padding: const EdgeInsets.only(left: 8.0),
           margin: const EdgeInsets.only(
               left: 20.0, right: 20.0, top: 40, bottom: 30),
           alignment: Alignment.centerLeft,
@@ -69,19 +70,20 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         Container(
           alignment: Alignment.center,
-          margin: const EdgeInsets.only(bottom: 80),
+          margin: const EdgeInsets.only(left: 12.0, bottom: 80),
           child: Text(
             items[id]["description"],
             style: const TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 30, color: Colors.white),
+                fontWeight: FontWeight.w500, fontSize: 22, color: Colors.white),
           ),
         )
       ],
     );
+    return dicho;
   }
 
   Widget answers(List items) {
-    return Container(
+    Widget dicho = Container(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       height: 100,
       child: Row(
@@ -100,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     incrementId();
                   },
-                  child: Text(items[id]["answers"]["yes"],
+                  child: Text(items[id]["answers"]["one"],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -117,13 +119,80 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     incrementId();
                   },
-                  child: Text(items[id]["answers"]["no"],
+                  child: Text(items[id]["answers"]["two"],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
         ],
       ),
     );
+
+    Widget qcm = items[id]["type"] == "qcm"
+        ? Container(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            height: 300,
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 80,
+                    padding: const EdgeInsets.only(right: 0),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // <-- Radius
+                          ),
+                        ),
+                        onPressed: () {
+                          incrementId();
+                        },
+                        child: Text(items[id]["answers"]["one"],
+                            style: const TextStyle(fontSize: 16))),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 80,
+                    padding: const EdgeInsets.only(left: 0),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // <-- Radius
+                          ),
+                        ),
+                        onPressed: () {
+                          incrementId();
+                        },
+                        child: Text(items[id]["answers"]["two"],
+                            style: const TextStyle(fontSize: 16))),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 80,
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // <-- Radius
+                          ),
+                        ),
+                        onPressed: () {
+                          incrementId();
+                        },
+                        child: Text(items[id]["answers"]["three"],
+                            style: const TextStyle(fontSize: 16))),
+                  ),
+                ),
+              ],
+            ),
+          )
+        : Column();
+    return items[id]["type"] == "dicho" ? dicho : qcm;
   }
 
   @override

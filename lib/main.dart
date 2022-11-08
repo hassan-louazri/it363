@@ -13,6 +13,5 @@ void main() async {
   final data = await json.decode(response);
 
   items = await data["Questions"];
-
   runApp(MyApp(items: items));
 }
