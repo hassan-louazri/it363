@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017679997283",
+    "project_id": "amazigh-5bffb",
+    "storage_bucket": "amazigh-5bffb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017679997283:android:aac199b2e91d89fe3e0b56",
+        "android_client_info": {
+          "package_name": "com.example.project_basic_quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017679997283-db4qcpjs2k3qadgph6fq3nfeo872k0o6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmCxFht4KLX5XoC2esTX9C-nszGVdJ4o4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017679997283-db4qcpjs2k3qadgph6fq3nfeo872k0o6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

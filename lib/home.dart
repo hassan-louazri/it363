@@ -1,10 +1,15 @@
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'readJson.dart' ;
+
+import 'main.dart' ;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.items});
 
   final List items;
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -16,6 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blueGrey,
       ),
+
       home: MyHomePage(title: 'Charles Consel', items: items),
       debugShowCheckedModeBanner: false,
     );
@@ -23,7 +29,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+
   const MyHomePage({super.key, required this.title, required this.items});
+
+
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -35,12 +44,16 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+
   final List items;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
+
   int id = 0;
 
   void incrementId() {
@@ -195,6 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return items[id]["type"] == "dicho" ? dicho : qcm;
   }
 
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -203,9 +217,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+
     return DefaultTabController(
       initialIndex: 1,
       length: 2,
+
       child: Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -237,3 +254,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
