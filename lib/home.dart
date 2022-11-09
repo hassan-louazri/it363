@@ -1,10 +1,12 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.items});
 
   final List items;
+
 
   // This widget is the root of your application.
   @override
@@ -38,12 +40,28 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   final List items;
+  final String currentItem = "";
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int id = 0;
+
+  String currentItem = "";
+  
+  void initState() { 
+    List<String> test = ["1", "2", "3"];
+    currentItem = test[0];
+    super.initState();
+  }
+
+  int returnMaxLengthString(List<String> choises){
+      var values = choises.map((choise) => choise.length);
+      return values.reduce(max);
+    
+  }
 
   void incrementId(String newId) {
     setState(() {
@@ -89,6 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget answers(List items) {
+    List<String> test = ["1", "2", "3"];
+
     Widget dicho = Container(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       height: 100,
@@ -196,8 +216,71 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           )
+          : Column();
+
+          Widget RankOrder = items[id]["type"] == "RankOrder"
+              ? Container(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  height: 220,
+                  child: SafeArea(
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          for( var i =0; i < items[id]["answers"].keys.toList().length;i++)
+                            Row(
+                            children : <Widget> [
+                              Column(
+                                children : [
+                                  Container(
+                                  margin :  const EdgeInsets.only(left:40,right : 100,),
+                                  child :Text(items[id]["answers"].keys.toList()[i]),
+                                  ),
+                                ]  
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 200,
+                                   // margin :  EdgeInsets.only(right:100 - items[id]["answers"]!.keys.toList()[i].length +40,),
+                                    child :DropdownButton(
+                                      value: currentItem,
+                                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                                      items: test
+                                          .map<DropdownMenuItem<String>>(
+                                            (e) => DropdownMenuItem(
+                                              value: e,
+                                              child: Text(e),
+                                              alignment: Alignment.center,
+                                            ),
+                                          )
+                                          .toList(),
+                                      onChanged: (String? value) => setState(
+                                        () {
+                                          if (value != null) currentItem = value;
+                                        },
+                                      ),
+                                      isExpanded: true,
+                                    ),
+                                  )
+                                ],
+                              )    
+                          ]
+                        ),
+                      ],
+                      ),
+                    ),
+                  ),
+                )
         : Column();
-    return items[id]["type"] == "dicho" ? dicho : qcm;
+        if(items[id]["type"] == "dicho"){
+          return dicho;
+        }
+        else if(items[id]["type"] == "qcm"){
+          return qcm;
+        }
+        else{
+          return RankOrder;
+        }
   }
 
   @override

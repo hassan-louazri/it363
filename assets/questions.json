@@ -29,6 +29,13 @@
       "type": "qcm",
       "description": "what is the mass of an atom?",
       "answers": {"1 Kg": "1 Kg", "1 g": "1 g", "very tiny":"very tiny"}
+    },
+    {
+      "id": "6",
+      "type": "RankOrder",
+      "description": "Please rank (1-3) the following in order of interest?",
+      "answers": {"Skiing": "Skiing", "Snowboarding": "Snowboarding", "Biking":"Biking"},
+      "choises" : ["1","2","3"]
     }
   ]
 }
