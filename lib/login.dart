@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'home.dart' show MyApp;
 import 'mockPage.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'register.dart';
@@ -54,7 +52,7 @@ class _MyLoginState extends State<MyLogin> {
                 children:  [  TextField(
                   controller: emailController,
               style:  const TextStyle(
-                color: Colors.black,
+                color: Colors.white,
               ),
             decoration:  const InputDecoration(
               filled: false,
@@ -68,16 +66,14 @@ class _MyLoginState extends State<MyLogin> {
                 borderSide: BorderSide(color: Colors.white),
               ),
             ),
-           /* onChanged: (value) {
-              login = value;
-            },*/
+
           ),
                   const SizedBox(height: 50),
                    TextField(
                      controller: passwordController,
                     style:  const TextStyle(
 
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                     decoration:  const InputDecoration(
                       filled: false,
@@ -91,23 +87,16 @@ class _MyLoginState extends State<MyLogin> {
                         //borderSide: BorderSide.,
                       ),
                     ),
-                     /* onChanged: (value) {
-                         password = value;
-                     },*/
+
                   ),
                   const SizedBox(height: 50),
                   ElevatedButton(
                       style:ElevatedButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 20.0,fontFamily: 'Lato'),
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.deepPurple,
                       ),
-                   /* onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MyApp()),
-                      );
-                    }*/
-                    onPressed: () => { signInFunction()},
+
+                    onPressed: () => { signInFunction(context)},
 
                   // onPressed: () =>{},
                     child:const Padding(
@@ -119,21 +108,17 @@ class _MyLoginState extends State<MyLogin> {
                   ),
 
                   ),
+                  const SizedBox(height: 30),
                   ElevatedButton(
                     style:ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20.0,fontFamily: 'Lato'),
-                      backgroundColor: Colors.indigo,
+                      backgroundColor: Colors.deepPurple
+
                     ),
-                    /* onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MyApp()),
-                      );
-                    }*/
-                    onPressed: () => { (value) => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MyRegister())
-                    )},
+
+                    onPressed: () => { Navigator.push( context, MaterialPageRoute(builder: (context) => const MyRegister())
+                    )
+                    },
 
 
                     // onPressed: () =>{},
@@ -157,8 +142,6 @@ class _MyLoginState extends State<MyLogin> {
 
 
     return  Scaffold(
-
-
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -169,42 +152,15 @@ class _MyLoginState extends State<MyLogin> {
         ),
 
         child: ListView(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-         // mainAxisAlignment: MainAxisAlignment.center,
-
-
           children: <Widget>[topBar,loginPage()],
         ),
       ),
-      /*body: SafeArea(
 
-        child: Center(
-          child:  Column(
-            children: [
-                TextField(
-                decoration: InputDecoration(
-                 // icon: Icon(Icons.email),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      width: 100,
-                      color: Colors.greenAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(20.0)
-                  ),
-                  labelText: 'Email',
-                ),
-              ),
-
-            ],
-          )
-        )
-      ),*/
 
     );
   }
 
-  Future signInFunction() async{
+  Future signInFunction(BuildContext context) async{
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: emailController.text,
       password: passwordController.text
@@ -217,31 +173,11 @@ class _MyLoginState extends State<MyLogin> {
     
 
   }
+
+
 }
 
 
-/*class MyLogin extends StatelessWidget {
-  const MyLogin ({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Login'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MyApp()),
-            );
-          }
-        ),
-      ),
-    );
 
-  }
-}*/
 

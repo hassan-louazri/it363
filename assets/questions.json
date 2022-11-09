@@ -29,6 +29,12 @@
       "type": "qcm",
       "description": "what is the mass of an atom?",
       "answers": {"one": "1 Kg", "two": "1 g", "three":"very tiny"}
+    },
+    {
+      "id": "6",
+      "type": "textSlider",
+      "description": "what is the mass of an atom?",
+      "answers": {"one": "1 Kg", "two": "1 g", "three":"very tiny"}
     }
   ]
 }

@@ -56,6 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int id = 0;
 
+  double myvalue= 0;
+
   void incrementId() {
     setState(() {
       if (id < widget.items.length - 1) {
@@ -95,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return dicho;
   }
 
-  Widget answers(List items) {
+  Widget answers(List items,double value) {
     Widget dicho = Container(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       height: 100,
@@ -205,7 +207,43 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
         : Column();
-    return items[id]["type"] == "dicho" ? dicho : qcm;
+    Widget textSlider = items[id]["type"] == "textSlider"
+    ? Column(
+    children: <Widget> [Slider(
+      min: 0.0,
+      max: 100.0,
+      value: myvalue,
+      divisions: 9,
+      activeColor: Colors.green,
+      inactiveColor: Colors.orange,
+
+      onChanged: (value) {
+        setState(() {
+          myvalue = value;
+        });
+        print("test slider");
+      },
+    ),
+        Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+        children: const <Widget>[
+        Text('6'),
+    ]
+    ),
+        ]
+    )
+        :Container();
+    switch (items[id]["type"])
+    {
+      case "textSlider":
+        return textSlider;
+      case "qcm":
+        return qcm;
+
+    }
+    return dicho;
+    //return items[id]["type"] == "dicho" ? dicho : qcm;
   }
 
 
@@ -247,7 +285,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           child: Column(
-            children: <Widget>[question(widget.items), answers(widget.items)],
+            children: <Widget>[question(widget.items), answers(widget.items,myvalue)],
           ),
         ),
       ),
