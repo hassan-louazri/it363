@@ -7,11 +7,16 @@ import  "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'dart:math';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.items});
 
   final List items;
+
+
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -45,6 +50,8 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   final List items;
+  final String currentItem = "";
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -54,6 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   double myvalue= 0;
 
+  String currentItem = "";
+  
+  void initState() { 
+    List<String> test = ["1", "2", "3"];
+    currentItem = test[0];
+    super.initState();
+  }
+
+  int returnMaxLengthString(List<String> choises){
+      var values = choises.map((choise) => choise.length);
+      return values.reduce(max);
+    
+  }
 
   void incrementId(String newId) {
     setState(() {
@@ -99,6 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget answers(List items,double value) {
+    List<String> test = ["1", "2", "3"];
     Widget dicho = Container(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       height: 100,
@@ -206,6 +227,61 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           )
+          : Column();
+
+          Widget RankOrder = items[id]["type"] == "RankOrder"
+              ? Container(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  height: 220,
+                  child: SafeArea(
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          for( var i =0; i < items[id]["answers"].keys.toList().length;i++)
+                            Row(
+                            children : <Widget> [
+                              Column(
+                                children : [
+                                  Container(
+                                  margin :  const EdgeInsets.only(left:40,right : 100,),
+                                  child :Text(items[id]["answers"].keys.toList()[i]),
+                                  ),
+                                ]  
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 200,
+                                   // margin :  EdgeInsets.only(right:100 - items[id]["answers"]!.keys.toList()[i].length +40,),
+                                    child :DropdownButton(
+                                      value: currentItem,
+                                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                                      items: test
+                                          .map<DropdownMenuItem<String>>(
+                                            (e) => DropdownMenuItem(
+                                              value: e,
+                                              child: Text(e),
+                                              alignment: Alignment.center,
+                                            ),
+                                          )
+                                          .toList(),
+                                      onChanged: (String? value) => setState(
+                                        () {
+                                          if (value != null) currentItem = value;
+                                        },
+                                      ),
+                                      isExpanded: true,
+                                    ),
+                                  )
+                                ],
+                              )    
+                          ]
+                        ),
+                      ],
+                      ),
+                    ),
+                  ),
+                )
         : Column();
     Widget textSlider = items[id]["type"] == "textSlider"
     ? Column(
@@ -243,6 +319,15 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return dicho;
     //return items[id]["type"] == "dicho" ? dicho : qcm;
+        if(items[id]["type"] == "dicho"){
+          return dicho;
+        }
+        else if(items[id]["type"] == "qcm"){
+          return qcm;
+        }
+        else{
+          return RankOrder;
+        }
   }
 
   @override
@@ -312,21 +397,23 @@ class _LoadJsonState extends State<LoadJson> {
   }
   @override
   Widget build(BuildContext context) {
+    var logger = Logger();
+
     final FirebaseAuth auth = FirebaseAuth.instance;
 
-    /*void inputData() {
+    void inputData() {
       final User? user = auth.currentUser;
       final uid = user?.uid;
       // here you write the codes to input the data into firestore
+      logger.i("User id is : $uid");
     }
 
-    inputData();*/
-    var logger = Logger();
-    logger.i("Debug message");
+    inputData();
 
-    CollectionReference students = FirebaseFirestore.instance.collection('questions-aswered');
 
-   /* Future<void> addAnswer() {
+    CollectionReference students = FirebaseFirestore.instance.collection('questions-answered');
+
+    Future<void> addAnswer() {
       // Calling the collection to add a new user
       return students
       //adding to firebase collection
@@ -341,11 +428,11 @@ class _LoadJsonState extends State<LoadJson> {
           }
         ]
       })
-          .then((value) => print("Student data Added"))
-          .catchError((error) => print("Student couldn't be added."));
-    }*/
+          .then((value) => logger.i("Student data Added"))
+          .catchError((error) => logger.i("Student couldn't be added."));
+    }
 
-    //addAnswer();
+    addAnswer();
 
     return ElevatedButton(
       style:ElevatedButton.styleFrom(
