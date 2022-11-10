@@ -1,19 +1,22 @@
+import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'readJson.dart' ;
+import  "package:firebase_auth/firebase_auth.dart";
+import 'package:logger/logger.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'main.dart' ;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.items});
 
   final List items;
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Quiz',
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(
@@ -21,7 +24,6 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blueGrey,
       ),
-
       home: MyHomePage(title: 'Charles Consel', items: items),
       debugShowCheckedModeBanner: false,
     );
@@ -29,10 +31,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
   const MyHomePage({super.key, required this.title, required this.items});
-
-
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -51,19 +50,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
-
   int id = 0;
 
   double myvalue= 0;
 
-  void incrementId() {
+
+  void incrementId(String newId) {
     setState(() {
-      if (id < widget.items.length - 1) {
-        id++;
+      if (newId != "null") {
+        id = int.parse(newId);
       } else {
-        id = 0;
+        if (id < widget.items.length - 1) {
+          id++;
+        } else {
+          id = 0;
+        }
       }
     });
   }
@@ -115,9 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   onPressed: () {
-                    incrementId();
+                    incrementId(items[id]["answers"]
+                        [items[id]["answers"].keys.toList()[0]]);
                   },
-                  child: Text(items[id]["answers"]["one"],
+                  child: Text(items[id]["answers"].keys.toList()[0],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -132,9 +134,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   onPressed: () {
-                    incrementId();
+                    incrementId(items[id]["answers"]
+                        [items[id]["answers"].keys.toList()[1]]);
                   },
-                  child: Text(items[id]["answers"]["two"],
+                  child: Text(items[id]["answers"].keys.toList()[1],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -145,65 +148,62 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget qcm = items[id]["type"] == "qcm"
         ? Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            height: 300,
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(right: 0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+            height: 220,
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId();
-                        },
-                        child: Text(items[id]["answers"]["one"],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(left: 0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+                          onPressed: () {
+                            incrementId("null");
+                          },
+                          child: Text(items[id]["answers"].keys.toList()[0],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId();
-                        },
-                        child: Text(items[id]["answers"]["two"],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
+                          onPressed: () {
+                            incrementId("null");
+                          },
+                          child: Text(items[id]["answers"].keys.toList()[1],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20), // NEW
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          incrementId();
-                        },
-                        child: Text(items[id]["answers"]["three"],
-                            style: const TextStyle(fontSize: 16))),
-                  ),
+                          onPressed: () {
+                            incrementId("null");
+                          },
+                          child: Text(items[id]["answers"].keys.toList()[2],
+                              style: const TextStyle(fontSize: 16))),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           )
         : Column();
@@ -221,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           myvalue = value;
         });
-        print("test slider");
+
       },
     ),
         Row(
@@ -240,12 +240,10 @@ class _MyHomePageState extends State<MyHomePage> {
         return textSlider;
       case "qcm":
         return qcm;
-
     }
     return dicho;
     //return items[id]["type"] == "dicho" ? dicho : qcm;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -256,11 +254,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
 
-
     return DefaultTabController(
       initialIndex: 1,
       length: 2,
-
       child: Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -289,6 +285,91 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class LoadJson extends StatefulWidget {
+  const LoadJson({Key? key}) : super(key: key);
+
+  @override
+  State<LoadJson> createState() => _LoadJsonState();
+}
+
+
+class _LoadJsonState extends State<LoadJson> {
+  List items = [];
+  Future<void> readJson() async
+  {
+
+    final String response = await rootBundle.loadString('assets/questions.json');
+    final data = await json.decode(response);
+
+    items = await data["Questions"];
+/*****************************************************************/
+
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    /*void inputData() {
+      final User? user = auth.currentUser;
+      final uid = user?.uid;
+      // here you write the codes to input the data into firestore
+    }
+
+    inputData();*/
+    var logger = Logger();
+    logger.i("Debug message");
+
+    CollectionReference students = FirebaseFirestore.instance.collection('questions-aswered');
+
+   /* Future<void> addAnswer() {
+      // Calling the collection to add a new user
+      return students
+      //adding to firebase collection
+          .add({
+        //Data added in the form of a dictionary into the document.
+        'full_name': "test",
+        'grade': "tes",
+        'age': [
+          {
+            'id': "1",
+            'answers':{'yes':"yes"}
+          }
+        ]
+      })
+          .then((value) => print("Student data Added"))
+          .catchError((error) => print("Student couldn't be added."));
+    }*/
+
+    //addAnswer();
+
+    return ElevatedButton(
+      style:ElevatedButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 20.0,fontFamily: 'Lato'),
+          backgroundColor: Colors.deepPurple
+
+      ),
+
+      onPressed: () => {
+        readJson(),
+        Navigator.push( context, MaterialPageRoute(builder: (context) =>  MyApp(items:items))
+      )
+      },
+
+
+      // onPressed: () =>{},
+      child:const Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 50.0,
+        ),
+        child: Text('Start quizz'),
+      ),
+
     );
   }
 }
