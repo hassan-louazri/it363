@@ -99,8 +99,8 @@ class _MyProfileState extends State<MyProfile> {
                               onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          MyApp(items: widget.items))),
+                                      builder: (context) => MyApp(
+                                          items: widget.items, uid: "ds"))),
                               child: const Text("Finish the test",
                                   style: TextStyle(fontSize: 16)))))
                 ],

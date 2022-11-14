@@ -1,11 +1,20 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:project_basic_quiz/profile.dart';
+import "package:firebase_auth/firebase_auth.dart";
+import 'package:logger/logger.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'dart:math';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.items});
+  const MyApp({super.key, required this.items, required this.uid});
 
   final List items;
+  final String? uid;
 
   // This widget is the root of your application.
   @override
@@ -18,14 +27,15 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Charles Consel', items: items),
+      home: MyHomePage(title: 'Charles Consel', items: items, uid: uid),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title, required this.items});
+  const MyHomePage(
+      {super.key, required this.title, required this.items, required this.uid});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -39,28 +49,79 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   final List items;
+  final String currentItem = "";
+  final String? uid;
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int id = 0;
+  int id = 1;
+
+  double myvalue = 0;
+
+  String currentItem = "";
+  var logger = Logger();
+  String lastId = "";
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<void> updateLastQuestion(int id) {
+    CollectionReference lastQuestion =
+        FirebaseFirestore.instance.collection('last-question-answered');
+    return lastQuestion
+        .doc(widget.uid)
+        .set({
+          'uid': "${widget.uid}",
+          'id': "$id",
+        })
+        .then((value) => logger.i("Last question added"))
+        .catchError(
+            (error) => logger.e("Last question wasn't added successfully."));
+  }
+
+  void getLastQuestionByUid() async {
+    var lastQuestion = FirebaseFirestore.instance
+        .collection("last-question-answered")
+        .doc("${widget.uid}");
+    lastQuestion.get().then((value) => setState(() {
+          id = int.parse(value["id"]);
+        }));
+  }
+
+  @override
+  void initState() {
+    List<String> test = ["1", "2", "3"];
+    currentItem = test[0];
+    getLastQuestionByUid();
+    super.initState();
+  }
+
+  int returnMaxLengthString(List<String> choises) {
+    var values = choises.map((choise) => choise.length);
+    return values.reduce(max);
+  }
 
   void incrementId(String newId) {
+    logger.i("String newId is $newId");
     setState(() {
       if (newId != "null") {
         id = int.parse(newId);
+        logger.i("String Id is $id");
       } else {
         if (id < widget.items.length - 1) {
           id++;
         } else {
-          id = 0;
+          id = 1;
         }
       }
     });
   }
 
   Widget question(List items) {
+    logger.i(lastId);
+    logger.i("In Question widget $id");
     Widget dicho = Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -70,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               left: 20.0, right: 20.0, top: 40, bottom: 30),
           alignment: Alignment.centerLeft,
           child: Text(
-            "Question ${1 + id}:",
+            "Question $id:",
             style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           ),
@@ -79,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 12.0, bottom: 80),
           child: Text(
-            items[id]["description"],
+            items[id - 1]["description"],
             style: const TextStyle(
                 fontWeight: FontWeight.w500, fontSize: 22, color: Colors.white),
           ),
@@ -89,7 +150,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return dicho;
   }
 
-  Widget answers(List items) {
+  Widget answers(List items, double value) {
+    List<String> test = ["1", "2", "3"];
     Widget dicho = Container(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       height: 100,
@@ -107,10 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   onPressed: () {
-                    incrementId(items[id]["answers"]
-                        [items[id]["answers"].keys.toList()[0]]);
+                    incrementId(items[id - 1]["answers"]
+                        [items[id - 1]["answers"].keys.toList()[0]]);
                   },
-                  child: Text(items[id]["answers"].keys.toList()[0],
+                  child: Text(items[id - 1]["answers"].keys.toList()[0],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -125,10 +187,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   onPressed: () {
-                    incrementId(items[id]["answers"]
-                        [items[id]["answers"].keys.toList()[1]]);
+                    incrementId(items[id - 1]["answers"]
+                        [items[id - 1]["answers"].keys.toList()[1]]);
                   },
-                  child: Text(items[id]["answers"].keys.toList()[1],
+                  child: Text(items[id - 1]["answers"].keys.toList()[1],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -136,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget qcm = items[id]["type"] == "qcm"
+    Widget qcm = items[id - 1]["type"] == "qcm"
         ? Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             height: 220,
@@ -158,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             incrementId(items[id]["answers"]
                                 [items[id]["answers"].keys.toList()[0]]);
                           },
-                          child: Text(items[id]["answers"].keys.toList()[0],
+                          child: Text(items[id - 1]["answers"].keys.toList()[0],
                               style: const TextStyle(fontSize: 16))),
                     ),
                     const SizedBox(height: 20),
@@ -175,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             incrementId(items[id]["answers"]
                                 [items[id]["answers"].keys.toList()[1]]);
                           },
-                          child: Text(items[id]["answers"].keys.toList()[1],
+                          child: Text(items[id - 1]["answers"].keys.toList()[1],
                               style: const TextStyle(fontSize: 16))),
                     ),
                     const SizedBox(height: 20),
@@ -192,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             incrementId(items[id]["answers"]
                                 [items[id]["answers"].keys.toList()[2]]);
                           },
-                          child: Text(items[id]["answers"].keys.toList()[2],
+                          child: Text(items[id - 1]["answers"].keys.toList()[2],
                               style: const TextStyle(fontSize: 16))),
                     ),
                   ],
@@ -201,7 +263,101 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
         : Column();
-    return items[id]["type"] == "dicho" ? dicho : qcm;
+
+    Widget RankOrder = items[id - 1]["type"] == "RankOrder"
+        ? Container(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            height: 220,
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    for (var i = 0;
+                        i < items[id]["answers"].keys.toList().length;
+                        i++)
+                      Row(children: <Widget>[
+                        Column(children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                              left: 40,
+                              right: 100,
+                            ),
+                            child:
+                                Text(items[id - 1]["answers"].keys.toList()[i]),
+                          ),
+                        ]),
+                        Column(
+                          children: [
+                            Container(
+                              width: 200,
+                              // margin :  EdgeInsets.only(right:100 - items[id]["answers"]!.keys.toList()[i].length +40,),
+                              child: DropdownButton(
+                                value: currentItem,
+                                style: const TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                                items: test
+                                    .map<DropdownMenuItem<String>>(
+                                      (e) => DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e),
+                                        alignment: Alignment.center,
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (String? value) => setState(
+                                  () {
+                                    if (value != null) currentItem = value;
+                                  },
+                                ),
+                                isExpanded: true,
+                              ),
+                            )
+                          ],
+                        )
+                      ]),
+                  ],
+                ),
+              ),
+            ),
+          )
+        : Column();
+    Widget textSlider = items[id - 1]["type"] == "textSlider"
+        ? Column(children: <Widget>[
+            Slider(
+              min: 0.0,
+              max: 100.0,
+              value: myvalue,
+              divisions: 9,
+              activeColor: Colors.green,
+              inactiveColor: Colors.orange,
+              onChanged: (value) {
+                setState(() {
+                  myvalue = value;
+                });
+              },
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
+                  Text('6'),
+                ]),
+          ])
+        : Container();
+    switch (items[id - 1]["type"]) {
+      case "textSlider":
+        return textSlider;
+      case "qcm":
+        return qcm;
+    }
+    return dicho;
+    //return items[id]["type"] == "dicho" ? dicho : qcm;
+    if (items[id]["type"] == "dicho") {
+      return dicho;
+    } else if (items[id]["type"] == "qcm") {
+      return qcm;
+    } else {
+      return RankOrder;
+    }
   }
 
   @override
@@ -236,14 +392,118 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/background_image.jpg"),
+              image: AssetImage("assets/login3.png"),
               fit: BoxFit.cover,
             ),
           ),
           child: Column(
-            children: <Widget>[question(widget.items), answers(widget.items)],
+            children: <Widget>[
+              question(widget.items),
+              answers(widget.items, myvalue),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle:
+                        const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                    backgroundColor: Colors.deepPurple),
+
+                onPressed: () => {updateLastQuestion(id)},
+
+                // onPressed: () =>{},
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 50.0,
+                  ),
+                  child: Text('Save answers'),
+                ),
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LoadJson extends StatefulWidget {
+  const LoadJson({Key? key}) : super(key: key);
+
+  @override
+  State<LoadJson> createState() => _LoadJsonState();
+}
+
+class _LoadJsonState extends State<LoadJson> {
+  List items = [];
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  var logger = Logger();
+
+  String? getUser() {
+    final User? user = auth.currentUser;
+    final String? uid = user?.uid;
+    // here you write the codes to input the data into firestore
+    logger.i("User id is : $uid");
+    return uid;
+  }
+
+  Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('assets/questions.json');
+    logger.i(response);
+    final data = await json.decode(response);
+
+    items = await data["Questions"];
+/*****************************************************************/
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String? uid = getUser();
+    CollectionReference students =
+        FirebaseFirestore.instance.collection('questions-answered');
+
+    Future<void> addAnswer() {
+      // Calling the collection to add a new user
+      return students
+          //adding to firebase collection
+          .add({
+            //Data added in the form of a dictionary into the document.
+            'full_name': "test",
+            'grade': "tes",
+            'age': [
+              {
+                'id': "1",
+                'answers': {'yes': "yes"}
+              }
+            ]
+          })
+          .then((value) => logger.i("Student data Added"))
+          .catchError((error) => logger.i("Student couldn't be added."));
+    }
+
+    //addAnswer();
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+          backgroundColor: Colors.deepPurple),
+
+      onPressed: () => {
+        readJson(),
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyApp(items: items, uid: uid)))
+      },
+
+      // onPressed: () =>{},
+      child: const Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 50.0,
+        ),
+        child: Text('Start quizz'),
       ),
     );
   }

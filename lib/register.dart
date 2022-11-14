@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'home.dart' show MyApp;
-import 'mockPage.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'login.dart';
 
 class MyRegister extends StatefulWidget {
@@ -54,7 +50,7 @@ class _MyRegisterState extends State<MyRegister> {
                 children:  [  TextField(
                   controller: emailController,
                   style:  const TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   decoration:  const InputDecoration(
                     filled: false,
@@ -99,7 +95,7 @@ class _MyRegisterState extends State<MyRegister> {
                   ElevatedButton(
                     style:ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20.0,fontFamily: 'Lato'),
-                      backgroundColor: Colors.indigo,
+                      backgroundColor: Colors.deepPurple,
                     ),
                     /* onPressed: () {
                       Navigator.push(
