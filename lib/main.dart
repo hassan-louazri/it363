@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_basic_quiz/home.dart';
 
-import 'login.dart';
+//import 'login.dart';
 // import 'register.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -20,6 +20,7 @@ Future<void> main() async {
   items = await data["Questions"];
 
   runApp(MyApp(items: items));
+  //runApp(MyLogin());
 }
 
 // ignore_for_file: avoid_print

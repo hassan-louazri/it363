@@ -1,5 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:project_basic_quiz/profile.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.items});
@@ -154,7 +155,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           onPressed: () {
-                            incrementId("null");
+                            incrementId(items[id]["answers"]
+                                [items[id]["answers"].keys.toList()[0]]);
                           },
                           child: Text(items[id]["answers"].keys.toList()[0],
                               style: const TextStyle(fontSize: 16))),
@@ -170,7 +172,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           onPressed: () {
-                            incrementId("null");
+                            incrementId(items[id]["answers"]
+                                [items[id]["answers"].keys.toList()[1]]);
                           },
                           child: Text(items[id]["answers"].keys.toList()[1],
                               style: const TextStyle(fontSize: 16))),
@@ -186,7 +189,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           onPressed: () {
-                            incrementId("null");
+                            incrementId(items[id]["answers"]
+                                [items[id]["answers"].keys.toList()[2]]);
                           },
                           child: Text(items[id]["answers"].keys.toList()[2],
                               style: const TextStyle(fontSize: 16))),
@@ -208,7 +212,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-
     return DefaultTabController(
       initialIndex: 1,
       length: 2,
@@ -217,15 +220,17 @@ class _MyHomePageState extends State<MyHomePage> {
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.account_circle_sharp),
-              ),
-              Tab(
-                icon: Icon(Icons.account_tree_outlined),
-              ),
-            ],
+
+          leading: Padding(
+            //Icon: Icons.account_circle_rounded,
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyProfile(items: widget.items))),
+              child: Icon(Icons.account_circle_rounded),
+            ),
           ),
         ),
         body: Container(

@@ -10,25 +10,25 @@
       "id": "2",
       "type": "dicho",
       "description": "Have you ever used our service??",
-      "answers": {"yes": "yes", "non": "no"}
+      "answers": {"yes": "null", "non": "null"}
     },
     {
       "id": "3",
       "type": "dicho",
       "description": "Is is true?",
-      "answers": {"yes": "yes", "non": "no"}
+      "answers": {"yes": "null", "non": "null"}
     },
     {
       "id": "4",
       "type": "qcm",
       "description": "what is the mass of the sun?",
-      "answers": {"1 Kg": "1 Kg", "1 g": "1 g", "a lot":"a lot"}
+      "answers": {"1 Kg": "null", "1 g": "null", "a lot":"null"}
     },
     {
       "id": "5",
       "type": "qcm",
       "description": "what is the mass of an atom?",
-      "answers": {"1 Kg": "1 Kg", "1 g": "1 g", "very tiny":"very tiny"}
+      "answers": {"1 Kg": "null", "1 g": "null", "very tiny":"null"}
     }
   ]
 }
