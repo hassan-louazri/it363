@@ -31,8 +31,6 @@ class _MyRegisterState extends State<MyRegister> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     Widget topBar =   Container(
-
-
       padding:  EdgeInsets.only(left: 20, top: width*0.4),
       child: const Text(
         'Welcome ',

@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id = int.parse(newId);
         logger.i("String Id is $id");
       } else {
-        if (id < widget.items.length - 1) {
+        if (id < widget.items.length -1) {
           id++;
         } else {
           id = 1;
@@ -264,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         : Column();
 
-    Widget RankOrder = items[id - 1]["type"] == "RankOrder"
+    Widget rankOrder = items[id - 1]["type"] == "RankOrder"
         ? Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             height: 220,
@@ -343,20 +343,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 ]),
           ])
         : Container();
-    switch (items[id - 1]["type"]) {
+    /*switch (items[id - 1]["type"]) {
       case "textSlider":
         return textSlider;
       case "qcm":
         return qcm;
     }
-    return dicho;
+    return dicho;*/
     //return items[id]["type"] == "dicho" ? dicho : qcm;
-    if (items[id]["type"] == "dicho") {
+    if (items[id-1]["type"] == "dicho") {
       return dicho;
-    } else if (items[id]["type"] == "qcm") {
+    } else if (items[id-1]["type"] == "qcm") {
       return qcm;
     } else {
-      return RankOrder;
+      return rankOrder;
     }
   }
 
@@ -384,7 +384,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MyProfile(items: widget.items))),
+                      builder: (context) => MyProfile(items: widget.items, uid: widget.uid))),
               child: Icon(Icons.account_circle_rounded),
             ),
           ),
@@ -415,7 +415,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     vertical: 10.0,
                     horizontal: 50.0,
                   ),
-                  child: Text('Save answers'),
+                  child: Text('Save progress'),
                 ),
               ),
             ],
