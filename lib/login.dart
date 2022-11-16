@@ -12,11 +12,10 @@ class MyLogin extends StatefulWidget {
   State<MyLogin> createState() => _MyLoginState();
 }
 
-
-
 class _MyLoginState extends State<MyLogin> {
   String login = '';
   String password = '';
+  bool _obscureText = true;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -29,156 +28,158 @@ class _MyLoginState extends State<MyLogin> {
     super.dispose();
   }
 
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    Widget topBar =   Container(
-
-
-      padding:  EdgeInsets.only(left: 20, top: width*0.4),
-      child: const Text(
-        'Welcome Back',
-        style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'Lato'),
+    Widget topBar = Container(
+      padding: EdgeInsets.only(left: 20, top: width * 0.4, right: 20),
+      child: const Center(
+        child: Text(
+          'Login',
+          style:
+              TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'Lato'),
+        ),
       ),
     );
-    Widget loginPage () => Container(
-      padding:  EdgeInsets.symmetric(
-          vertical: width*0.3, horizontal: width/20),
-      child: SafeArea(
-
-          child: Center(
-              child:  Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [  TextField(
-                  controller: emailController,
-              style:  const TextStyle(
-                color: Colors.white,
-              ),
-            decoration:  const InputDecoration(
-              filled: false,
-
-              hintText: 'Login',
-              hintStyle: TextStyle(color: Colors.white,fontFamily: 'Lato'),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20.0),
+    Widget loginPage() => Container(
+          padding: EdgeInsets.symmetric(
+              vertical: width * 0.3, horizontal: width / 20),
+          child: SafeArea(
+              child: Center(
+                  child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextFormField(
+                controller: emailController,
+                style: const TextStyle(
+                  color: Colors.white,
                 ),
-                borderSide: BorderSide(color: Colors.white),
+                decoration: const InputDecoration(
+                  filled: false,
+                  hintText: 'Email or username',
+                  hintStyle: TextStyle(color: Colors.white, fontFamily: 'Lato'),
+                  icon: Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Icon(Icons.mail_outline, color: Colors.white),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                    borderSide: BorderSide(color: Colors.white, width: 3.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                ),
               ),
-            ),
-
-          ),
-                  const SizedBox(height: 50),
-                   TextField(
-                     controller: passwordController,
-                    style:  const TextStyle(
-
-                      color: Colors.white,
-                    ),
-                    decoration:  const InputDecoration(
-                      filled: false,
-                      fillColor: Colors.white,
-                      hintText: 'Password',
-                      hintStyle: TextStyle(color: Colors.white,fontFamily:'Lato'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20.0),
-                        ),
-                        //borderSide: BorderSide.,
-                      ),
-                    ),
-
+              const SizedBox(height: 30),
+              TextFormField(
+                decoration: InputDecoration(
+                  filled: false,
+                  fillColor: Colors.white,
+                  hintText: 'Password',
+                  suffixIcon: IconButton(
+                      onPressed: _toggle,
+                      icon: Icon(_obscureText
+                          ? Icons.visibility
+                          : Icons.visibility_off)),
+                  hintStyle:
+                      const TextStyle(color: Colors.white, fontFamily: 'Lato'),
+                  icon: const Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Icon(Icons.lock, color: Colors.white),
                   ),
-                  const SizedBox(height: 50),
-                  ElevatedButton(
-                      style:ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 20.0,fontFamily: 'Lato'),
-                        backgroundColor: Colors.deepPurple,
-                      ),
-
-                    onPressed: () => { signInFunction(context)},
-
-                  // onPressed: () =>{},
-                    child:const Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10.0,
-                      horizontal: 50.0,
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
                     ),
-                    child: Text('Sign-in'),
+                    borderSide: BorderSide(color: Colors.white, width: 3.0),
                   ),
-
-                  ),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    style:ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20.0,fontFamily: 'Lato'),
-                      backgroundColor: Colors.deepPurple
-
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
                     ),
-
-                    onPressed: () => { Navigator.push( context, MaterialPageRoute(builder: (context) => const MyRegister())
-                    )
-                    },
-
-
-                    // onPressed: () =>{},
-                    child:const Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 50.0,
-                      ),
-                      child: Text('Create account'),
-                    ),
-
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
                   ),
+                ),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+                controller: passwordController,
+                obscureText: _obscureText,
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle:
+                      const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueGrey,
+                ),
+                onPressed: () => {signInFunction(context)},
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 50.0,
+                  ),
+                  child: Text('Login'),
+                ),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle:
+                        const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                    backgroundColor: Colors.blueGrey),
+                onPressed: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyRegister()))
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 50.0,
+                  ),
+                  child: Text('Create account'),
+                ),
+              ),
+            ],
+          ))),
+        );
 
-                ],
-              )
-          )
-
-      ),
-
-    );
-
-
-    return  Scaffold(
+    return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-                "assets/login3.png"),
+            image: AssetImage("assets/login3.png"),
             fit: BoxFit.cover,
           ),
         ),
-
         child: ListView(
-          children: <Widget>[topBar,loginPage()],
+          children: <Widget>[topBar, loginPage()],
         ),
       ),
-
-
     );
   }
 
-  Future signInFunction(BuildContext context) async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text
-    ).then((value) => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoadJson()
-        )
-    )
-    ).catchError((error) => Alert(context: context, title: "Wrong email or password").show());
-    
-
+  Future signInFunction(BuildContext context) async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text)
+        .then((value) => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const LoadJson())))
+        .catchError((error) =>
+            Alert(context: context, title: "Wrong email or password").show());
   }
-
-
 }
-
-
-
-
-

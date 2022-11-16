@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
@@ -9,11 +9,10 @@ class MyRegister extends StatefulWidget {
   State<MyRegister> createState() => _MyRegisterState();
 }
 
-
-
 class _MyRegisterState extends State<MyRegister> {
   String login = '';
   String password = '';
+  bool _obscureText = true;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -26,166 +25,145 @@ class _MyRegisterState extends State<MyRegister> {
     super.dispose();
   }
 
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    Widget topBar =   Container(
-
-
-      padding:  EdgeInsets.only(left: 20, top: width*0.4),
+    Widget topBar = Container(
+      padding: EdgeInsets.only(left: 20, top: width * 0.4),
       child: const Text(
-        'Welcome ',
+        'Create new account',
         style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'Lato'),
       ),
     );
-    Widget loginPage () => Container(
-      padding:  EdgeInsets.symmetric(
-          vertical: width*0.3, horizontal: width/20),
-      child: SafeArea(
 
-          child: Center(
-              child:  Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [  TextField(
-                  controller: emailController,
-                  style:  const TextStyle(
-                    color: Colors.white,
+    Widget loginPage() => Container(
+          padding: EdgeInsets.symmetric(
+              vertical: width * 0.3, horizontal: width / 20),
+          child: SafeArea(
+              child: Center(
+                  child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  hintText: 'Email',
+                  hintStyle: TextStyle(color: Colors.white, fontFamily: 'Lato'),
+                  icon: Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Icon(Icons.mail_outline, color: Colors.white),
                   ),
-                  decoration:  const InputDecoration(
-                    filled: false,
-
-                    hintText: 'Login',
-                    hintStyle: TextStyle(color: Colors.white,fontFamily: 'Lato'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.0),
-                      ),
-                      borderSide: BorderSide(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
                     ),
+                    borderSide: BorderSide(color: Colors.white, width: 3.0),
                   ),
-                  /* onChanged: (value) {
-              login = value;
-            },*/
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
                 ),
-                  const SizedBox(height: 50),
-                  TextField(
-                    controller: passwordController,
-                    style:  const TextStyle(
-
-                      color: Colors.black,
-                    ),
-                    decoration:  const InputDecoration(
-                      filled: false,
-                      fillColor: Colors.white,
-                      hintText: 'Password',
-                      hintStyle: TextStyle(color: Colors.white,fontFamily:'Lato'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20.0),
-                        ),
-                        //borderSide: BorderSide.,
-                      ),
-                    ),
-                    /* onChanged: (value) {
-                         password = value;
-                     },*/
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+                controller: emailController,
+              ),
+              const SizedBox(height: 30),
+              TextFormField(
+                decoration: InputDecoration(
+                  filled: false,
+                  fillColor: Colors.white,
+                  hintText: 'Password',
+                  suffixIcon: IconButton(
+                      onPressed: _toggle,
+                      icon: Icon(_obscureText
+                          ? Icons.visibility
+                          : Icons.visibility_off)),
+                  hintStyle:
+                      const TextStyle(color: Colors.white, fontFamily: 'Lato'),
+                  icon: const Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Icon(Icons.lock, color: Colors.white),
                   ),
-                  const SizedBox(height: 50),
-                  ElevatedButton(
-                    style:ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20.0,fontFamily: 'Lato'),
-                      backgroundColor: Colors.deepPurple,
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
                     ),
-                    /* onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MyApp()),
-                      );
-                    }*/
-                    onPressed: () => { signUpFunction()},
-
-                    // onPressed: () =>{},
-                    child:const Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 50.0,
-                      ),
-                      child: Text('Sign-up'),
-                    ),
-
+                    borderSide: BorderSide(color: Colors.white, width: 3.0),
                   ),
-                ],
-              )
-          )
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                ),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+                controller: passwordController,
+                obscureText: _obscureText,
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle:
+                      const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueGrey,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 50.0,
+                  ),
+                  child: Text('Register'),
+                ),
+                onPressed: () => {signUpFunction()},
+              ),
+            ],
+          ))),
+        );
 
-      ),
-
-    );
-
-
-    return  Scaffold(
-
-
+    return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-                "assets/login3.png"),
+            image: AssetImage("assets/login3.png"),
             fit: BoxFit.cover,
           ),
         ),
-
         child: ListView(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.center,
-
-
-          children: <Widget>[topBar,loginPage()],
+          children: <Widget>[topBar, loginPage()],
         ),
       ),
-      /*body: SafeArea(
-
-        child: Center(
-          child:  Column(
-            children: [
-                TextField(
-                decoration: InputDecoration(
-                 // icon: Icon(Icons.email),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      width: 100,
-                      color: Colors.greenAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(20.0)
-                  ),
-                  labelText: 'Email',
-                ),
-              ),
-
-            ],
-          )
-        )
-      ),*/
-
     );
   }
 
-  Future signUpFunction() async{
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text
-    ).then((value) => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const MyLogin()
-        )
-    )
-    );
+  void success() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const MyLogin()));
+    Alert(context: context, title: "Register success").show();
+  }
 
-
+  Future signUpFunction() async {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text)
+        .then((value) => {success()})
+        .catchError((error) => {
+              Alert(
+                      context: context,
+                      title: "Password must be 4 characters minimum")
+                  .show()
+            });
   }
 }
-
-
-
