@@ -4,13 +4,13 @@
       "id": "1",
       "type": "dicho",
       "description": "Have you ever used our service?",
-      "answers": {"yes": "2", "no": "3"}
+      "answers": {"yes": "4", "no": "5"}
     },
     {
       "id": "2",
       "type": "dicho",
-      "description": "Have you ever used our service??",
-      "answers": {"yes": "null", "non": "null"}
+      "description": "Have you ever usiiiiied our service??",
+      "answers": {"yes": "null", "non": "7"}
     },
     {
       "id": "3",
@@ -34,20 +34,26 @@
       "id": "6",
       "type": "qcm",
       "description": "Who is the best awper?",
-      "answers": {"s1mple": "s1mple", "zywoo": "zywoo", "jame":"jame"}
+      "answers": {"s1mple": "null", "zywoo": "null", "jame":"null"}
     },
     {
       "id": "7",
       "type": "qcm",
       "description": "GOAT?",
-      "answers": {"kb9": "kb9", "messi": "messi", "cr7":"cr7"}
+      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
+    },
+   
+    {
+      "id": "9",
+      "type": "qcm",
+      "description": "GO99999999999999999999999AT?",
+      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
     },
     {
-      "id": "6",
-      "type": "RankOrder",
-      "description": "Please rank (1-3) the following in order of interest?",
-      "answers": {"Skiing": "Skiing", "Snowboarding": "Snowboarding", "Biking":"Biking"},
-      "choices" : ["1","2","3"]
+      "id": "10",
+      "type": "qcm",
+      "description": "GO100000000AT?",
+      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
     }
   ]
 }
