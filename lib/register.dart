@@ -113,12 +113,12 @@ class _MyRegisterState extends State<MyRegister> {
                 controller: passwordController,
                 obscureText: _obscureText,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   textStyle:
                       const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor: Colors.blueAccent,
                 ),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(
@@ -129,6 +129,23 @@ class _MyRegisterState extends State<MyRegister> {
                 ),
                 onPressed: () => {signUpFunction()},
               ),
+              const SizedBox(height: 100),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  textStyle:
+                      const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueAccent,
+                ),
+                icon: const Icon(
+                  Icons.keyboard_return,
+                  size: 24,
+                ),
+                label: const Text("Return"),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MyLogin()));
+                },
+              ),
             ],
           ))),
         );
@@ -137,7 +154,7 @@ class _MyRegisterState extends State<MyRegister> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/login3.png"),
+            image: AssetImage("assets/background_image_2.jpg"),
             fit: BoxFit.cover,
           ),
         ),

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme,
         ),
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Charles Consel', items: items, uid: uid),
       debugShowCheckedModeBanner: false,
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               left: 20.0, right: 20.0, top: 40, bottom: 30),
           alignment: Alignment.centerLeft,
           child: Text(
-            "Question" + items[id]["id"],
+            "Question ${items[id]["id"]}",
             style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           ),
@@ -379,21 +379,20 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
 
           leading: Padding(
-            //Icon: Icons.account_circle_rounded,
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => MyProfile(items: widget.items))),
-              child: Icon(Icons.account_circle_rounded),
+              child: const Icon(Icons.account_circle_rounded),
             ),
           ),
         ),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/login3.png"),
+              image: AssetImage("assets/background_image_2.jpg"),
               fit: BoxFit.cover,
             ),
           ),
