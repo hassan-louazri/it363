@@ -7,6 +7,8 @@ import 'package:project_basic_quiz/profile.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'login.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'dart:math';
 
@@ -73,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return lastQuestion
         .doc(widget.uid)
         .set({
-          'uid': "${widget.uid}",
           'id': "$id",
         })
         .then((value) => logger.i("Last question added"))
@@ -82,12 +83,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getLastQuestionByUid() async {
-    var lastQuestion = FirebaseFirestore.instance
+    var lastQuestion =  FirebaseFirestore.instance
         .collection("last-question-answered")
         .doc("${widget.uid}");
     lastQuestion.get().then((value) => setState(() {
           id = int.parse(value["id"]);
-        }));
+        }))
+        .catchError((error) =>
+        logger.w( "Last question does not exist yet"));
+  }
+
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut()
+        .then((value) => {logger.i("logged out successfully"),
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const MyLogin())),
+    Alert(context: context, title: "Logout success").show()
+    }
+    ).catchError((error)=>logger.w("problem with logging out"));
   }
 
   @override
@@ -149,6 +162,17 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     return dicho;
   }
+  /*
+  {
+    id:
+    answer:yes
+  }
+  *******multi******
+  {
+    id:
+    answer:s1mple
+  }
+   */
 
   Widget answers(List items, double value) {
     List<String> test = ["1", "2", "3"];
@@ -392,6 +416,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(Icons.account_circle_rounded),
             ),
           ),
+            actions: <Widget>[
+        IconButton(
+        icon: const Icon(Icons.logout),
+        tooltip: 'Show Snackbar',
+        onPressed: () =>{logOut()}
+      ),
+      ]
         ),
         body: Container(
           decoration: const BoxDecoration(
