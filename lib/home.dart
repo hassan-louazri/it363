@@ -287,7 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ]),
                         Column(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 200,
                               // margin :  EdgeInsets.only(right:100 - items[id]["answers"]!.keys.toList()[i].length +40,),
                               child: DropdownButton(
@@ -298,8 +298,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     .map<DropdownMenuItem<String>>(
                                       (e) => DropdownMenuItem(
                                         value: e,
-                                        child: Text(e),
                                         alignment: Alignment.center,
+                                        child: Text(e),
                                       ),
                                     )
                                     .toList(),
@@ -353,6 +353,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return answerType;
     //return items[id]["type"] == "dicho" ? dicho : qcm;
+    // if (items[id - 1]["type"] == "dicho") {
+    //   return dicho;
+    // } else if (items[id - 1]["type"] == "qcm") {
+    //   return qcm;
+    // }
+    // return RankOrder;
   }
 
   @override
@@ -458,32 +464,10 @@ class _LoadJsonState extends State<LoadJson> {
     CollectionReference students =
         FirebaseFirestore.instance.collection('questions-answered');
 
-    Future<void> addAnswer() {
-      // Calling the collection to add a new user
-      return students
-          //adding to firebase collection
-          .add({
-            //Data added in the form of a dictionary into the document.
-            'full_name': "test",
-            'grade': "tes",
-            'age': [
-              {
-                'id': "1",
-                'answers': {'yes': "yes"}
-              }
-            ]
-          })
-          .then((value) => logger.i("Student data Added"))
-          .catchError((error) => logger.i("Student couldn't be added."));
-    }
-
-    //addAnswer();
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
           backgroundColor: Colors.deepPurple),
-
       onPressed: () => {
         readJson(),
         Navigator.push(
@@ -491,14 +475,12 @@ class _LoadJsonState extends State<LoadJson> {
             MaterialPageRoute(
                 builder: (context) => MyApp(items: items, uid: uid)))
       },
-
-      // onPressed: () =>{},
       child: const Padding(
         padding: EdgeInsets.symmetric(
           vertical: 10.0,
           horizontal: 50.0,
         ),
-        child: Text('Start quizz'),
+        child: Text('Tap to start quiz'),
       ),
     );
   }
