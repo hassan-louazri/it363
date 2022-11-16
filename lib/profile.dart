@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:project_basic_quiz/home.dart';
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({super.key, required this.items});
+  const MyProfile({super.key, required this.items, required this.uid});
   final List items;
+  final String? uid;
   @override
   State<MyProfile> createState() => _MyProfileState();
 }

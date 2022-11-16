@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'mockPage.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'register.dart';
 import 'home.dart';
@@ -123,7 +121,7 @@ class _MyLoginState extends State<MyLogin> {
                 style: ElevatedButton.styleFrom(
                   textStyle:
                       const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor: Colors.blueAccent,
                 ),
                 onPressed: () => {signInFunction(context)},
                 child: const Padding(
@@ -139,7 +137,7 @@ class _MyLoginState extends State<MyLogin> {
                 style: ElevatedButton.styleFrom(
                     textStyle:
                         const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-                    backgroundColor: Colors.blueGrey),
+                    backgroundColor: Colors.blueAccent),
                 onPressed: () => {
                   Navigator.push(
                       context,
@@ -162,7 +160,7 @@ class _MyLoginState extends State<MyLogin> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/login3.png"),
+            image: AssetImage("assets/background_image_2.jpg"),
             fit: BoxFit.cover,
           ),
         ),
