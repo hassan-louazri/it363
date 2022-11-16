@@ -350,20 +350,28 @@ class _MyHomePageState extends State<MyHomePage> {
               min: 0.0,
               max: 100.0,
               value: myvalue,
-              divisions: 9,
-              activeColor: Colors.green,
-              inactiveColor: Colors.orange,
+              divisions: 3,
+              activeColor: Colors.purple,
+              inactiveColor: Colors.purple.shade100,
+              thumbColor: Colors.pink,
               onChanged: (value) {
                 setState(() {
                   myvalue = value;
                 });
+                logger.i("my value is $myvalue");
               },
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const <Widget>[
-                  Text('6'),
+                children:  <Widget>[
+                Text(items[id]["answers"].keys.toList()[0],
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
+                Text(items[id]["answers"].keys.toList()[1],
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
+                Text(items[id]["answers"].keys.toList()[2],
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white))
                 ]),
+      ElevatedButton(onPressed:()=> incrementId("null"), child: null,)
           ])
         : Container();
 
@@ -375,6 +383,9 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case "RankOrder":
         answerType = rankOrder;
+        break;
+      case "textSlider":
+        answerType=textSlider;
         break;
 
     }

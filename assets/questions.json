@@ -54,6 +54,18 @@
       "type": "qcm",
       "description": "GO100000000AT?",
       "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
+    },
+    {
+      "id": "10",
+      "type": "textSlider",
+      "description": "How was your experience in the accor arena",
+      "answers": {"Poor": "null", "Average": "null", "Amazing":"null"}
+    },
+    {
+      "id": "11",
+      "type": "qcm",
+      "description": "GO99999999999999999999999AT?",
+      "answers": {"Poor": "null", "Average": "null", "Amazing":"null"}
     }
   ]
 }
