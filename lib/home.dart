@@ -57,7 +57,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int id = 1;
+  int id = 0;
 
   double myvalue = 0;
 
@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     logger.i("String newId is $newId");
     setState(() {
       if (newId != "null") {
-        id = int.parse(newId);
+        id = int.parse(newId) - 1;
         logger.i("String Id is $id");
       } else {
         if (id < widget.items.length -1) {
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget question(List items) {
     logger.i(lastId);
-    logger.i("In Question widget $id");
+    //logger.i("In Question widget $id");
     Widget dicho = Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               left: 20.0, right: 20.0, top: 40, bottom: 30),
           alignment: Alignment.centerLeft,
           child: Text(
-            "Question $id:",
+            "Question" + items[id]["id"],
             style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           ),
@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 12.0, bottom: 80),
           child: Text(
-            items[id - 1]["description"],
+            items[id]["description"],
             style: const TextStyle(
                 fontWeight: FontWeight.w500, fontSize: 22, color: Colors.white),
           ),
@@ -169,10 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   onPressed: () {
-                    incrementId(items[id - 1]["answers"]
-                        [items[id - 1]["answers"].keys.toList()[0]]);
+                    incrementId(items[id]["answers"]
+                        [items[id]["answers"].keys.toList()[0]]);
                   },
-                  child: Text(items[id - 1]["answers"].keys.toList()[0],
+                  child: Text(items[id]["answers"].keys.toList()[0],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -187,10 +187,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   onPressed: () {
-                    incrementId(items[id - 1]["answers"]
-                        [items[id - 1]["answers"].keys.toList()[1]]);
+                    incrementId(items[id]["answers"]
+                        [items[id]["answers"].keys.toList()[1]]);
                   },
-                  child: Text(items[id - 1]["answers"].keys.toList()[1],
+                  child: Text(items[id]["answers"].keys.toList()[1],
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget qcm = items[id - 1]["type"] == "qcm"
+    Widget qcm = items[id]["type"] == "qcm"
         ? Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             height: 220,
@@ -220,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             incrementId(items[id]["answers"]
                                 [items[id]["answers"].keys.toList()[0]]);
                           },
-                          child: Text(items[id - 1]["answers"].keys.toList()[0],
+                          child: Text(items[id]["answers"].keys.toList()[0],
                               style: const TextStyle(fontSize: 16))),
                     ),
                     const SizedBox(height: 20),
@@ -237,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             incrementId(items[id]["answers"]
                                 [items[id]["answers"].keys.toList()[1]]);
                           },
-                          child: Text(items[id - 1]["answers"].keys.toList()[1],
+                          child: Text(items[id]["answers"].keys.toList()[1],
                               style: const TextStyle(fontSize: 16))),
                     ),
                     const SizedBox(height: 20),
@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             incrementId(items[id]["answers"]
                                 [items[id]["answers"].keys.toList()[2]]);
                           },
-                          child: Text(items[id - 1]["answers"].keys.toList()[2],
+                          child: Text(items[id]["answers"].keys.toList()[2],
                               style: const TextStyle(fontSize: 16))),
                     ),
                   ],
@@ -264,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         : Column();
 
-    Widget rankOrder = items[id - 1]["type"] == "RankOrder"
+    Widget rankOrder = items[id]["type"] == "RankOrder"
         ? Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             height: 220,
@@ -282,8 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               left: 40,
                               right: 100,
                             ),
-                            child:
-                                Text(items[id - 1]["answers"].keys.toList()[i]),
+                            child: Text(items[id]["answers"].keys.toList()[i]),
                           ),
                         ]),
                         Column(
@@ -321,7 +320,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
         : Column();
-    Widget textSlider = items[id - 1]["type"] == "textSlider"
+    Widget textSlider = items[id]["type"] == "textSlider"
         ? Column(children: <Widget>[
             Slider(
               min: 0.0,
@@ -344,16 +343,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ])
         : Container();
 
-    // switch (items[id - 1]["type"]) {
-    //   case "textSlider":
-    //     return textSlider;
-    //   case "qcm":
-    //     return qcm;
-    // }
-    // return dicho;
-    //return items[id]["type"] == "dicho" ? dicho : qcm;
+
     Widget answerType = dicho;
-    switch (items[id - 1]["type"]) {
+    switch (items[id]["type"]) {
       case "qcm":
         answerType = qcm;
         break;
@@ -363,6 +355,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     }
     return answerType;
+    //return items[id]["type"] == "dicho" ? dicho : qcm;
     // if (items[id - 1]["type"] == "dicho") {
     //   return dicho;
     // } else if (items[id - 1]["type"] == "qcm") {
