@@ -350,6 +350,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case "RankOrder":
         answerType = rankOrder;
         break;
+      case "textSlider":
+        answerType = textSlider;
+        break;
     }
     return answerType;
     //return items[id]["type"] == "dicho" ? dicho : qcm;
@@ -374,21 +377,28 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyProfile(items: widget.items))),
-              child: const Icon(Icons.account_circle_rounded),
+            // Here we take the value from the MyHomePage object that was created by
+            // the App.build method, and use it to set our appbar title.
+            title: Text(widget.title),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MyProfile(items: widget.items, uid: widget.uid))),
+                child: const Icon(Icons.account_circle_rounded),
+              ),
             ),
-          ),
-        ),
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.logout),
+                  tooltip: 'Show Snackbar',
+                  onPressed: () => {
+                        //logOut()
+                      }),
+            ]),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -415,7 +425,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     vertical: 10.0,
                     horizontal: 50.0,
                   ),
-                  child: Text('Save answers'),
+                  child: Text('Save progress'),
                 ),
               ),
             ],
