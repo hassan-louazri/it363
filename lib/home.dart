@@ -7,8 +7,7 @@ import 'package:project_basic_quiz/profile.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'login.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'question_widget.dart';
 
 import 'dart:math';
 
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme,
         ),
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Charles Consel', items: items, uid: uid),
       debugShowCheckedModeBanner: false,
@@ -75,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return lastQuestion
         .doc(widget.uid)
         .set({
+          'uid': "${widget.uid}",
           'id': "$id",
         })
         .then((value) => logger.i("Last question added"))
@@ -83,24 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getLastQuestionByUid() async {
-    var lastQuestion =  FirebaseFirestore.instance
+    var lastQuestion = FirebaseFirestore.instance
         .collection("last-question-answered")
         .doc("${widget.uid}");
     lastQuestion.get().then((value) => setState(() {
           id = int.parse(value["id"]);
-        }))
-        .catchError((error) =>
-        logger.w( "Last question does not exist yet"));
-  }
-
-  Future<void> logOut() async {
-    await FirebaseAuth.instance.signOut()
-        .then((value) => {logger.i("logged out successfully"),
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const MyLogin())),
-    Alert(context: context, title: "Logout success").show()
-    }
-    ).catchError((error)=>logger.w("problem with logging out"));
+        }));
   }
 
   @override
@@ -123,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id = int.parse(newId) - 1;
         logger.i("String Id is $id");
       } else {
-        if (id < widget.items.length -1) {
+        if (id < widget.items.length - 1) {
           id++;
         } else {
           id = 1;
@@ -131,48 +119,6 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     });
   }
-
-  Widget question(List items) {
-    logger.i(lastId);
-    //logger.i("In Question widget $id");
-    Widget dicho = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Container(
-          padding: const EdgeInsets.only(left: 8.0),
-          margin: const EdgeInsets.only(
-              left: 20.0, right: 20.0, top: 40, bottom: 30),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Question" + items[id]["id"],
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(left: 12.0, bottom: 80),
-          child: Text(
-            items[id]["description"],
-            style: const TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 22, color: Colors.white),
-          ),
-        )
-      ],
-    );
-    return dicho;
-  }
-  /*
-  {
-    id:
-    answer:yes
-  }
-  *******multi******
-  {
-    id:
-    answer:s1mple
-  }
-   */
 
   Widget answers(List items, double value) {
     List<String> test = ["1", "2", "3"];
@@ -358,24 +304,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   myvalue = value;
                 });
-                logger.i("my value is $myvalue");
               },
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children:  <Widget>[
-                Text(items[id]["answers"].keys.toList()[0],
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
-                Text(items[id]["answers"].keys.toList()[1],
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
-                Text(items[id]["answers"].keys.toList()[2],
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white))
+                  Text(items[id]["answers"].keys.toList()[0],
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
+                  Text(items[id]["answers"].keys.toList()[1],
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
+                  Text(items[id]["answers"].keys.toList()[2],
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white))
                 ]),
       ElevatedButton(onPressed:()=> incrementId("null"), child: null,)
           ])
         : Container();
-
-
     Widget answerType = dicho;
     switch (items[id]["type"]) {
       case "qcm":
@@ -385,9 +328,8 @@ class _MyHomePageState extends State<MyHomePage> {
         answerType = rankOrder;
         break;
       case "textSlider":
-        answerType=textSlider;
+        answerType = textSlider;
         break;
-
     }
     return answerType;
     //return items[id]["type"] == "dicho" ? dicho : qcm;
@@ -412,39 +354,38 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-
-          leading: Padding(
-            //Icon: Icons.account_circle_rounded,
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyProfile(items: widget.items, uid: widget.uid))),
-              child: Icon(Icons.account_circle_rounded),
+            // Here we take the value from the MyHomePage object that was created by
+            // the App.build method, and use it to set our appbar title.
+            title: Text(widget.title),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MyProfile(items: widget.items, uid: widget.uid))),
+                child: const Icon(Icons.account_circle_rounded),
+              ),
             ),
-          ),
             actions: <Widget>[
-        IconButton(
-        icon: const Icon(Icons.logout),
-        tooltip: 'Show Snackbar',
-        onPressed: () =>{logOut()}
-      ),
-      ]
-        ),
+              IconButton(
+                  icon: const Icon(Icons.logout),
+                  tooltip: 'Show Snackbar',
+                  onPressed: () => {
+                        //logOut()
+                      }),
+            ]),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/login3.png"),
+              image: AssetImage("assets/background_image_2.jpg"),
               fit: BoxFit.cover,
             ),
           ),
           child: Column(
             children: <Widget>[
-              question(widget.items),
+              Questions(items: widget.items, id:id),
               answers(widget.items, myvalue),
               const SizedBox(height: 50),
               ElevatedButton(

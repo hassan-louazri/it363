@@ -63,9 +63,9 @@ flutter:
   assets:
     - assets/background_image.jpg
     - assets/questions.json
-    - assets/loginBackground.jpg
     - assets/login2.jpeg
     - assets/login3.png
+    - assets/background_image_2.jpg
 
 
   # The following line ensures that the Material Icons font is
