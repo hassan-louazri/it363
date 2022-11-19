@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:project_basic_quiz/home.dart';
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({super.key, required this.items});
+  const MyProfile({super.key, required this.items, required this.uid});
   final List items;
+  final String? uid;
+
   @override
   State<MyProfile> createState() => _MyProfileState();
 }
@@ -27,7 +29,7 @@ class _MyProfileState extends State<MyProfile> {
                 children: <Widget>[
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
+                    children: const <Widget>[
                       SizedBox(
                         height: 10.0,
                       ),
@@ -52,7 +54,7 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Card(
@@ -79,7 +81,7 @@ class _MyProfileState extends State<MyProfile> {
                 ],
               ),
             ),
-            SizedBox(height: 50.0),
+            const SizedBox(height: 50.0),
             Container(
               height: 60,
               padding: const EdgeInsets.only(right: 8.0),
@@ -100,7 +102,7 @@ class _MyProfileState extends State<MyProfile> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => MyApp(
-                                          items: widget.items, uid: "ds"))),
+                                          items: widget.items, uid: widget.uid))),
                               child: const Text("Finish the test",
                                   style: TextStyle(fontSize: 16)))))
                 ],
