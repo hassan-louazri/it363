@@ -2,3 +2,7 @@ EMAIL: medbigi2000@gmail.com
 password:123456
 EMAIL: srahhal@gmail.com	
 password: 123456
+EMAIL: mockAcc@gmail.com
+password: mockPass
+EMAIL: mockAcc2@gmail.com
+password: mockPass2

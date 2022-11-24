@@ -9,6 +9,7 @@ import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'question_widget.dart';
 
+
 import 'dart:math';
 
 class MyApp extends StatelessWidget {
@@ -54,17 +55,23 @@ class MyHomePage extends StatefulWidget {
   final String? uid;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int id = 0;
+class MyHomePageState extends State<MyHomePage> {
+   int id = 0;
 
   double myvalue = 0;
 
   String currentItem = "";
   var logger = Logger();
   String lastId = "";
+
+
+ /* static void  setId(int idToSet)
+  {
+    id = idToSet;
+  }*/
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -120,9 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
+
   Widget answers(List items, double value) {
     List<String> test = ["1", "2", "3"];
-    Widget dicho = Container(
+    Widget dicho =Container(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       height: 100,
       child: Row(
