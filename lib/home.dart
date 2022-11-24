@@ -66,6 +66,12 @@ class MyHomePageState extends State<MyHomePage> {
   String currentItem = "";
   var logger = Logger();
   String lastId = "";
+   late PageController _pageController;
+   List<String> images = [
+     "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
+     "https://wallpaperaccess.com/full/2637581.jpg",
+     "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg"
+   ];
 
 
  /* static void  setId(int idToSet)
@@ -104,6 +110,7 @@ class MyHomePageState extends State<MyHomePage> {
     currentItem = test[0];
     getLastQuestionByUid();
     super.initState();
+    _pageController = PageController(viewportFraction: 0.8);
   }
 
   int returnMaxLengthString(List<String> choises) {
@@ -401,6 +408,22 @@ class MyHomePageState extends State<MyHomePage> {
         ),
     ]
     );
+   Widget image = PageView.builder(
+       itemCount: images.length,
+       pageSnapping: true,
+       controller: _pageController,
+       onPageChanged: (page) {
+         /*setState(() {
+           activePage = page;
+         });*/
+       },
+       itemBuilder: (context, pagePosition) {
+         return Container(
+           margin: EdgeInsets.all(10),
+           child: Image.network(images[pagePosition]),
+         );
+       });
+
     Widget answerType = dicho;
     switch (items[id]["type"]) {
       case "qcm":
@@ -414,6 +437,9 @@ class MyHomePageState extends State<MyHomePage> {
         break;
       case "visAnalog":
         answerType = visualAnalog;
+        break;
+      case "image":
+        answerType = image;
         break;
     }
     return answerType;
