@@ -4,14 +4,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key? key}) : super(key: key);
+class MyProfile extends StatefulWidget {
+  const MyProfile({super.key, required this.items, required this.uid});
+  final List items;
+  final String? uid;
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _MyProfileState extends State<MyProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -99,12 +101,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
-                              /*style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),*/
                             )),
                           ),
                         ),
@@ -123,17 +119,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              /* style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),*/
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -153,17 +142,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              /*  style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),*/
                             )),
                             SelectionArea(
                                 child: Text(
                               '10',
-                              //style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -183,17 +165,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              /* style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),*/
                             )),
                             SelectionArea(
                                 child: Text(
                               '8',
-                              //style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -235,17 +210,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              /*style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),*/
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -258,12 +226,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              //style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              //style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -276,12 +242,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              //style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              //style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -307,12 +271,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -325,12 +287,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              //style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -343,12 +303,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -374,12 +332,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              //   style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              //  style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -396,7 +352,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             SelectionArea(
                                 child: Text(
                               '38',
-                              //  style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),
@@ -409,12 +364,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              // style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                             SelectionArea(
                                 child: Text(
                               '38',
-                              //  style: FlutterFlowTheme.of(context).bodyText1,
                             )),
                           ],
                         ),

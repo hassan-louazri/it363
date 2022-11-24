@@ -7,6 +7,7 @@ import 'package:project_basic_quiz/profile.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'question_widget.dart';
 
 import 'dart:math';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme,
         ),
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Charles Consel', items: items, uid: uid),
       debugShowCheckedModeBanner: false,
@@ -53,10 +54,10 @@ class MyHomePage extends StatefulWidget {
   final String? uid;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   int id = 0;
 
   double myvalue = 0;
@@ -64,6 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String currentItem = "";
   var logger = Logger();
   String lastId = "";
+
+  /* static void  setId(int idToSet)
+  {
+    id = idToSet;
+  }*/
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -117,37 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }
     });
-  }
-
-  Widget question(List items) {
-    logger.i(lastId);
-    //logger.i("In Question widget $id");
-    Widget dicho = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Container(
-          padding: const EdgeInsets.only(left: 8.0),
-          margin: const EdgeInsets.only(
-              left: 20.0, right: 20.0, top: 40, bottom: 30),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Question" + items[id]["id"],
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(left: 12.0, bottom: 80),
-          child: Text(
-            items[id]["description"],
-            style: const TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 22, color: Colors.white),
-          ),
-        )
-      ],
-    );
-    return dicho;
   }
 
   Widget answers(List items, double value) {
@@ -326,9 +301,10 @@ class _MyHomePageState extends State<MyHomePage> {
               min: 0.0,
               max: 100.0,
               value: myvalue,
-              divisions: 9,
-              activeColor: Colors.green,
-              inactiveColor: Colors.orange,
+              divisions: 3,
+              activeColor: Colors.purple,
+              inactiveColor: Colors.purple.shade100,
+              thumbColor: Colors.pink,
               onChanged: (value) {
                 setState(() {
                   myvalue = value;
@@ -337,11 +313,96 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const <Widget>[
-                  Text('6'),
+                children: <Widget>[
+                  Text(items[id]["answers"].keys.toList()[0],
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white)),
+                  Text(items[id]["answers"].keys.toList()[1],
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white)),
+                  Text(items[id]["answers"].keys.toList()[2],
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white))
                 ]),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                backgroundColor: Colors.blueAccent,
+              ),
+              onPressed: () => {incrementId("null")},
+              child: const Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 50.0,
+                ),
+                child: Text('Next question'),
+              ),
+            )
           ])
         : Container();
+    Widget visualAnalog = Column(
+        //padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        //height: 100,
+        children: [
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.thumb_up,
+                        size: 50.0,
+                        color: Colors.blue,
+                      ),
+                      tooltip: 'Show Snackbar',
+                      onPressed: () {
+                        incrementId(items[id]["answers"]
+                            [items[id]["answers"].keys.toList()[1]]);
+                      }),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: IconButton(
+                      icon: const Icon(Icons.thumb_down,
+                          size: 50.0, color: Colors.redAccent),
+                      tooltip: 'Show Snackbar',
+                      onPressed: () {
+                        incrementId(items[id]["answers"]
+                            [items[id]["answers"].keys.toList()[1]]);
+                      }),
+                  // child: Text(items[id]["answers"].keys.toList()[1],
+                  // style: const TextStyle(fontSize: 16))),
+                ),
+              ),
+            ],
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+              backgroundColor: Colors.blueAccent,
+            ),
+            onPressed: () => {incrementId("null")},
+            child: const Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 5.0,
+                horizontal: 50.0,
+              ),
+              child: Text('Next question'),
+            ),
+          ),
+        ]);
     Widget answerType = dicho;
     switch (items[id]["type"]) {
       case "qcm":
@@ -349,6 +410,12 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case "RankOrder":
         answerType = rankOrder;
+        break;
+      case "textSlider":
+        answerType = textSlider;
+        break;
+      case "visAnalog":
+        answerType = visualAnalog;
         break;
     }
     return answerType;
@@ -374,30 +441,38 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-
-          leading: Padding(
-            //Icon: Icons.account_circle_rounded,
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomePageWidget())),
-              child: Icon(Icons.account_circle_rounded),
+            // Here we take the value from the MyHomePage object that was created by
+            // the App.build method, and use it to set our appbar title.
+            title: Text(widget.title),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MyProfile(items: widget.items, uid: widget.uid))),
+                child: const Icon(Icons.account_circle_rounded),
+              ),
             ),
-          ),
-        ),
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.logout),
+                  tooltip: 'Show Snackbar',
+                  onPressed: () => {
+                        //logOut()
+                      }),
+            ]),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/login3.png"),
+              image: AssetImage("assets/background_image_2.jpg"),
               fit: BoxFit.cover,
             ),
           ),
           child: Column(
             children: <Widget>[
-              question(widget.items),
+              Questions(items: widget.items, id: id),
               answers(widget.items, myvalue),
               const SizedBox(height: 50),
               ElevatedButton(
@@ -414,7 +489,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     vertical: 10.0,
                     horizontal: 50.0,
                   ),
-                  child: Text('Save answers'),
+                  child: Text('Save progress'),
                 ),
               ),
             ],
