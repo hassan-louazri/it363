@@ -382,10 +382,8 @@ class _MyHomePageState extends State<MyHomePage> {
             //Icon: Icons.account_circle_rounded,
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyProfile(items: widget.items))),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomePageWidget())),
               child: Icon(Icons.account_circle_rounded),
             ),
           ),
