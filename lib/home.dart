@@ -325,9 +325,82 @@ class MyHomePageState extends State<MyHomePage> {
                   Text(items[id]["answers"].keys.toList()[2],
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white))
                 ]),
-      ElevatedButton(onPressed:()=> incrementId("null"), child: null,)
+      ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle:
+          const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+          backgroundColor: Colors.blueAccent,
+        ),
+        onPressed:()=> {incrementId("null")},
+    child: const Padding(
+      padding: EdgeInsets.symmetric(
+    vertical: 5.0,
+    horizontal: 50.0,
+    ),
+      child: Text('Next question'),
+    ),
+
+      )
           ])
         : Container();
+    Widget visualAnalog =
+    Column(
+      //padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+      //height: 100,
+      children: [ Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Expanded(
+            child: Container(
+              height: 60,
+              padding: const EdgeInsets.only(right: 8.0),
+
+                child:  IconButton(
+                    icon: const Icon(Icons.thumb_up,size: 50.0,color: Colors.blue,),
+                    tooltip: 'Show Snackbar',
+                    onPressed: () {
+                      incrementId(items[id]["answers"]
+                      [items[id]["answers"].keys.toList()[1]]);
+                    }),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: 60,
+              padding: const EdgeInsets.only(left: 8.0),
+              child:  IconButton(
+                  icon: const Icon(Icons.thumb_down, size:50.0, color: Colors.redAccent),
+                  tooltip: 'Show Snackbar',
+                  onPressed: () {
+                    incrementId(items[id]["answers"]
+                    [items[id]["answers"].keys.toList()[1]]);
+                  }),
+                 // child: Text(items[id]["answers"].keys.toList()[1],
+                     // style: const TextStyle(fontSize: 16))),
+            ),
+          ),
+
+        ],
+      ),
+
+         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            textStyle:
+            const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+            backgroundColor: Colors.blueAccent,
+          ),
+          onPressed:()=> {incrementId("null")},
+          child: const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 5.0,
+              horizontal: 50.0,
+            ),
+            child: Text('Next question'),
+          ),
+
+        ),
+    ]
+    );
     Widget answerType = dicho;
     switch (items[id]["type"]) {
       case "qcm":
@@ -338,6 +411,9 @@ class MyHomePageState extends State<MyHomePage> {
         break;
       case "textSlider":
         answerType = textSlider;
+        break;
+      case "visAnalog":
+        answerType = visualAnalog;
         break;
     }
     return answerType;

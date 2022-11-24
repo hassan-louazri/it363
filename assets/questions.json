@@ -63,9 +63,15 @@
     },
     {
       "id": "11",
+      "type": "visAnalog",
+      "description": "What do you think of our app so far",
+      "answers": {"Love it": "null", "Hate it": "null"}
+    },
+    {
+      "id": "12",
       "type": "qcm",
-      "description": "GO99999999999999999999999AT?",
-      "answers": {"Poor": "null", "Average": "null", "Amazing":"null"}
+      "description": "GO100000000AT?",
+      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
     }
   ]
 }
