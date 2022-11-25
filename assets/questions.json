@@ -72,6 +72,13 @@
       "type": "qcm",
       "description": "GO100000000AT?",
       "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
+    },
+    {
+      "id": "13",
+      "type": "matrixTableQuestions",
+      "description": "How satisfied are you with the following?",
+      "answers": {"website": "null", "Quality": "null", "Overall":"null"},
+      "choises" : {"not satisfied": "null", "neutral": "null", "satisfied": "null"}
     }
   ]
 }

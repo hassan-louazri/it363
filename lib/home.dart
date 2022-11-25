@@ -63,6 +63,7 @@ class MyHomePageState extends State<MyHomePage> {
   double myvalue = 0;
 
   String currentItem = "";
+  String matrixTableQuestion = "";
   var logger = Logger();
   String lastId = "";
 
@@ -295,6 +296,71 @@ class MyHomePageState extends State<MyHomePage> {
             ),
           )
         : Column();
+        Widget matrixTableQuestions = items[id]["type"] == "matrixTableQuestions"
+        ? Expanded(
+          child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              for(var j= 0;j<items[id]["choises"].keys.toList().length;j++)
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                child: Text(items[id]["choises"].keys.toList()[j],
+                            style: const TextStyle(fontSize: 16, color: Colors.white)),
+              ),
+              
+            ],),
+            Expanded(
+              child:ListView(children: [
+                    for(var i= 0;i<items[id]["answers"].keys.toList().length;i++)
+                    Row(
+                      children: <Widget> [
+                        Container(
+                          padding:const EdgeInsets.fromLTRB(0, 0, 30 , 0),
+                          child: Text(items[id]["answers"].keys.toList()[i],
+                            style: const TextStyle(fontSize: 20, color: Colors.white)),
+                        ),
+                        for(var j= 0;j<items[id]["choises"].keys.toList().length;j++)
+                        Expanded(
+                            child:ListView(
+                              shrinkWrap: true,
+                              children: [
+                              ListTile(    
+                                leading: Radio(  
+                                  value: items[id]["choises"].keys.toList()[j],  
+                                  activeColor: const Color(0xFFFFFFFF),
+                                  groupValue: matrixTableQuestion,  
+                                  fillColor:
+                                  MaterialStateColor.resolveWith((states) => Colors.white),
+                                  onChanged: (value) {  
+                                    setState(() {
+                                      matrixTableQuestion = value;
+                                    });
+                                  },  
+                                ),  
+                              ),             
+                            ],) 
+                          ),         
+                      ],)     
+              ],    
+            
+            )),
+             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                textStyle:
+                  const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueAccent,
+                ),
+                onPressed:()=> {incrementId("null")},
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 50.0,),  
+                  child: Text('Next question'),
+                ),
+
+              )
+
+        ],)
+        ):Column();
     Widget textSlider = items[id]["type"] == "textSlider"
         ? Column(children: <Widget>[
             Slider(
@@ -413,6 +479,9 @@ class MyHomePageState extends State<MyHomePage> {
         break;
       case "textSlider":
         answerType = textSlider;
+        break;
+      case "matrixTableQuestions":
+        answerType = matrixTableQuestions;
         break;
       case "visAnalog":
         answerType = visualAnalog;
