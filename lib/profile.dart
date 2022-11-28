@@ -22,6 +22,7 @@ class _MyProfileState extends State<MyProfile> {
   var logger = Logger();
 
   String? profilePictureUrl;
+  String? userName;
 
   void getProfilePictureByUid() async {
     var lastQuestion = FirebaseFirestore.instance
@@ -34,14 +35,26 @@ class _MyProfileState extends State<MyProfile> {
   }));
   }
 
+  void getUserNameByUid() async {
+    var lastQuestion = FirebaseFirestore.instance
+        .collection("Profile")
+        .doc("${widget.uid}");
+    await lastQuestion.get().then((value) => setState(() {
+      userName = value["userName"];
+    })).catchError((error) => setState((){
+      userName = 'Default-User';
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
    getProfilePictureByUid();
+   getUserNameByUid();
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFF333B3E),
+      backgroundColor: const Color(0xFF333B3E),
       appBar: AppBar(
-        backgroundColor: Color(0xFF333B3E),
+        backgroundColor: const Color(0xFF333B3E),
         automaticallyImplyLeading: false,
         title: const Text(
           'Profil',
@@ -124,10 +137,10 @@ class _MyProfileState extends State<MyProfile> {
                                 width: 0,
                               ),
                             ),
-                            child: const SelectionArea(
+                            child:  SelectionArea(
                                 child: Text(
-                              'Soufyane',
-                              style: TextStyle(
+                              userName!,
+                              style: const TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
