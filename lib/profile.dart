@@ -1,8 +1,12 @@
 //import '../flutter_flow/flutter_flow_icon_button.dart';
 //import '../flutter_flow/flutter_flow_theme.dart';
 //import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
+import 'upload_image.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key, required this.items, required this.uid});
@@ -15,9 +19,24 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var logger = Logger();
+
+  String? profilePictureUrl;
+
+  void getProfilePictureByUid() async {
+    var lastQuestion = FirebaseFirestore.instance
+        .collection("Profile")
+        .doc("${widget.uid}");
+   await lastQuestion.get().then((value) => setState(() {
+      profilePictureUrl = value["profileUrl"];
+    })).catchError((error) => setState((){
+       profilePictureUrl = 'https://picsum.photos/seed/370/600';
+  }));
+  }
 
   @override
   Widget build(BuildContext context) {
+   getProfilePictureByUid();
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFF333B3E),
@@ -30,12 +49,27 @@ class _MyProfileState extends State<MyProfile> {
         actions: [],
         centerTitle: true,
         elevation: 2,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: () =>
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ImageUploads(uid: widget.uid))),
+
+            child: const Icon(Icons.menu),
+          ),
+        ),
+
       ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/background_image_2.jpg"),
             fit: BoxFit.cover,
+
           ),
         ),
         child: GestureDetector(
@@ -74,9 +108,7 @@ class _MyProfileState extends State<MyProfile> {
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: Image.network(
-                            'https://picsum.photos/seed/370/600',
-                          ),
+                          child: FadeInImage(image: NetworkImage(profilePictureUrl!), placeholder: const AssetImage("assets/profilePlaceholder.png"))
                         ),
                         Material(
                           color: Colors.transparent,
