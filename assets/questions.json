@@ -69,8 +69,14 @@
     },
     {
       "id": "12",
-      "type": "qcm",
-      "description": "GO100000000AT?",
+      "type": "image",
+      "description": "what is life?",
+      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
+    },
+    {
+      "id": "13",
+      "type": "image",
+      "description": "what is life?",
       "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
     }
   ]
