@@ -25,6 +25,7 @@ class ImageUploadsState extends State<ImageUploads> {
   File? _photo;
   final ImagePicker _picker = ImagePicker();
   var logger = Logger();
+  final userNameController = TextEditingController();
 
 
 
@@ -36,11 +37,25 @@ class ImageUploadsState extends State<ImageUploads> {
         .doc(widget.uid)
         .set({
       'profileUrl': url,
-    })
+    },SetOptions(merge: true))
         .then((value) =>
         Alert(context: context, title: "Profile Picture updated").show())
         .catchError(
             (error) => logger.e("Profile url wasn't added."));
+  }
+
+  Future<void> updateUserName(String userName, BuildContext context) {
+    CollectionReference lastQuestion =
+    FirebaseFirestore.instance.collection('Profile');
+    return lastQuestion
+        .doc(widget.uid)
+        .set({
+      'userName': userName,
+    },SetOptions(merge: true))
+        .then((value) =>
+        Alert(context: context, title: "User name updated").show())
+        .catchError(
+            (error) => logger.e("User name not added."));
   }
 
 
@@ -99,7 +114,7 @@ class ImageUploadsState extends State<ImageUploads> {
       appBar: AppBar(),
       body: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           Center(
@@ -109,7 +124,7 @@ class ImageUploadsState extends State<ImageUploads> {
               },
               child: CircleAvatar(
                 radius: 55,
-                backgroundColor: Color(0xffFDCF09),
+                backgroundColor: const Color(0xffFDCF09),
                 child: _photo != null
                     ? ClipRRect(
                   borderRadius: BorderRadius.circular(50),
@@ -133,7 +148,49 @@ class ImageUploadsState extends State<ImageUploads> {
                 ),
               ),
             ),
-          )
+          ),
+          TextFormField(
+            controller: userNameController,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+            decoration: const InputDecoration(
+              filled: false,
+              hintText: 'Email or username',
+              hintStyle: TextStyle(color: Colors.black, fontFamily: 'Lato'),
+              icon: Padding(
+                padding: EdgeInsets.only(top: 15.0),
+                child: Icon(Icons.mail_outline, color: Colors.black),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+                borderSide: BorderSide(color: Colors.black, width: 3.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+                borderSide: BorderSide(color: Colors.black, width: 1.0),
+              ),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              textStyle:
+              const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+              backgroundColor: Colors.blueAccent,
+            ),
+            onPressed: () => {updateUserName(userNameController.text,context)},
+            child: const Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 50.0,
+              ),
+              child: Text('Send'),
+            ),
+          ),
         ],
       ),
     );
@@ -144,26 +201,24 @@ class ImageUploadsState extends State<ImageUploads> {
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Gallery'),
-                      onTap: () {
-                        imgFromGallery(context);
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
+            child: Wrap(
+              children: <Widget>[
+                 ListTile(
+                    leading:  const Icon(Icons.photo_library),
+                    title:  const Text('Gallery'),
                     onTap: () {
-                      imgFromCamera(context);
+                      imgFromGallery(context);
                       Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
+                    }),
+                 ListTile(
+                  leading:  const Icon(Icons.photo_camera),
+                  title:  const Text('Camera'),
+                  onTap: () {
+                    imgFromCamera(context);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
             ),
           );
         });

@@ -25,14 +25,16 @@ class _MyProfileState extends State<MyProfile> {
   String? userName;
 
   void getProfilePictureByUid() async {
-    var lastQuestion = FirebaseFirestore.instance
-        .collection("Profile")
-        .doc("${widget.uid}");
-   await lastQuestion.get().then((value) => setState(() {
-      profilePictureUrl = value["profileUrl"];
-    })).catchError((error) => setState((){
-       profilePictureUrl = 'https://picsum.photos/seed/370/600';
-  }));
+    var lastQuestion =
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    await lastQuestion
+        .get()
+        .then((value) => setState(() {
+              profilePictureUrl = value["profileUrl"];
+            }))
+        .catchError((error) => setState(() {
+              profilePictureUrl = 'https://picsum.photos/seed/370/600';
+            }));
   }
 
   void getUserNameByUid() async {
@@ -59,30 +61,25 @@ class _MyProfileState extends State<MyProfile> {
         title: const Text(
           'Profil',
         ),
-        actions: [],
+        actions: const [],
         centerTitle: true,
         elevation: 2,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onTap: () =>
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ImageUploads(uid: widget.uid))),
-
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ImageUploads(uid: widget.uid))),
             child: const Icon(Icons.menu),
           ),
         ),
-
       ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/background_image_2.jpg"),
             fit: BoxFit.cover,
-
           ),
         ),
         child: GestureDetector(
@@ -105,7 +102,7 @@ class _MyProfileState extends State<MyProfile> {
                         spreadRadius: 2,
                       )
                     ],
-                    color: Color.fromARGB(255, 190, 92, 90)),
+                    color: const Color.fromARGB(255, 190, 92, 90)),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -115,14 +112,16 @@ class _MyProfileState extends State<MyProfile> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          width: 120,
-                          height: 120,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: FadeInImage(image: NetworkImage(profilePictureUrl!), placeholder: const AssetImage("assets/profilePlaceholder.png"))
-                        ),
+                            width: 120,
+                            height: 120,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: FadeInImage(
+                                image: NetworkImage(profilePictureUrl!),
+                                placeholder: const AssetImage(
+                                    "assets/profilePlaceholder.png"))),
                         Material(
                           color: Colors.transparent,
                           elevation: 0,
@@ -130,7 +129,7 @@ class _MyProfileState extends State<MyProfile> {
                             width: 100,
                             height: 22,
                             decoration: BoxDecoration(
-                              color: Color(0x00249689),
+                              color: const Color(0x00249689),
                               shape: BoxShape.rectangle,
                               border: Border.all(
                                 color: Colors.transparent,
@@ -226,7 +225,7 @@ class _MyProfileState extends State<MyProfile> {
                 width: 400,
                 height: 300,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 36, 101, 90),
+                  color: const Color.fromARGB(255, 36, 101, 90),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(
@@ -242,6 +241,15 @@ class _MyProfileState extends State<MyProfile> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Container(
+                        child: const Align(
+                            alignment: Alignment.center,
+                            child: Text('Culture generale',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                )))),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -251,7 +259,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Culture generale',
+                              'Total',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -267,7 +275,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Sience',
+                              'questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -283,7 +291,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Enseirb-Matmeca',
+                              'Correct',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -303,6 +311,15 @@ class _MyProfileState extends State<MyProfile> {
                       endIndent: 3,
                       //color: Color.fromARGB(255, 60, 67, 9),
                     ),
+                    Container(
+                        child: const Align(
+                            alignment: Alignment.center,
+                            child: Text('Science',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                )))),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -312,7 +329,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Culture generale',
+                              'Total',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -328,7 +345,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Sience',
+                              'questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -344,7 +361,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Enseirb-Matmeca',
+                              'Correct',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -364,6 +381,15 @@ class _MyProfileState extends State<MyProfile> {
                       endIndent: 3,
                       //color: Color.fromARGB(255, 185, 204, 42),
                     ),
+                    Container(
+                        child: const Align(
+                            alignment: Alignment.center,
+                            child: Text('Enseirb-MATMECA',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                )))),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -373,7 +399,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Culture generale',
+                              'Total',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -389,7 +415,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Sience',
+                              'questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -405,7 +431,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Enseirb-Matmeca',
+                              'Correct',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
