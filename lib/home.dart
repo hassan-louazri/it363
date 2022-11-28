@@ -63,8 +63,15 @@ class MyHomePageState extends State<MyHomePage> {
   double myvalue = 0;
 
   String currentItem = "";
+  String matrixTableQuestion = "";
   var logger = Logger();
   String lastId = "";
+   late PageController _pageController;
+   List<String> images = [
+     "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
+     "https://wallpaperaccess.com/full/2637581.jpg",
+     "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg"
+   ];
 
   /* static void  setId(int idToSet)
   {
@@ -102,6 +109,7 @@ class MyHomePageState extends State<MyHomePage> {
     currentItem = test[0];
     getLastQuestionByUid();
     super.initState();
+    _pageController = PageController(viewportFraction: 0.8);
   }
 
   int returnMaxLengthString(List<String> choises) {
@@ -295,6 +303,71 @@ class MyHomePageState extends State<MyHomePage> {
             ),
           )
         : Column();
+        Widget matrixTableQuestions = items[id]["type"] == "matrixTableQuestions"
+        ? Expanded(
+          child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              for(var j= 0;j<items[id]["choises"].keys.toList().length;j++)
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                child: Text(items[id]["choises"].keys.toList()[j],
+                            style: const TextStyle(fontSize: 16, color: Colors.white)),
+              ),
+              
+            ],),
+            Expanded(
+              child:ListView(children: [
+                    for(var i= 0;i<items[id]["answers"].keys.toList().length;i++)
+                    Row(
+                      children: <Widget> [
+                        Container(
+                          padding:const EdgeInsets.fromLTRB(0, 0, 30 , 0),
+                          child: Text(items[id]["answers"].keys.toList()[i],
+                            style: const TextStyle(fontSize: 20, color: Colors.white)),
+                        ),
+                        for(var j= 0;j<items[id]["choises"].keys.toList().length;j++)
+                        Expanded(
+                            child:ListView(
+                              shrinkWrap: true,
+                              children: [
+                              ListTile(    
+                                leading: Radio(  
+                                  value: items[id]["choises"].keys.toList()[j],  
+                                  activeColor: const Color(0xFFFFFFFF),
+                                  groupValue: matrixTableQuestion,  
+                                  fillColor:
+                                  MaterialStateColor.resolveWith((states) => Colors.white),
+                                  onChanged: (value) {  
+                                    setState(() {
+                                      matrixTableQuestion = value;
+                                    });
+                                  },  
+                                ),  
+                              ),             
+                            ],) 
+                          ),         
+                      ],)     
+              ],    
+            
+            )),
+             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                textStyle:
+                  const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueAccent,
+                ),
+                onPressed:()=> {incrementId("null")},
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 50.0,),  
+                  child: Text('Next question'),
+                ),
+
+              )
+
+        ],)
+        ):Column();
     Widget textSlider = items[id]["type"] == "textSlider"
         ? Column(children: <Widget>[
             Slider(
@@ -402,7 +475,27 @@ class MyHomePageState extends State<MyHomePage> {
               child: Text('Next question'),
             ),
           ),
-        ]);
+    ]
+    );
+   /*Widget image = PageView.builder(
+       itemCount: images.length,
+       pageSnapping: true,
+       controller: _pageController,
+       onPageChanged: (page) {
+         /*setState(() {
+           activePage = page;
+         });*/
+       },
+       itemBuilder: (context, pagePosition) {
+         return Container(
+           margin: EdgeInsets.all(10),
+           child: Image.network(images[pagePosition]),
+         );
+       });
+
+
+        ]);*/
+
     Widget answerType = dicho;
     switch (items[id]["type"]) {
       case "qcm":
@@ -414,9 +507,15 @@ class MyHomePageState extends State<MyHomePage> {
       case "textSlider":
         answerType = textSlider;
         break;
+      case "matrixTableQuestions":
+        answerType = matrixTableQuestions;
+        break;
       case "visAnalog":
         answerType = visualAnalog;
         break;
+     /* case "image":
+        answerType = image;
+        break;*/
     }
     return answerType;
     //return items[id]["type"] == "dicho" ? dicho : qcm;
