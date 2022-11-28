@@ -1,5 +1,8 @@
+//import '../flutter_flow/flutter_flow_icon_button.dart';
+//import '../flutter_flow/flutter_flow_theme.dart';
+//import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:project_basic_quiz/home.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key, required this.items, required this.uid});
@@ -11,104 +14,370 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Profile it363',
-      home: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 40,
-          backgroundColor: Colors.blueGrey[900],
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Color(0xFF333B3E),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF333B3E),
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Profil',
         ),
-        body: ListView(
-          children: <Widget>[
-            Container(
-              height: 360,
-              color: Color.fromARGB(255, 153, 174, 179),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const <Widget>[
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.white70,
-                        minRadius: 75.0,
-                        child: CircleAvatar(
-                          radius: 70.0,
-                          backgroundImage: NetworkImage(
-                              'https://avatars0.githubusercontent.com/u/28812093?s=460&u=06471c90e03cfd8ce2855d217d157c93060da490&v=4'),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        'My Profil',
-                        style: TextStyle(
-                          fontSize: 23,
-                          color: Colors.white,
-                        ),
-                      ),
+        actions: [],
+        centerTitle: true,
+        elevation: 2,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background_image_2.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: 355,
+                height: 165,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.rectangle,
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 10,
+                        color: Color.fromARGB(255, 190, 92, 90),
+                        offset: Offset(0, 4),
+                        spreadRadius: 2,
+                      )
                     ],
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Card(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-                      clipBehavior: Clip.antiAlias,
-                      color: Colors.white,
-                      elevation: 5.0,
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 22.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Score : 80",
-                                  style: TextStyle(
-                                    color: Colors.blueGrey[900],
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              ])))
-                ],
-              ),
-            ),
-            const SizedBox(height: 50.0),
-            Container(
-              height: 60,
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Column(
-                children: [
-                  Expanded(
-                      child: SizedBox(
-                          height: 100, //height of button
-                          width: 300,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.blueGrey,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                    color: Color.fromARGB(255, 190, 92, 90)),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 120,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.network(
+                            'https://picsum.photos/seed/370/600',
+                          ),
+                        ),
+                        Material(
+                          color: Colors.transparent,
+                          elevation: 0,
+                          child: Container(
+                            width: 100,
+                            height: 22,
+                            decoration: BoxDecoration(
+                              color: Color(0x00249689),
+                              shape: BoxShape.rectangle,
+                              border: Border.all(
+                                color: Colors.transparent,
+                                width: 0,
                               ),
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyApp(
-                                          items: widget.items, uid: widget.uid))),
-                              child: const Text("Finish the test",
-                                  style: TextStyle(fontSize: 16)))))
-                ],
+                            ),
+                            child: const SelectionArea(
+                                child: Text(
+                              'Soufyane',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            )),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Culture generale',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                        const Divider(
+                          height: 15,
+                          thickness: 10,
+                          indent: 100,
+                          endIndent: 100,
+                          color: Color(0xA9090909),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Science',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '10',
+                            )),
+                          ],
+                        ),
+                        const Divider(
+                          height: 15,
+                          thickness: 5,
+                          indent: 100,
+                          endIndent: 100,
+                          color: Color.fromARGB(255, 60, 67, 9),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'ENSEIRB',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '8',
+                            )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
+              Container(
+                width: 400,
+                height: 300,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 36, 101, 90),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 10,
+                      color: Color.fromARGB(255, 36, 101, 90),
+                      offset: Offset(0, 4),
+                      spreadRadius: 2,
+                    )
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Culture generale',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Sience',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Enseirb-Matmeca',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      height: 10,
+                      thickness: 5,
+                      indent: 3,
+                      endIndent: 3,
+                      //color: Color.fromARGB(255, 60, 67, 9),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Culture generale',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Sience',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Enseirb-Matmeca',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      height: 10,
+                      thickness: 5,
+                      indent: 3,
+                      endIndent: 3,
+                      //color: Color.fromARGB(255, 185, 204, 42),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Culture generale',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Sience',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            SelectionArea(
+                                child: Text(
+                              'Enseirb-Matmeca',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            )),
+                            SelectionArea(
+                                child: Text(
+                              '38',
+                            )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

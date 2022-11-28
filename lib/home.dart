@@ -9,7 +9,6 @@ import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'question_widget.dart';
 
-
 import 'dart:math';
 
 class MyApp extends StatelessWidget {
@@ -59,7 +58,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-   int id = 0;
+  int id = 0;
 
   double myvalue = 0;
 
@@ -73,8 +72,7 @@ class MyHomePageState extends State<MyHomePage> {
      "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg"
    ];
 
-
- /* static void  setId(int idToSet)
+  /* static void  setId(int idToSet)
   {
     id = idToSet;
   }*/
@@ -134,11 +132,9 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
-
   Widget answers(List items, double value) {
     List<String> test = ["1", "2", "3"];
-    Widget dicho =Container(
+    Widget dicho = Container(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       height: 100,
       child: Row(
@@ -324,91 +320,98 @@ class MyHomePageState extends State<MyHomePage> {
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:  <Widget>[
+                children: <Widget>[
                   Text(items[id]["answers"].keys.toList()[0],
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white)),
                   Text(items[id]["answers"].keys.toList()[1],
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white)),
                   Text(items[id]["answers"].keys.toList()[2],
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white))
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white))
                 ]),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          textStyle:
-          const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-          backgroundColor: Colors.blueAccent,
-        ),
-        onPressed:()=> {incrementId("null")},
-    child: const Padding(
-      padding: EdgeInsets.symmetric(
-    vertical: 5.0,
-    horizontal: 50.0,
-    ),
-      child: Text('Next question'),
-    ),
-
-      )
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                backgroundColor: Colors.blueAccent,
+              ),
+              onPressed: () => {incrementId("null")},
+              child: const Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 50.0,
+                ),
+                child: Text('Next question'),
+              ),
+            )
           ])
         : Container();
-    Widget visualAnalog =
-    Column(
-      //padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-      //height: 100,
-      children: [ Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    Widget visualAnalog = Column(
+        //padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        //height: 100,
         children: [
-          Expanded(
-            child: Container(
-              height: 60,
-              padding: const EdgeInsets.only(right: 8.0),
-
-                child:  IconButton(
-                    icon: const Icon(Icons.thumb_up,size: 50.0,color: Colors.blue,),
-                    tooltip: 'Show Snackbar',
-                    onPressed: () {
-                      incrementId(items[id]["answers"]
-                      [items[id]["answers"].keys.toList()[1]]);
-                    }),
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.thumb_up,
+                        size: 50.0,
+                        color: Colors.blue,
+                      ),
+                      tooltip: 'Show Snackbar',
+                      onPressed: () {
+                        incrementId(items[id]["answers"]
+                            [items[id]["answers"].keys.toList()[1]]);
+                      }),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: IconButton(
+                      icon: const Icon(Icons.thumb_down,
+                          size: 50.0, color: Colors.redAccent),
+                      tooltip: 'Show Snackbar',
+                      onPressed: () {
+                        incrementId(items[id]["answers"]
+                            [items[id]["answers"].keys.toList()[1]]);
+                      }),
+                  // child: Text(items[id]["answers"].keys.toList()[1],
+                  // style: const TextStyle(fontSize: 16))),
+                ),
+              ),
+            ],
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+              backgroundColor: Colors.blueAccent,
+            ),
+            onPressed: () => {incrementId("null")},
+            child: const Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 5.0,
+                horizontal: 50.0,
+              ),
+              child: Text('Next question'),
             ),
           ),
-          Expanded(
-            child: Container(
-              height: 60,
-              padding: const EdgeInsets.only(left: 8.0),
-              child:  IconButton(
-                  icon: const Icon(Icons.thumb_down, size:50.0, color: Colors.redAccent),
-                  tooltip: 'Show Snackbar',
-                  onPressed: () {
-                    incrementId(items[id]["answers"]
-                    [items[id]["answers"].keys.toList()[1]]);
-                  }),
-                 // child: Text(items[id]["answers"].keys.toList()[1],
-                     // style: const TextStyle(fontSize: 16))),
-            ),
-          ),
-
-        ],
-      ),
-
-         ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            textStyle:
-            const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-            backgroundColor: Colors.blueAccent,
-          ),
-          onPressed:()=> {incrementId("null")},
-          child: const Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 5.0,
-              horizontal: 50.0,
-            ),
-            child: Text('Next question'),
-          ),
-
-        ),
     ]
     );
-   Widget image = PageView.builder(
+   /*Widget image = PageView.builder(
        itemCount: images.length,
        pageSnapping: true,
        controller: _pageController,
@@ -424,6 +427,9 @@ class MyHomePageState extends State<MyHomePage> {
          );
        });
 
+
+        ]);*/
+
     Widget answerType = dicho;
     switch (items[id]["type"]) {
       case "qcm":
@@ -438,9 +444,9 @@ class MyHomePageState extends State<MyHomePage> {
       case "visAnalog":
         answerType = visualAnalog;
         break;
-      case "image":
+     /* case "image":
         answerType = image;
-        break;
+        break;*/
     }
     return answerType;
     //return items[id]["type"] == "dicho" ? dicho : qcm;
@@ -496,7 +502,7 @@ class MyHomePageState extends State<MyHomePage> {
           ),
           child: Column(
             children: <Widget>[
-              Questions(items: widget.items, id:id),
+              Questions(items: widget.items, id: id),
               answers(widget.items, myvalue),
               const SizedBox(height: 50),
               ElevatedButton(
