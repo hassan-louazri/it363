@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'register.dart';
-import 'home.dart';
+import 'start.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -176,7 +176,7 @@ class _MyLoginState extends State<MyLogin> {
         .signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text)
         .then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const LoadJson())))
+            context, MaterialPageRoute(builder: (context) => LoadJson())))
         .catchError((error) =>
             Alert(context: context, title: "Wrong email or password").show());
   }

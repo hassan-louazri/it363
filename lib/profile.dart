@@ -222,7 +222,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Sience',
+                              'Science',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -283,7 +283,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Sience',
+                              'Science',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -344,7 +344,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Sience',
+                              'Science',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
