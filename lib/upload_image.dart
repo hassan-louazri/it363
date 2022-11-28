@@ -152,15 +152,15 @@ class ImageUploadsState extends State<ImageUploads> {
           TextFormField(
             controller: userNameController,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
             decoration: const InputDecoration(
               filled: false,
-              hintText: 'Email or username',
+              hintText: 'username',
               hintStyle: TextStyle(color: Colors.black, fontFamily: 'Lato'),
               icon: Padding(
                 padding: EdgeInsets.only(top: 15.0),
-                child: Icon(Icons.mail_outline, color: Colors.black),
+                child: Icon(Icons.person, color: Colors.black),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
