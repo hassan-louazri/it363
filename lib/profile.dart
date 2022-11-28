@@ -1,8 +1,12 @@
 //import '../flutter_flow/flutter_flow_icon_button.dart';
 //import '../flutter_flow/flutter_flow_theme.dart';
 //import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
+import 'upload_image.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key, required this.items, required this.uid});
@@ -15,21 +19,63 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var logger = Logger();
+
+  String? profilePictureUrl;
+  String? userName;
+
+  void getProfilePictureByUid() async {
+    var lastQuestion =
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    await lastQuestion
+        .get()
+        .then((value) => setState(() {
+              profilePictureUrl = value["profileUrl"];
+            }))
+        .catchError((error) => setState(() {
+              profilePictureUrl = 'https://picsum.photos/seed/370/600';
+            }));
+  }
+
+  void getUserNameByUid() async {
+    var lastQuestion =
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    await lastQuestion
+        .get()
+        .then((value) => setState(() {
+              userName = value["userName"];
+            }))
+        .catchError((error) => setState(() {
+              userName = 'Default-User';
+            }));
+  }
 
   @override
   Widget build(BuildContext context) {
+    getProfilePictureByUid();
+    getUserNameByUid();
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFF333B3E),
+      backgroundColor: const Color(0xFF333B3E),
       appBar: AppBar(
-        backgroundColor: Color(0xFF333B3E),
+        backgroundColor: const Color(0xFF333B3E),
         automaticallyImplyLeading: false,
         title: const Text(
           'Profil',
         ),
-        actions: [],
+        actions: const [],
         centerTitle: true,
         elevation: 2,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ImageUploads(uid: widget.uid))),
+            child: const Icon(Icons.menu),
+          ),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -58,7 +104,7 @@ class _MyProfileState extends State<MyProfile> {
                         spreadRadius: 2,
                       )
                     ],
-                    color: Color.fromARGB(255, 190, 92, 90)),
+                    color: const Color.fromARGB(255, 190, 92, 90)),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -68,16 +114,16 @@ class _MyProfileState extends State<MyProfile> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          width: 120,
-                          height: 120,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.network(
-                            'https://picsum.photos/seed/370/600',
-                          ),
-                        ),
+                            width: 120,
+                            height: 120,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: FadeInImage(
+                                image: NetworkImage(profilePictureUrl!),
+                                placeholder: const AssetImage(
+                                    "assets/profilePlaceholder.png"))),
                         Material(
                           color: Colors.transparent,
                           elevation: 0,
@@ -85,17 +131,17 @@ class _MyProfileState extends State<MyProfile> {
                             width: 100,
                             height: 22,
                             decoration: BoxDecoration(
-                              color: Color(0x00249689),
+                              color: const Color(0x00249689),
                               shape: BoxShape.rectangle,
                               border: Border.all(
                                 color: Colors.transparent,
                                 width: 0,
                               ),
                             ),
-                            child: const SelectionArea(
+                            child: SelectionArea(
                                 child: Text(
-                              'Soufyane',
-                              style: TextStyle(
+                              userName!,
+                              style: const TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -181,7 +227,7 @@ class _MyProfileState extends State<MyProfile> {
                 width: 400,
                 height: 300,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 36, 101, 90),
+                  color: const Color.fromARGB(255, 36, 101, 90),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(
@@ -197,6 +243,14 @@ class _MyProfileState extends State<MyProfile> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const Align(
+                        alignment: Alignment.center,
+                        child: Text('Culture generale',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ))),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -206,7 +260,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Culture generale',
+                              'Total',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -222,7 +276,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Science',
+                              'questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -238,7 +292,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Enseirb-Matmeca',
+                              'Correct',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -258,6 +312,15 @@ class _MyProfileState extends State<MyProfile> {
                       endIndent: 3,
                       //color: Color.fromARGB(255, 60, 67, 9),
                     ),
+                    Container(
+                        child: const Align(
+                            alignment: Alignment.center,
+                            child: Text('Science',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                )))),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -267,7 +330,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Culture generale',
+                              'Total',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -283,7 +346,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Science',
+                              'questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -299,7 +362,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Enseirb-Matmeca',
+                              'Correct',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -319,6 +382,15 @@ class _MyProfileState extends State<MyProfile> {
                       endIndent: 3,
                       //color: Color.fromARGB(255, 185, 204, 42),
                     ),
+                    Container(
+                        child: const Align(
+                            alignment: Alignment.center,
+                            child: Text('Enseirb-MATMECA',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                )))),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -328,7 +400,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Culture generale',
+                              'Total',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -344,7 +416,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Science',
+                              'questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -360,7 +432,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: const [
                             SelectionArea(
                                 child: Text(
-                              'Enseirb-Matmeca',
+                              'Correct',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
