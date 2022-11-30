@@ -7,6 +7,8 @@ import 'package:project_basic_quiz/profile.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'login.dart';
 import 'question_widget.dart';
 
 import 'dart:math';
@@ -92,6 +94,32 @@ class MyHomePageState extends State<MyHomePage> {
         .then((value) => logger.i("Last question added"))
         .catchError(
             (error) => logger.e("Last question wasn't added successfully."));
+  }
+
+  Future<void> updateProgressToProfile(int id) {
+    CollectionReference lastQuestion =
+    FirebaseFirestore.instance.collection('Profile');
+    return lastQuestion
+        .doc(widget.uid)
+        .set({
+      'progress': "${((id*100)/14).round()}",
+    },SetOptions(merge: true))
+        .then((value) => {logger.i("Progress added"),
+        Alert(context: context, title: "Progress saved ").show()
+    })
+        .catchError(
+            (error) => logger.e("Progress wasn't added succefully."));
+  }
+
+  Future<void> logOut() async {
+    
+    await FirebaseAuth.instance.signOut()
+        .then((value) => {logger.i("logged out successfully"),
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const MyLogin())),
+      Alert(context: context, title: "Logout success").show()
+    }
+    ).catchError((error)=>logger.w("problem with logging out"));
   }
 
   void getLastQuestionByUid() async {
@@ -559,7 +587,7 @@ class MyHomePageState extends State<MyHomePage> {
                   icon: const Icon(Icons.logout),
                   tooltip: 'Show Snackbar',
                   onPressed: () => {
-                        //logOut()
+                        logOut()
                       }),
             ]),
         body: Container(
@@ -580,7 +608,9 @@ class MyHomePageState extends State<MyHomePage> {
                         const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
                     backgroundColor: Colors.deepPurple),
 
-                onPressed: () => {updateLastQuestion(id)},
+                onPressed: () => {updateLastQuestion(id),
+                  updateProgressToProfile(id),
+                },
 
                 // onPressed: () =>{},
                 child: const Padding(

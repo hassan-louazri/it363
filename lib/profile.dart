@@ -1,6 +1,4 @@
-//import '../flutter_flow/flutter_flow_icon_button.dart';
-//import '../flutter_flow/flutter_flow_theme.dart';
-//import '../flutter_flow/flutter_flow_util.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +21,7 @@ class _MyProfileState extends State<MyProfile> {
 
   String? profilePictureUrl;
   String? userName;
+  String? myProgress;
 
   void getProfilePictureByUid() async {
     var lastQuestion =
@@ -35,6 +34,19 @@ class _MyProfileState extends State<MyProfile> {
         .catchError((error) => setState(() {
               profilePictureUrl = 'https://picsum.photos/seed/370/600';
             }));
+  }
+
+  void getProgressByUid() async {
+    var progress =
+    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    await progress
+        .get()
+        .then((value) => setState(() {
+      myProgress = value["progress"];
+    }))
+        .catchError((error) => setState(() {
+      myProgress = '0';
+    }));
   }
 
   void getUserNameByUid() async {
@@ -52,6 +64,7 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
    getProfilePictureByUid();
    getUserNameByUid();
+   getProgressByUid();
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color(0xFF333B3E),
@@ -272,17 +285,17 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            SelectionArea(
+                          children:  [
+                            const SelectionArea(
                                 child: Text(
-                              'questions answered',
+                              'Progress',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             )),
                             SelectionArea(
                                 child: Text(
-                              '38',
+                              '${myProgress!}%',
                             )),
                           ],
                         ),
