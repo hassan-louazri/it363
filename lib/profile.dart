@@ -19,7 +19,7 @@ class _MyProfileState extends State<MyProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var logger = Logger();
 
-  String? profilePictureUrl;
+  String  profilePictureUrl = 'https://picsum.photos/seed/370/600';
   String? userName;
   String? myProgress;
 
@@ -89,6 +89,7 @@ class _MyProfileState extends State<MyProfile> {
                     builder: (context) => ImageUploads(uid: widget.uid))),
             child: const Icon(Icons.menu),
           ),
+
         ),
       ),
       body: Container(
