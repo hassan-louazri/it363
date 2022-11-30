@@ -50,18 +50,21 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   void getUserNameByUid() async {
-    var lastQuestion = FirebaseFirestore.instance
-        .collection("Profile")
-        .doc("${widget.uid}");
-    await lastQuestion.get().then((value) => setState(() {
-      userName = value["userName"];
-    })).catchError((error) => setState((){
-      userName = 'Default-User';
-    }));
+    var lastQuestion =
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    await lastQuestion
+        .get()
+        .then((value) => setState(() {
+              userName = value["userName"];
+            }))
+        .catchError((error) => setState(() {
+              userName = 'Default-User';
+            }));
   }
 
   @override
   Widget build(BuildContext context) {
+
    getProfilePictureByUid();
    getUserNameByUid();
    getProgressByUid();
@@ -149,7 +152,7 @@ class _MyProfileState extends State<MyProfile> {
                                 width: 0,
                               ),
                             ),
-                            child:  SelectionArea(
+                            child: SelectionArea(
                                 child: Text(
                               userName!,
                               style: const TextStyle(
@@ -254,15 +257,14 @@ class _MyProfileState extends State<MyProfile> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                        child: const Align(
-                            alignment: Alignment.center,
-                            child: Text('Culture generale',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                )))),
+                    const Align(
+                        alignment: Alignment.center,
+                        child: Text('Culture generale',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ))),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
