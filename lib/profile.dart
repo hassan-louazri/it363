@@ -67,6 +67,7 @@ class _MyProfileState extends State<MyProfile> {
     getProfilePictureByUid();
     getUserNameByUid();
     getProgressByUid();
+    double width2 = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color(0xFF333B3E),
@@ -119,7 +120,7 @@ class _MyProfileState extends State<MyProfile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width: 355,
+                width : width2,
                 height: 165,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
