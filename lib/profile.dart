@@ -19,7 +19,7 @@ class _MyProfileState extends State<MyProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var logger = Logger();
 
-  String  profilePictureUrl = 'https://picsum.photos/seed/370/600';
+  String profilePictureUrl = 'https://picsum.photos/seed/370/600';
   String? userName;
   String? myProgress;
 
@@ -88,7 +88,6 @@ class _MyProfileState extends State<MyProfile> {
                         uid: widget.uid))),
             child: const Icon(Icons.arrow_back),
           ),
-
         ),
         centerTitle: true,
         elevation: 2,
@@ -149,7 +148,7 @@ class _MyProfileState extends State<MyProfile> {
                               shape: BoxShape.circle,
                             ),
                             child: FadeInImage(
-                                image: NetworkImage(profilePictureUrl!),
+                                image: NetworkImage(profilePictureUrl),
                                 placeholder: const AssetImage(
                                     "assets/profilePlaceholder.png"))),
                         Material(

@@ -1,9 +1,14 @@
+// ignore_for_file: invalid_return_type_for_catch_error
+
+// import 'dart:convert';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:project_basic_quiz/profile.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:project_basic_quiz/start.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'login.dart';
 import 'question_widget.dart';
@@ -65,12 +70,12 @@ class MyHomePageState extends State<MyHomePage> {
   String matrixTableQuestion = "";
   var logger = Logger();
   String lastId = "";
-   late PageController _pageController;
-   List<String> images = [
-     "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
-     "https://wallpaperaccess.com/full/2637581.jpg",
-     "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg"
-   ];
+  late PageController _pageController;
+  List<String> images = [
+    "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
+    "https://wallpaperaccess.com/full/2637581.jpg",
+    "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg"
+  ];
 
   /* static void  setId(int idToSet)
   {
@@ -95,28 +100,31 @@ class MyHomePageState extends State<MyHomePage> {
 
   Future<void> updateProgressToProfile(int id) {
     CollectionReference lastQuestion =
-    FirebaseFirestore.instance.collection('Profile');
+        FirebaseFirestore.instance.collection('Profile');
     return lastQuestion
         .doc(widget.uid)
         .set({
-      'progress': "${((id*100)/14).round()}",
-    },SetOptions(merge: true))
-        .then((value) => {logger.i("Progress added"),
-        Alert(context: context, title: "Progress saved ").show()
-    })
-        .catchError(
-            (error) => logger.e("Progress wasn't added succefully."));
+          'progress': "${((id * 100) / 14).round()}",
+        }, SetOptions(merge: true))
+        .then((value) => {
+              logger.i("Progress added"),
+              Alert(context: context, title: "Progress saved ").show()
+            })
+        .catchError((error) => logger.e("Progress wasn't added succefully."));
   }
 
   Future<void> logOut() async {
-    
-    await FirebaseAuth.instance.signOut()
-        .then((value) => {logger.i("logged out successfully"),
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const MyLogin())),
-      Alert(context: context, title: "Logout success").show()
-    }
-    ).catchError((error)=>logger.w("problem with logging out"));
+    await FirebaseAuth.instance
+        .signOut()
+        .then(
+          (value) => {
+            Navigator.of(context).pop(),
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MyLogin())),
+            logger.i("logged out successfully"),
+          },
+        )
+        .catchError((error) => logger.w("problem with logging out"));
   }
 
   void getLastQuestionByUid() async {
@@ -328,78 +336,92 @@ class MyHomePageState extends State<MyHomePage> {
             ),
           )
         : Column();
-        Widget matrixTableQuestions = items[id]["type"] == "matrixTableQuestions"
+    Widget matrixTableQuestions = items[id]["type"] == "matrixTableQuestions"
         ? Expanded(
-          child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              for(var j= 0;j<items[id]["choises"].keys.toList().length;j++)
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                child: Text(items[id]["choises"].keys.toList()[j],
-                            style: const TextStyle(fontSize: 16, color: Colors.white)),
+            child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (var j = 0;
+                      j < items[id]["choises"].keys.toList().length;
+                      j++)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 20),
+                      child: Text(items[id]["choises"].keys.toList()[j],
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.white)),
+                    ),
+                ],
               ),
-              
-            ],),
-            Expanded(
-              child:ListView(children: [
-                    for(var i= 0;i<items[id]["answers"].keys.toList().length;i++)
+              Expanded(
+                  child: ListView(
+                children: [
+                  for (var i = 0;
+                      i < items[id]["answers"].keys.toList().length;
+                      i++)
                     Row(
-                      children: <Widget> [
+                      children: <Widget>[
                         Container(
-                          padding:const EdgeInsets.fromLTRB(0, 0, 30 , 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
                           child: Text(items[id]["answers"].keys.toList()[i],
-                            style: const TextStyle(fontSize: 20, color: Colors.white)),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.white)),
                         ),
-                        for(var j= 0;j<items[id]["choises"].keys.toList().length;j++)
-                        Expanded(
-                            child:ListView(
-                              shrinkWrap: true,
-                              children: [
-                              ListTile(    
-                                leading: Radio(  
-                                  value: items[id]["choises"].keys.toList()[j],  
+                        for (var j = 0;
+                            j < items[id]["choises"].keys.toList().length;
+                            j++)
+                          Expanded(
+                              child: ListView(
+                            shrinkWrap: true,
+                            children: [
+                              ListTile(
+                                leading: Radio(
+                                  value: items[id]["choises"].keys.toList()[j],
                                   activeColor: const Color(0xFFFFFFFF),
-                                  groupValue: matrixTableQuestion,  
-                                  fillColor:
-                                  MaterialStateColor.resolveWith((states) => Colors.white),
-                                  onChanged: (value) {  
+                                  groupValue: matrixTableQuestion,
+                                  fillColor: MaterialStateColor.resolveWith(
+                                      (states) => Colors.white),
+                                  onChanged: (value) {
                                     setState(() {
                                       matrixTableQuestion = value;
                                     });
-                                  },  
-                                ),  
-                              ),             
-                            ],) 
-                          ),         
-                      ],)     
-              ],    
-            
-            )),
-             ElevatedButton(
+                                  },
+                                ),
+                              ),
+                            ],
+                          )),
+                      ],
+                    )
+                ],
+              )),
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                textStyle:
-                  const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  textStyle:
+                      const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
                   backgroundColor: Colors.blueAccent,
                 ),
-                onPressed:()=> {incrementId("null")},
+                onPressed: () => {incrementId("null")},
                 child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 50.0,),  
+                  padding: EdgeInsets.symmetric(
+                    vertical: 5.0,
+                    horizontal: 50.0,
+                  ),
                   child: Text('Next question'),
                 ),
-
               )
-
-        ],)
-        ):Column();
+            ],
+          ))
+        : Column();
     Widget textSlider = items[id]["type"] == "textSlider"
         ? Column(children: <Widget>[
             Slider(
               min: 0.0,
               max: 100.0,
               value: myvalue,
-              divisions: 3,
+              divisions: items[id]["answers"].keys.toList().length - 1,
               activeColor: Colors.purple,
               inactiveColor: Colors.purple.shade100,
               thumbColor: Colors.pink,
@@ -411,23 +433,14 @@ class MyHomePageState extends State<MyHomePage> {
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(items[id]["answers"].keys.toList()[0],
+                children:
+                    items[id]["answers"].keys.toList().map<Widget>((element) {
+                  return Text(element.toString(),
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                          color: Colors.white)),
-                  Text(items[id]["answers"].keys.toList()[1],
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white)),
-                  Text(items[id]["answers"].keys.toList()[2],
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white))
-                ]),
+                          color: Colors.white));
+                }).toList()),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
@@ -500,9 +513,8 @@ class MyHomePageState extends State<MyHomePage> {
               child: Text('Next question'),
             ),
           ),
-    ]
-    );
-   /*Widget image = PageView.builder(
+        ]);
+    /*Widget image = PageView.builder(
        itemCount: images.length,
        pageSnapping: true,
        controller: _pageController,
@@ -538,7 +550,7 @@ class MyHomePageState extends State<MyHomePage> {
       case "visAnalog":
         answerType = visualAnalog;
         break;
-     /* case "image":
+      /* case "image":
         answerType = image;
         break;*/
     }
@@ -572,20 +584,23 @@ class MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            MyProfile(items: widget.items, uid: widget.uid))),
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        MyProfile(items: widget.items, uid: widget.uid),
+                  ),
+                ),
                 child: const Icon(Icons.account_circle_rounded),
               ),
             ),
             actions: <Widget>[
               IconButton(
-                  icon: const Icon(Icons.logout),
-                  tooltip: 'Show Snackbar',
-                  onPressed: () => {
-                        logOut()
-                      }),
+                icon: const Icon(Icons.logout),
+                tooltip: 'Show Snackbar',
+                onPressed: () => {
+                  logOut(),
+                },
+              ),
             ]),
         body: Container(
           decoration: const BoxDecoration(
@@ -605,7 +620,8 @@ class MyHomePageState extends State<MyHomePage> {
                         const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
                     backgroundColor: Colors.deepPurple),
 
-                onPressed: () => {updateLastQuestion(id),
+                onPressed: () => {
+                  updateLastQuestion(id),
                   updateProgressToProfile(id),
                 },
 

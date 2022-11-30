@@ -65,6 +65,9 @@ flutter:
     - assets/background_image.jpg
     - assets/questions.json
     - assets/login2.jpeg
+    - assets/cg.json
+    - assets/science.json
+    - assets/enseirb.json
     - assets/login3.png
     - assets/background_image_2.jpg
     - assets/profilePlaceholder.png

@@ -1,0 +1,96 @@
+{
+    "Questions": [
+        {
+            "id": "1",
+            "type": "qcm",
+            "description": "ENSEIRB-MATMECA a été fondée en quelle année?",
+            "answers": {
+                "1958": "null",
+                "1920": "null",
+                "1936": "null"
+            }
+        },
+        {
+            "id": "2",
+            "type": "textSlider",
+            "description": "Combien de filières sont actuellement dans l'ENSEIRB-MATMECA?",
+            "answers": {
+                "1": "null",
+                "2": "null",
+                "4": "null",
+                "6": "null",
+                "7": "null"
+            }
+        },
+        {
+            "id": "3",
+            "type": "dicho",
+            "description": "ENSEIRB-MATMECA accepte la formation en alternance?",
+            "answers": {
+                "Oui": "null",
+                "Non": "null"
+            }
+        },
+        {
+            "id": "4",
+            "type": "qcm",
+            "description": "Quelle liste a gagné les campagnes BDE en 2021?",
+            "answers": {
+                "Revolutionn'eirb": "null",
+                "Gangst'eirb": "null",
+                "West'eirb": "null",
+                "Rams'eirb": "null"
+            }
+        },
+        {
+            "id": "5",
+            "type": "qcm",
+            "description": "Environ combien d'associations et clubs existent au sein de l'ENSEIRB-MATMECA?",
+            "answers": {
+                "20": "null",
+                "30": "null",
+                "40": "null",
+                "50": "null"
+            }
+        },
+        {
+            "id": "6",
+            "type": "dicho",
+            "description": "Pierre Fabrie est-il le directeur actuel de l'ENSEIRB-MATMECA?",
+            "answers": {
+                "Oui": "null",
+                "Non": "null"
+            }
+        },
+        {
+            "id": "7",
+            "type": "qcm",
+            "description": "Quel le numéro de la salle \"Télécom Lab\"?",
+            "answers": {
+                "S104": "null",
+                "P168": "null",
+                "I101": "null",
+                "P115": "null"
+            }
+        },
+        {
+            "id": "8",
+            "type": "qcm",
+            "description": "Quelle est la signification de l'acronyme BDE?",
+            "answers": {
+                "Bureau Des Etudes": "null",
+                "Big Dark Energy": "null",
+                "Bureau Des Etudiants": "null"
+            }
+        },
+        {
+            "id": "9",
+            "type": "visAnalog",
+            "description": "Comment t'as trouvé l'ambiance à l'ENSEIRB-MATMECA?",
+            "answers": {
+                "Love it": "null",
+                "Hate it": "null"
+            }
+        }
+    ]
+}
