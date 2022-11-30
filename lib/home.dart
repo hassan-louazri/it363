@@ -1,14 +1,11 @@
 // ignore_for_file: invalid_return_type_for_catch_error
 
-// import 'dart:convert';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:project_basic_quiz/profile.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:project_basic_quiz/start.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'login.dart';
 import 'question_widget.dart';
@@ -39,7 +36,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage(
+  MyHomePage(
       {super.key, required this.title, required this.items, required this.uid});
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -56,6 +53,7 @@ class MyHomePage extends StatefulWidget {
   final List items;
   final String currentItem = "";
   final String? uid;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   State<MyHomePage> createState() => MyHomePageState();
@@ -63,39 +61,35 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   int id = 0;
-
   double myvalue = 0;
-
   String currentItem = "";
   String matrixTableQuestion = "";
-  var logger = Logger();
   String lastId = "";
-  late PageController _pageController;
+  var logger = Logger();
+  // late PageController _pageController;
   List<String> images = [
     "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
     "https://wallpaperaccess.com/full/2637581.jpg",
     "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg"
   ];
 
-  /* static void  setId(int idToSet)
-  {
-    id = idToSet;
-  }*/
-
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
   Future<void> updateLastQuestion(int id) {
     CollectionReference lastQuestion =
         FirebaseFirestore.instance.collection('last-question-answered');
     return lastQuestion
         .doc(widget.uid)
-        .set({
-          'uid': "${widget.uid}",
-          'id': "$id",
-        })
-        .then((value) => logger.i("Last question added"))
+        .set(
+          {
+            'uid': "${widget.uid}",
+            'id': "$id",
+          },
+        )
+        .then(
+          (value) => logger.i("Last question added"),
+        )
         .catchError(
-            (error) => logger.e("Last question wasn't added successfully."));
+          (error) => logger.e("Last question wasn't added successfully."),
+        );
   }
 
   Future<void> updateProgressToProfile(int id) {
@@ -103,14 +97,21 @@ class MyHomePageState extends State<MyHomePage> {
         FirebaseFirestore.instance.collection('Profile');
     return lastQuestion
         .doc(widget.uid)
-        .set({
-          'progress': "${((id * 100) / 9).round()}",
-        }, SetOptions(merge: true))
-        .then((value) => {
-              logger.i("Progress added"),
-              Alert(context: context, title: "Progress saved ").show()
-            })
-        .catchError((error) => logger.e("Progress wasn't added succefully."));
+        .set(
+          {
+            'progress': "${((id * 100) / 9).round()}",
+          },
+          SetOptions(merge: true),
+        )
+        .then(
+          (value) => {
+            logger.i("Progress added"),
+            Alert(context: context, title: "Progress saved ").show()
+          },
+        )
+        .catchError(
+          (error) => logger.e("Progress wasn't added succefully."),
+        );
   }
 
   Future<void> logOut() async {
@@ -119,12 +120,18 @@ class MyHomePageState extends State<MyHomePage> {
         .then(
           (value) => {
             Navigator.of(context).pop(),
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const MyLogin())),
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MyLogin(),
+              ),
+            ),
             logger.i("logged out successfully"),
           },
         )
-        .catchError((error) => logger.w("problem with logging out"));
+        .catchError(
+          (error) => logger.w("problem with logging out"),
+        );
   }
 
   void getLastQuestionByUid() async {
@@ -142,7 +149,7 @@ class MyHomePageState extends State<MyHomePage> {
     currentItem = test[0];
     getLastQuestionByUid();
     super.initState();
-    _pageController = PageController(viewportFraction: 0.8);
+    // _pageController = PageController(viewportFraction: 0.8);
   }
 
   int returnMaxLengthString(List<String> choises) {
@@ -151,7 +158,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void incrementId(String newId) {
-    logger.i("String newId is $newId");
+    // logger.i("String newId is $newId");
     setState(() {
       if (newId != "null") {
         id = int.parse(newId) - 1;
@@ -336,6 +343,7 @@ class MyHomePageState extends State<MyHomePage> {
             ),
           )
         : Column();
+
     Widget matrixTableQuestions = items[id]["type"] == "matrixTableQuestions"
         ? Expanded(
             child: Column(
@@ -350,11 +358,24 @@ class MyHomePageState extends State<MyHomePage> {
                     Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 30, horizontal: 20),
-                      child: Text(items[id]["choises"].keys.toList()[j],
-                          style: const TextStyle(
-                              fontSize: 16, color: Colors.white)),
+                      child: Text(
+                        items[id]["choises"].keys.toList()[j],
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white),
+                      ),
                     ),
                 ],
+                // children:
+                //     items[id]["choises"].keys.toList().map<Widget>((element) {
+                //   return Container(
+                //     padding: const EdgeInsets.symmetric(
+                //         vertical: 30, horizontal: 20),
+                //     child: Text(
+                //       element.toString(),
+                //       style: const TextStyle(fontSize: 16, color: Colors.white),
+                //     ),
+                //   );
+                // }).toList(),
               ),
               Expanded(
                   child: ListView(

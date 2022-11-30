@@ -25,7 +25,7 @@ class _LoadJsonState extends State<Start> {
     final User? user = auth.currentUser;
     final String? uid = user?.uid;
     // here you write the codes to input the data into firestore
-    logger.i("User id is : $uid");
+    // logger.i("User id is : $uid");
     return uid;
   }
 

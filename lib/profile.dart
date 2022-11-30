@@ -20,7 +20,7 @@ class _MyProfileState extends State<MyProfile> {
   var logger = Logger();
 
   String profilePictureUrl = 'https://picsum.photos/seed/370/600';
-  String? userName;
+  String userName = "Default-User";
   String? myProgress;
 
   void getProfilePictureByUid() async {
@@ -54,12 +54,16 @@ class _MyProfileState extends State<MyProfile> {
         FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
     await lastQuestion
         .get()
-        .then((value) => setState(() {
-              userName = value["userName"];
-            }))
-        .catchError((error) => setState(() {
-              userName = 'Default-User';
-            }));
+        .then(
+          (value) => setState(() {
+            userName = value["userName"];
+          }),
+        )
+        .catchError(
+          (error) => setState(() {
+            userName = 'Default-User';
+          }),
+        );
   }
 
   @override
@@ -81,12 +85,15 @@ class _MyProfileState extends State<MyProfile> {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MyHomePage(
-                        title: 'Charles Consel',
-                        items: widget.items,
-                        uid: widget.uid))),
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyHomePage(
+                  title: userName,
+                  items: widget.items,
+                  uid: widget.uid,
+                ),
+              ),
+            ),
             child: const Icon(Icons.arrow_back),
           ),
         ),
@@ -119,7 +126,7 @@ class _MyProfileState extends State<MyProfile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width : width2,
+                width: width2,
                 height: 165,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -168,7 +175,7 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                             child: SelectionArea(
                                 child: Text(
-                              userName!,
+                              userName,
                               style: const TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 15,
@@ -340,15 +347,17 @@ class _MyProfileState extends State<MyProfile> {
                       endIndent: 3,
                       //color: Color.fromARGB(255, 60, 67, 9),
                     ),
-                    Container(
-                        child: const Align(
-                            alignment: Alignment.center,
-                            child: Text('Science',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                )))),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Science',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -357,12 +366,13 @@ class _MyProfileState extends State<MyProfile> {
                           mainAxisSize: MainAxisSize.max,
                           children: const [
                             SelectionArea(
-                                child: Text(
-                              'Total',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
+                              child: Text(
+                                'Total',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
                               ),
-                            )),
+                            ),
                             SelectionArea(
                                 child: Text(
                               '38',
@@ -410,15 +420,17 @@ class _MyProfileState extends State<MyProfile> {
                       endIndent: 3,
                       //color: Color.fromARGB(255, 185, 204, 42),
                     ),
-                    Container(
-                        child: const Align(
-                            alignment: Alignment.center,
-                            child: Text('Enseirb-MATMECA',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                )))),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Enseirb-MATMECA',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -427,12 +439,13 @@ class _MyProfileState extends State<MyProfile> {
                           mainAxisSize: MainAxisSize.max,
                           children: const [
                             SelectionArea(
-                                child: Text(
-                              'Total',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
+                              child: Text(
+                                'Total',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
                               ),
-                            )),
+                            ),
                             SelectionArea(
                                 child: Text(
                               '38',
