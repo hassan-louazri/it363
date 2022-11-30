@@ -104,7 +104,7 @@ class MyHomePageState extends State<MyHomePage> {
     return lastQuestion
         .doc(widget.uid)
         .set({
-          'progress': "${((id * 100) / 14).round()}",
+          'progress': "${((id * 100) / 9).round()}",
         }, SetOptions(merge: true))
         .then((value) => {
               logger.i("Progress added"),
