@@ -3,7 +3,7 @@
     {
       "id": "1",
       "type": "dicho",
-      "description": "Have you ever used our service?",
+      "description": "Have you ever been to Morocco?",
       "answers": {"yes": "4", "no": "5"}
     },
     {
@@ -21,8 +21,8 @@
     {
       "id": "4",
       "type": "qcm",
-      "description": "what is the mass of the sun?",
-      "answers": {"1 Kg": "null", "1 g": "null", "a lot":"null"}
+      "description": "What is the capital of Morocco",
+      "answers": {"Rabat": "null", "Marrakech": "null", "Casablanca":"null"}
     },
     {
       "id": "5",
@@ -33,32 +33,32 @@
     {
       "id": "6",
       "type": "qcm",
-      "description": "Who is the best awper?",
-      "answers": {"s1mple": "null", "zywoo": "null", "jame":"null"}
+      "description": "What is the mass of the sun?",
+      "answers": {"1 kg": "null", "1 g": "null", "very big":"null"}
     },
     {
       "id": "7",
       "type": "qcm",
-      "description": "GOAT?",
-      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
+      "description": "Flutter is a: ",
+      "answers": {"Framework": "null", "Food": "null", "Movie":"null"}
     },
    
     {
       "id": "8",
       "type": "qcm",
-      "description": "GO99999999999999999999999AT?",
+      "description": "Best player?",
       "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
     },
     {
       "id": "9",
       "type": "qcm",
-      "description": "GO100000000AT?",
+      "description": "Second best player",
       "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
     },
     {
       "id": "10",
       "type": "textSlider",
-      "description": "How was your experience in the accor arena",
+      "description": "How was your experience with Flutter",
       "answers": {"Poor": "null", "Average": "null", "Amazing":"null"}
     },
     {
@@ -69,18 +69,18 @@
     },
     {
       "id": "12",
-      "type": "image",
-      "description": "what is life?",
-      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
+      "type": "qcm",
+      "description": "JEE is used for",
+      "answers": {"Games": "null", "Web": "null", "Mbile":"null"}
     },
     {
       "id": "13",
-      "type": "image",
-      "description": "what is life?",
-      "answers": {"kb9": "null", "messi": "null", "cr7":"null"}
+      "type": "qcm",
+      "description": "Python is used for",
+      "answers": {"Games": "null", "AI": "null", "All of the above":"null"}
     },
     {
-      "id": "13",
+      "id": "14",
       "type": "matrixTableQuestions",
       "description": "How satisfied are you with the following?",
       "answers": {"website": "null", "Quality": "null", "Overall":"null"},
