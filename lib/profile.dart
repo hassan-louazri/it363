@@ -1,9 +1,9 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
+import 'package:project_basic_quiz/home.dart';
 import 'upload_image.dart';
 
 class MyProfile extends StatefulWidget {
@@ -38,15 +38,15 @@ class _MyProfileState extends State<MyProfile> {
 
   void getProgressByUid() async {
     var progress =
-    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
     await progress
         .get()
         .then((value) => setState(() {
-      myProgress = value["progress"];
-    }))
+              myProgress = value["progress"];
+            }))
         .catchError((error) => setState(() {
-      myProgress = '0';
-    }));
+              myProgress = '0';
+            }));
   }
 
   void getUserNameByUid() async {
@@ -64,10 +64,9 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
-
-   getProfilePictureByUid();
-   getUserNameByUid();
-   getProgressByUid();
+    getProfilePictureByUid();
+    getUserNameByUid();
+    getProgressByUid();
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color(0xFF333B3E),
@@ -77,19 +76,33 @@ class _MyProfileState extends State<MyProfile> {
         title: const Text(
           'Profil',
         ),
-        actions: const [],
-        centerTitle: true,
-        elevation: 2,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ImageUploads(uid: widget.uid))),
-            child: const Icon(Icons.menu),
+                    builder: (context) => MyHomePage(
+                        title: 'Charles Consel',
+                        items: widget.items,
+                        uid: widget.uid))),
+            child: const Icon(Icons.arrow_back),
           ),
         ),
+        centerTitle: true,
+        elevation: 2,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ImageUploads(uid: widget.uid))),
+              child: const Icon(Icons.menu),
+            ),
+          )
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -287,7 +300,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children:  [
+                          children: [
                             const SelectionArea(
                                 child: Text(
                               'Progress',
