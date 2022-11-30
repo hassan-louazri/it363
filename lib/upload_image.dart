@@ -111,8 +111,19 @@ class ImageUploadsState extends State<ImageUploads> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
+      appBar: AppBar(
+        title: const Text('Profile settings'),
+      ),
+
+      body:
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/background_image_2.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+      child: Column(
         children: <Widget>[
           const SizedBox(
             height: 32,
@@ -157,27 +168,27 @@ class ImageUploadsState extends State<ImageUploads> {
           TextFormField(
             controller: userNameController,
             style: const TextStyle(
-              color: Colors.black,
+              color: Colors.white,
             ),
             decoration: const InputDecoration(
               filled: false,
               hintText: 'Username',
-              hintStyle: TextStyle(color: Colors.black, fontFamily: 'Lato'),
+              hintStyle: TextStyle(color: Colors.white, fontFamily: 'Lato'),
               icon: Padding(
                 padding: EdgeInsets.only(top: 15.0),
-                child: Icon(Icons.person, color: Colors.black),
+                child: Icon(Icons.person, color: Colors.white),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10.0),
                 ),
-                borderSide: BorderSide(color: Colors.black, width: 3.0),
+                borderSide: BorderSide(color: Colors.white, width: 3.0),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10.0),
                 ),
-                borderSide: BorderSide(color: Colors.black, width: 1.0),
+                borderSide: BorderSide(color: Colors.white, width: 1.0),
               ),
             ),
           ),
@@ -201,6 +212,7 @@ class ImageUploadsState extends State<ImageUploads> {
           ),
         ],
       ),
+      )
     );
   }
 
