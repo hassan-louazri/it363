@@ -117,6 +117,8 @@ class ImageUploadsState extends State<ImageUploads> {
           const SizedBox(
             height: 32,
           ),
+
+
           Center(
             child: GestureDetector(
               onTap: () {
@@ -142,12 +144,15 @@ class ImageUploadsState extends State<ImageUploads> {
                   width: 100,
                   height: 100,
                   child: Icon(
-                    Icons.camera_alt,
+                    Icons.account_box,
                     color: Colors.grey[800],
                   ),
                 ),
               ),
             ),
+          ),
+          const SizedBox(
+            height: 32,
           ),
           TextFormField(
             controller: userNameController,
@@ -156,7 +161,7 @@ class ImageUploadsState extends State<ImageUploads> {
             ),
             decoration: const InputDecoration(
               filled: false,
-              hintText: 'username',
+              hintText: 'Username',
               hintStyle: TextStyle(color: Colors.black, fontFamily: 'Lato'),
               icon: Padding(
                 padding: EdgeInsets.only(top: 15.0),
@@ -176,6 +181,9 @@ class ImageUploadsState extends State<ImageUploads> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 32,
+          ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               textStyle:
@@ -188,7 +196,7 @@ class ImageUploadsState extends State<ImageUploads> {
                 vertical: 10.0,
                 horizontal: 50.0,
               ),
-              child: Text('Send'),
+              child: Text('Send username'),
             ),
           ),
         ],
