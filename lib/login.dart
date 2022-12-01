@@ -140,9 +140,11 @@ class _MyLoginState extends State<MyLogin> {
                     backgroundColor: Colors.blueAccent),
                 onPressed: () => {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyRegister()))
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MyRegister(),
+                    ),
+                  ),
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(

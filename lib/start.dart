@@ -83,9 +83,11 @@ class _LoadJsonState extends State<Start> {
               readJson(selectedItem),
               Navigator.of(context).pop(),
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyApp(items: items, uid: uid)))
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyApp(items: items, uid: uid),
+                ),
+              ),
             },
           ),
         ));

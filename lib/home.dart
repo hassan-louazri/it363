@@ -576,13 +576,6 @@ class MyHomePageState extends State<MyHomePage> {
         break;*/
     }
     return answerType;
-    //return items[id]["type"] == "dicho" ? dicho : qcm;
-    // if (items[id - 1]["type"] == "dicho") {
-    //   return dicho;
-    // } else if (items[id - 1]["type"] == "qcm") {
-    //   return qcm;
-    // }
-    // return RankOrder;
   }
 
   @override
@@ -640,13 +633,10 @@ class MyHomePageState extends State<MyHomePage> {
                     textStyle:
                         const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
                     backgroundColor: Colors.deepPurple),
-
                 onPressed: () => {
                   updateLastQuestion(id),
                   updateProgressToProfile(id),
                 },
-
-                // onPressed: () =>{},
                 child: const Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: 10.0,
