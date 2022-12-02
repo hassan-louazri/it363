@@ -1,0 +1,97 @@
+{
+    "Questions": [
+        {
+            "id": "1",
+            "type": "qcm",
+            "description": "Laquelle de ces équations porte le nom \"La plus belle formule mathématique\"?",
+            "answers": {
+                "exp(iπ) + 1 = 0": "null",
+                "1 + 1 = 2": "null",
+                "E = M.C²": "null"
+            }
+        },
+        {
+            "id": "2",
+            "type": "textSlider",
+            "description": "Quel est le pourcentage d'H2O dans le corps humain?",
+            "answers": {
+                "0%": "null",
+                "25%": "null",
+                "45%": "null",
+                "65%": "null",
+                "85%": "null"
+            }
+        },
+        {
+            "id": "3",
+            "type": "qcm",
+            "description": "Quel physicien a reçu deux prix nobel pendant sa vie?",
+            "answers": {
+                "Albert Einstein": "null",
+                "Leonardo Da Vinci": "null",
+                "Marie Curie": "null",
+                "Fritz Haber": "null"
+            }
+        },
+        {
+            "id": "4",
+            "type": "dicho",
+            "description": "Albert Einstein a reçue son prix nobel en 1921?",
+            "answers": {
+                "Oui": "null",
+                "Non": "null"
+            }
+        },
+        {
+            "id": "5",
+            "type": "qcm",
+            "description": "Quel élément chimique a été utilisé pour développer la première bombe nucléaire?",
+            "answers": {
+                "Plutonium": "null",
+                "Uranium": "null",
+                "Cesium": "null",
+                "Hydrogene": "null"
+            }
+        },
+        {
+            "id": "6",
+            "type": "qcm",
+            "description": "Qui a découvert le premier antibiotique \"Penicilin G\"?",
+            "answers": {
+                "Fritz Haber": "null",
+                "Leonhard Euler": "null",
+                "Alexander Fleming": "null",
+                "Werner Heisenberg": "null"
+            }
+        },
+        {
+            "id": "7",
+            "type": "textSlider",
+            "description": "Quelle est la vitesse de la lumière?",
+            "answers": {
+                "100m/s": "null",
+                "300.000m/s": "null",
+                "300.000Km/s": "null",
+                "Infinie": "null"
+            }
+        },
+        {
+            "id": "8",
+            "type": "dicho",
+            "description": "La terre est plate?",
+            "answers": {
+                "Oui": "null",
+                "Non": "null"
+            }
+        },
+        {
+            "id": "9",
+            "type": "visAnalog",
+            "description": "Comment t'as trouvé cette catégorie de questions?",
+            "answers": {
+                "Love it": "null",
+                "Hate it": "null"
+            }
+        }
+    ]
+}

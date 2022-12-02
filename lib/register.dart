@@ -37,10 +37,12 @@ class _MyRegisterState extends State<MyRegister> {
 
     Widget topBar = Container(
       padding: EdgeInsets.only(left: 20, top: width * 0.4),
-
-      child: const Text(
-        'Create new account',
-        style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'Lato'),
+      child: const Center(
+        child: Text(
+          'Create new account',
+          style:
+              TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'Lato'),
+        ),
       ),
     );
 

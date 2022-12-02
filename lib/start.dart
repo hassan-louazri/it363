@@ -6,14 +6,14 @@ import 'package:project_basic_quiz/home.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 
-class LoadJson extends StatefulWidget {
-  const LoadJson({Key? key}) : super(key: key);
+class Start extends StatefulWidget {
+  const Start({Key? key}) : super(key: key);
 
   @override
-  State<LoadJson> createState() => _LoadJsonState();
+  State<Start> createState() => _LoadJsonState();
 }
 
-class _LoadJsonState extends State<LoadJson> {
+class _LoadJsonState extends State<Start> {
   List items = [];
   int selectedItem = -1;
   List categories = ["Culture générale", "Science", "Enseirb-matmeca"];
@@ -25,13 +25,25 @@ class _LoadJsonState extends State<LoadJson> {
     final User? user = auth.currentUser;
     final String? uid = user?.uid;
     // here you write the codes to input the data into firestore
-    logger.i("User id is : $uid");
+    // logger.i("User id is : $uid");
     return uid;
   }
 
-  Future<void> readJson() async {
-    final String response =
-        await rootBundle.loadString('assets/questions.json');
+  Future<void> readJson(int selectedItem) async {
+    String category = 'assets/questions.json';
+    switch (selectedItem) {
+      case 0:
+        category = 'assets/cg.json';
+        break;
+      case 1:
+        category = 'assets/science.json';
+        break;
+      case 2:
+        category = 'assets/enseirb.json';
+        break;
+      default:
+    }
+    final String response = await rootBundle.loadString(category);
     logger.i(response);
     final data = await json.decode(response);
 
@@ -68,33 +80,16 @@ class _LoadJsonState extends State<LoadJson> {
           child: ElevatedButton(
             child: const Text('Start Quiz'),
             onPressed: () => {
-              readJson(),
+              readJson(selectedItem),
+              Navigator.of(context).pop(),
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyApp(items: items, uid: uid)))
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyApp(items: items, uid: uid),
+                ),
+              ),
             },
           ),
         ));
   }
 }
-
-// ElevatedButton(
-//       style: ElevatedButton.styleFrom(
-//           textStyle: const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-//           backgroundColor: Colors.blueAccent),
-//       onPressed: () => {
-//         readJson(),
-//         Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//                 builder: (context) => MyApp(items: items, uid: uid)))
-//       },
-//       child: const Padding(
-//         padding: EdgeInsets.symmetric(
-//           vertical: 10.0,
-//           horizontal: 50.0,
-//         ),
-//         child: Text('Tap to start quiz'),
-//       ),
-//     );

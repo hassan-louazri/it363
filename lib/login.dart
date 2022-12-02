@@ -140,9 +140,11 @@ class _MyLoginState extends State<MyLogin> {
                     backgroundColor: Colors.blueAccent),
                 onPressed: () => {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyRegister()))
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MyRegister(),
+                    ),
+                  ),
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(
@@ -175,9 +177,12 @@ class _MyLoginState extends State<MyLogin> {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text)
-        .then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoadJson())))
+        .then((value) => {
+              Navigator.of(context).pop(),
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Start())),
+            })
         .catchError((error) =>
-            Alert(context: context, title: "Wrong email or password").show());
+            {Alert(context: context, title: "Wrong email or password").show()});
   }
 }

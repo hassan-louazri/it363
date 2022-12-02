@@ -1,0 +1,99 @@
+{
+    "Questions": [
+        {
+            "id": "1",
+            "type": "qcm",
+            "description": "Qui est l'actuel roi du Maroc?",
+            "answers": {
+                "Hassan II": "null",
+                "Mohamed V": "null",
+                "Mohamed VI": "null"
+            }
+        },
+        {
+            "id": "2",
+            "type": "qcm",
+            "description": "Quel est le plus petit État du monde?",
+            "answers": {
+                "la principauté de Monaco": "null",
+                "le Vatican": "null",
+                "la Yougoslavie": "null",
+                "l'Australie": "null"
+            }
+        },
+        {
+            "id": "3",
+            "type": "textSlider",
+            "description": "Pour un salaire d'un cadre, quel est le pourcentage pris par l'État français comme tax?",
+            "answers": {
+                "0%": "null",
+                "14%": "null",
+                "25%": "null",
+                "30%": "null",
+                "40%": "null"
+            }
+        },
+        {
+            "id": "4",
+            "type": "dicho",
+            "description": "L'Allemagne a-t-elle gagné la première guerre mondiale?",
+            "answers": {
+                "yes": "null",
+                "no": "null"
+            }
+        },
+        {
+            "id": "5",
+            "type": "dicho",
+            "description": "La Russie a-t-elle gagné la seconde guerre modniale?",
+            "answers": {
+                "yes": "null",
+                "no": "null"
+            }
+        },
+        {
+            "id": "6",
+            "type": "textSlider",
+            "description": "Quelle est la hauteur de la grande pyramide Cholula au Méxique?",
+            "answers": {
+                "1cm": "null",
+                "100m": "null",
+                "66m": "null",
+                "26m": "null",
+                "78km": "null"
+            }
+        },
+        {
+            "id": "7",
+            "type": "dicho",
+            "description": "La civilisation chinoise date-t-elle d'environ 4000 ans?",
+            "answers": {
+                "yes": "null",
+                "no": "null"
+            }
+        },
+        {
+            "id": "8",
+            "type": "textSlider",
+            "description": "Quelle est la hauteur de la grande pyramide Cholula au Méxique?",
+            "answers": {
+                "1cm": "null",
+                "100m": "null",
+                "66m": "null",
+                "26m": "null",
+                "78km": "null"
+            }
+        },
+        {
+            "id": "9",
+            "type": "qcm",
+            "description": "Dans la religion islamique, combien de prophètes ont été cités dans le quran?",
+            "answers": {
+                "1": "null",
+                "12": "null",
+                "25": "null",
+                "99": "null"
+            }
+        }
+    ]
+}
