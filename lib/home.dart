@@ -55,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 
   final List items;
   final String? uid;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -64,6 +65,7 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   int id = 0;
   double myvalue = 0;
+  int questionsAnswered = 0;
   double? _ratingValue;
   List<String> currentItem = ["1", "1", "1", "1"];
   String matrixTableQuestion = "";
@@ -101,18 +103,12 @@ class MyHomePageState extends State<MyHomePage> {
         FirebaseFirestore.instance.collection('Profile');
     return lastQuestion
         .doc(widget.uid)
-        .set(
-          {
-            'progress': "${((id * 100) / 9).round()}",
-          },
-          SetOptions(merge: true),
-        )
-        .then(
-          (value) => {
-            logger.i("Progress added"),
-            Alert(context: context, title: "Progress saved ").show()
-          },
-        )
+        .set({
+      'progress': "$questionsAnswered",
+    },SetOptions(merge: true))
+        .then((value) => {logger.i("Progress added"),
+        Alert(context: context, title: "Progress saved ").show()
+    })
         .catchError(
           (error) => logger.e("Progress wasn't added succefully."),
         );
@@ -164,7 +160,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void incrementId(String newId) {
-    // logger.i("String newId is $newId");
+    questionsAnswered++;
     setState(() {
       if (newId != "null") {
         id = int.parse(newId) - 1;

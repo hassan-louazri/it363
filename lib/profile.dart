@@ -330,14 +330,14 @@ class _MyProfileState extends State<MyProfile> {
                           children: [
                             const SelectionArea(
                                 child: Text(
-                              'Progress',
+                              'Questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             )),
                             SelectionArea(
                                 child: Text(
-                              '${myProgress!}%',
+                              myProgress!,
                             )),
                           ],
                         ),
