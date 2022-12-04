@@ -104,11 +104,12 @@ class MyHomePageState extends State<MyHomePage> {
     return lastQuestion
         .doc(widget.uid)
         .set({
-      'progress': "$questionsAnswered",
-    },SetOptions(merge: true))
-        .then((value) => {logger.i("Progress added"),
-        Alert(context: context, title: "Progress saved ").show()
-    })
+          'progress': "$questionsAnswered",
+        }, SetOptions(merge: true))
+        .then((value) => {
+              logger.i("Progress added"),
+              Alert(context: context, title: "Progress saved ").show()
+            })
         .catchError(
           (error) => logger.e("Progress wasn't added succefully."),
         );
@@ -309,7 +310,7 @@ class MyHomePageState extends State<MyHomePage> {
                                       child: Text(
                                         item,
                                         style: const TextStyle(
-                                            fontSize: 20, color: Colors.black),
+                                            fontSize: 20, color: Colors.white),
                                       ),
                                     ))
                                 .toList(),

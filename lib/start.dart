@@ -57,52 +57,81 @@ class _LoadJsonState extends State<Start> {
     String? uid = getUser();
     return Scaffold(
         appBar: AppBar(title: const Text("Welcome to Trivia Star")),
-        body: ListView.builder(
-            itemCount: categories.length,
-            itemBuilder: (BuildContext context, int index) => GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedItem = selectedItem == index ? -1 : index;
-                    });
-                  },
-                  child: Card(
-                    margin: const EdgeInsets.all(10.0),
-                    elevation: 8,
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: index == selectedItem
-                              ? Colors.blue
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 8.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                'assets/${imgs[index]}',
-                                width: 70,
-                                height: 70,
-                                fit: BoxFit.cover,
-                              ),
+        body: Column(
+          children: [
+            const Padding(
+              padding:
+                  EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 30),
+              child: Text(
+                "Please choose a category before proceeding",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.black),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: categories.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedItem = selectedItem == index ? -1 : index;
+                          });
+                        },
+                        child: Card(
+                          margin: const EdgeInsets.all(10.0),
+                          elevation: 8,
+                          child: Container(
+                            height: 100,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: index == selectedItem
+                                    ? Colors.blue
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.asset(
+                                      'assets/${imgs[index]}',
+                                      width: 70,
+                                      height: 70,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${categories[index]}"),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: const [Text("10/10")],
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 24),
-                          Column(
-                            children: [
-                              Text("${categories[index]}"),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )),
+                        ),
+                      )),
+            ),
+          ],
+        ),
         bottomSheet: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 80,
