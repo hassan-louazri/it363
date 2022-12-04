@@ -17,6 +17,7 @@ class _LoadJsonState extends State<Start> {
   List items = [];
   int selectedItem = -1;
   List categories = ["Culture générale", "Science", "Enseirb-matmeca"];
+  List imgs = ["culture_generale.png", "science.jpeg", "enseirb_matmeca.jpg"];
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   var logger = Logger();
@@ -54,26 +55,54 @@ class _LoadJsonState extends State<Start> {
   @override
   Widget build(BuildContext context) {
     String? uid = getUser();
-
     return Scaffold(
-        appBar: AppBar(title: const Text("Charles Consel")),
+        appBar: AppBar(title: const Text("Welcome to Trivia Star")),
         body: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-                color: selectedItem == index
-                    ? Colors.blueAccent.withOpacity(0.5)
-                    : Colors.transparent,
-                child: ListTile(
-                  title: Text("${categories[index]}"),
+            itemCount: categories.length,
+            itemBuilder: (BuildContext context, int index) => GestureDetector(
                   onTap: () {
                     setState(() {
                       selectedItem = selectedItem == index ? -1 : index;
                     });
                   },
-                ));
-          },
-        ),
+                  child: Card(
+                    margin: const EdgeInsets.all(10.0),
+                    elevation: 8,
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: index == selectedItem
+                              ? Colors.blue
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(8)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 8.0),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                'assets/${imgs[index]}',
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 24),
+                          Column(
+                            children: [
+                              Text("${categories[index]}"),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )),
         bottomSheet: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 80,

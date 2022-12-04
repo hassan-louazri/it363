@@ -19,12 +19,18 @@ TO ADD:
 
 Profile:
 
--possibility to change profile photo. BIGI
--Separate info by category (total questions, questions answered, questions not answered yet). SOUFYANE
--possibility to change username (?). SOUFYANE
+- Separate info by category (total questions, questions answered, questions not answered yet). BIGI
+- Responsive progress by category. BIGI
 
 Home:
 
-- possibility to select category before start quiz. HASSAN
-- add specific questions to each category. BIGI
+- Customize start page. HASSAN
+- Save user responses. BIGI
 - Show summary at end of quiz. HASSAN
+- Fix questions. ASMA
+- custom username. SOUFYANE
+
+Navigation:
+
+- customize alerts/popups. SOUFYANE
+- pop navigation context after login/logout.

@@ -92,16 +92,19 @@ class _MyProfileState extends State<MyProfile> {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MyHomePage(
-                  title: userName,
-                  items: widget.items,
-                  uid: widget.uid,
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyHomePage(
+                    title: userName,
+                    items: widget.items,
+                    uid: widget.uid,
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
             child: const Icon(Icons.arrow_back),
           ),
         ),

@@ -9,7 +9,6 @@ import "package:firebase_auth/firebase_auth.dart";
 import 'package:logger/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart'; 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'login.dart';
 import 'question_widget.dart';
@@ -66,7 +65,7 @@ class MyHomePageState extends State<MyHomePage> {
   int id = 0;
   double myvalue = 0;
   double? _ratingValue;
-  List <String> currentItem = ["1","1","1","1"];
+  List<String> currentItem = ["1", "1", "1", "1"];
   String matrixTableQuestion = "";
   var rating = 0.0;
   String lastId = "";
@@ -157,10 +156,10 @@ class MyHomePageState extends State<MyHomePage> {
 
   int returnMaxLengthString(List<String> choises, int index) {
     var values = choises.map((choise) => choise.length);
-    return (values.reduce(max) - choises[index].length)*8 + 20;
+    return (values.reduce(max) - choises[index].length) * 8 + 20;
   }
 
-  List<String> returnListForRankOrder(int index){
+  List<String> returnListForRankOrder(int index) {
     return [for (var i = 1; i <= index; i++) i.toString()];
   }
 
@@ -201,7 +200,10 @@ class MyHomePageState extends State<MyHomePage> {
                     incrementId(items[id]["answers"]
                         [items[id]["answers"].keys.toList()[0]]);
                   },
-                  child: Text(items[id]["answers"].keys.toList()?.length > 0 ? items[id]["answers"].keys.toList()[0] : '',
+                  child: Text(
+                      items[id]["answers"].keys.toList().length > 0
+                          ? items[id]["answers"].keys.toList()[0]
+                          : '',
                       style: const TextStyle(fontSize: 16))),
             ),
           ),
@@ -234,267 +236,286 @@ class MyHomePageState extends State<MyHomePage> {
             child: SafeArea(
               child: Center(
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(20),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: items[id]["answers"]
+                        .keys
+                        .toList()
+                        .map<Widget>((element) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          minimumSize: const Size.fromHeight(20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // <-- Radius
                           ),
-                          onPressed: () {
-                            incrementId(items[id]["answers"]
-                                [items[id]["answers"].keys.toList()[0]]);
-                          },
-                          child: Text(items[id]["answers"].keys.toList()[0],
-                              style: const TextStyle(fontSize: 16))),
-                    ),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(20),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            incrementId(items[id]["answers"]
-                                [items[id]["answers"].keys.toList()[1]]);
-                          },
-                          child: Text(items[id]["answers"].keys.toList()[1],
-                              style: const TextStyle(fontSize: 16))),
-                    ),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(20), // NEW
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            incrementId(items[id]["answers"]
-                                [items[id]["answers"].keys.toList()[2]]);
-                          },
-                          child: Text(items[id]["answers"].keys.toList()[2],
-                              style: const TextStyle(fontSize: 16))),
-                    ),
-                  ],
-                ),
+                        ),
+                        onPressed: () {
+                          incrementId(items[id]["answers"][element]);
+                        },
+                        child: Text(
+                          element,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      );
+
+                      // const SizedBox(height: 20)
+                    }).toList()),
               ),
             ),
           )
         : Column();
 
     Widget rankOrder = items[id]["type"] == "RankOrder"
-        ?Expanded(
-          child:Column(children: [
-            Expanded(child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget> [
-                for(var i= 0; i<items[id]["answers"].keys.toList().length; i++)
-                Expanded(
-                  child: Row(children: [
-                  Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, returnMaxLengthString(items[id]["answers"].keys.toList(), i).toDouble(),0),
-                  child: Text(items[id]["answers"].keys.toList().length > 0? items[id]["answers"].keys.toList()[i] : '',
-                              style: const TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                  Expanded(
-                        flex:2 ,
-                        child: DropdownButton(
-                        value: currentItem[i],
-                        iconEnabledColor: Colors.black,
-                        underline: Container(
-                          height: 1.5,
-                          color: Colors.grey,
+        ? Expanded(
+            child: Column(
+            children: [
+              Expanded(
+                  child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  for (var i = 0;
+                      i < items[id]["answers"].keys.toList().length;
+                      i++)
+                    Expanded(
+                        child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(
+                              0,
+                              0,
+                              returnMaxLengthString(
+                                      items[id]["answers"].keys.toList(), i)
+                                  .toDouble(),
+                              0),
+                          child: Text(
+                              items[id]["answers"].keys.toList().length > 0
+                                  ? items[id]["answers"].keys.toList()[i]
+                                  : '',
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.white)),
                         ),
-                        style: const TextStyle(
-                          fontSize: 18, color: Colors.black),
-                        items:  returnListForRankOrder(items[id]["answers"].keys.toList().length)
-                        .map((item) =>
-                                DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black
-                                    ),
-                                  ),
-                                ))
+                        Expanded(
+                          flex: 2,
+                          child: DropdownButton(
+                            value: currentItem[i],
+                            iconEnabledColor: Colors.black,
+                            underline: Container(
+                              height: 1.5,
+                              color: Colors.grey,
+                            ),
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black),
+                            items: returnListForRankOrder(
+                                    items[id]["answers"].keys.toList().length)
+                                .map((item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.black),
+                                      ),
+                                    ))
                                 .toList(),
-                        
-                        onChanged: (String? value) => setState(() {
+                            onChanged: (String? value) => setState(
+                              () {
                                 if (value != null) currentItem[i] = value;
-                              }, ),
-                        isExpanded: true, 
-                  ),)
-                ],))
-                
-              ],
-            ) ),
-            ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle:
-                        const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-                    backgroundColor: Colors.blueAccent,
+                              },
+                            ),
+                            isExpanded: true,
+                          ),
+                        )
+                      ],
+                    ))
+                ],
+              )),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle:
+                      const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueAccent,
+                ),
+                onPressed: () => {incrementId("null")},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5.0,
+                    horizontal: 50.0,
                   ),
-                  onPressed: () => {incrementId("null")},
-                  child:  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
-                      horizontal: 50.0,
-                    ),
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: const Text('Next question'),
-                  ),
-                )
-          ],)) 
-          
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: const Text('Next question'),
+                ),
+              )
+            ],
+          ))
         : Column();
 
     Widget matrixTableQuestions = items[id]["type"] == "matrixTableQuestions"
         ? Expanded(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (var j = 0;j < items[id]["choises"].keys.toList().length;j++)
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                        child: Text(
-                          items[id]["choises"].keys.toList()[j],
-                          style:
-                              const TextStyle(fontSize: 16, color: Colors.white),
-                        ),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (var j = 0;
+                      j < items[id]["choises"].keys.toList().length;
+                      j++)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 20),
+                      child: Text(
+                        items[id]["choises"].keys.toList()[j],
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white),
                       ),
-                  ],
-                ),
-                Expanded(
-                    child: ListView(
-                      children: [
-                        for (var i = 0;i < items[id]["answers"].keys.toList().length;i++)
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, returnMaxLengthString(items[id]["answers"].keys.toList(),i).toDouble() , 0),
-                                child: Text(items[id]["answers"].keys.toList().length> 0 ? items[id]["answers"].keys.toList()[i] : '',
-                                    style: const TextStyle(
-                                        fontSize: 20, color: Colors.white)),
-                              ),
-                              for (var k = 0;k < items[id]["choises"].keys.toList().length;k++)
-                                Expanded(
-                                    child: ListView(
-                                      shrinkWrap: true,
-                                      children: [
-                                        ListTile(
-                                          leading: Radio(
-                                            value: items[id]["choises"].keys.toList()[k] + ',' + items[id]["answers"].keys.toList()[i],
-                                            activeColor: const Color(0xFFFFFFFF),
-                                            groupValue: matrixTableQuestion,
-                                            fillColor: MaterialStateColor.resolveWith(
-                                                (states) => Colors.white),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                print(value);
-                                                matrixTableQuestion = value;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                ],
-                              )
-                          ],
-                )),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle:
-                        const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-                    backgroundColor: Colors.blueAccent,
-                  ),
-                  onPressed: () => {incrementId("null")},
-                  child:  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
-                      horizontal: 50.0,
                     ),
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: const Text('Next question'),
+                ],
+              ),
+              Expanded(
+                  child: ListView(
+                children: [
+                  for (var i = 0;
+                      i < items[id]["answers"].keys.toList().length;
+                      i++)
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.fromLTRB(
+                              0,
+                              0,
+                              returnMaxLengthString(
+                                      items[id]["answers"].keys.toList(), i)
+                                  .toDouble(),
+                              0),
+                          child: Text(
+                              items[id]["answers"].keys.toList().length > 0
+                                  ? items[id]["answers"].keys.toList()[i]
+                                  : '',
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.white)),
+                        ),
+                        for (var k = 0;
+                            k < items[id]["choises"].keys.toList().length;
+                            k++)
+                          Expanded(
+                              child: ListView(
+                            shrinkWrap: true,
+                            children: [
+                              ListTile(
+                                leading: Radio(
+                                  value: items[id]["choises"].keys.toList()[k] +
+                                      ',' +
+                                      items[id]["answers"].keys.toList()[i],
+                                  activeColor: const Color(0xFFFFFFFF),
+                                  groupValue: matrixTableQuestion,
+                                  fillColor: MaterialStateColor.resolveWith(
+                                      (states) => Colors.white),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      print(value);
+                                      matrixTableQuestion = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          )),
+                      ],
+                    )
+                ],
+              )),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle:
+                      const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueAccent,
+                ),
+                onPressed: () => {incrementId("null")},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5.0,
+                    horizontal: 50.0,
                   ),
-                )
-              ],
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: const Text('Next question'),
+                ),
+              )
+            ],
           ))
         : Column();
-        Widget ratingQuestion = items[id]["type"] == "ratingQuestion"
-        ? Expanded(child: Column(children: [
-          SizedBox( height : 450,child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    Widget ratingQuestion = items[id]["type"] == "ratingQuestion"
+        ? Expanded(
+            child: Column(
             children: [
-            for(var i=0;i< items[id]["answers"].keys.toList().length;i++)
-            Row(children: [
-              Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, returnMaxLengthString(items[id]["answers"].keys.toList(),i).toDouble() +40 , 0),
-                    child: Text(items[id]["answers"].keys.toList().length> 0 ? items[id]["answers"].keys.toList()[i] : '',
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.white)),
-               ),
-                RatingBar(
-                    initialRating: 0,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(Icons.star, color: Colors.orange),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: Colors.white,
+              Expanded(
+                  child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (var i = 0;
+                      i < items[id]["answers"].keys.toList().length;
+                      i++)
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(
+                              0,
+                              0,
+                              returnMaxLengthString(
+                                          items[id]["answers"].keys.toList(), i)
+                                      .toDouble() +
+                                  40,
+                              0),
+                          child: Text(
+                              items[id]["answers"].keys.toList().length > 0
+                                  ? items[id]["answers"].keys.toList()[i]
+                                  : '',
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.white)),
                         ),
-                        empty: const Icon(
-                          Icons.star_outline,
-                          color: Colors.white,
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue = value;
-                      });
-                  }),
-              
-            ],)
-          ],
-
-          )),
-          ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle:
-                        const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-                    backgroundColor: Colors.blueAccent,
+                        RatingBar(
+                            initialRating: 0,
+                            direction: Axis.horizontal,
+                            allowHalfRating: false,
+                            itemCount: 5,
+                            ratingWidget: RatingWidget(
+                                full: const Icon(Icons.star,
+                                    color: Colors.orange),
+                                half: const Icon(
+                                  Icons.star_half,
+                                  color: Colors.white,
+                                ),
+                                empty: const Icon(
+                                  Icons.star_outline,
+                                  color: Colors.white,
+                                )),
+                            onRatingUpdate: (value) {
+                              setState(() {
+                                _ratingValue = value;
+                              });
+                            }),
+                      ],
+                    )
+                ],
+              )),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle:
+                      const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+                  backgroundColor: Colors.blueAccent,
+                ),
+                onPressed: () => {incrementId("null")},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5.0,
+                    horizontal: 50.0,
                   ),
-                  onPressed: () => {incrementId("null")},
-                  child:  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
-                      horizontal: 50.0,
-                    ),
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: const Text('Next question'),
-                  ),
-                )
-        ],))
-        
-        :Column();
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: const Text('Next question'),
+                ),
+              )
+            ],
+          ))
+        : Column();
     Widget textSlider = items[id]["type"] == "textSlider"
         ? Column(children: <Widget>[
             Slider(
@@ -629,8 +650,8 @@ class MyHomePageState extends State<MyHomePage> {
         break;
       case "ratingQuestion":
         answerType = ratingQuestion;
-      break;
-      
+        break;
+
       case "visAnalog":
         answerType = visualAnalog;
         break;
