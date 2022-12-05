@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_basic_quiz/home.dart';
@@ -18,6 +19,12 @@ class _LoadJsonState extends State<Start> {
   int selectedItem = -1;
   List categories = ["Culture générale", "Science", "Enseirb-matmeca"];
   List imgs = ["culture_generale.png", "science.jpeg", "enseirb_matmeca.jpg"];
+  List lengthQuestion = ["9","9","12"];
+  List myProgress = ["0","0","0" ];
+  String? myProgressCg = "0";
+  String? myProgressScience = "0";
+  String? myProgressEnseirb = "0";
+
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   var logger = Logger();
@@ -30,6 +37,62 @@ class _LoadJsonState extends State<Start> {
     // here you write the codes to input the data into firestore
     // logger.i("User id is : $uid");
     return uid;
+  }
+
+  void getProgressCg(String uid) async {
+    var progress=
+    FirebaseFirestore.instance.collection("Profile").doc(uid);
+    await progress
+        .get()
+        .then(
+          (value) => setState(() {
+        myProgressCg = value["cg"];
+        myProgress[0] = myProgressCg;
+      }),
+    )
+        .catchError(
+          (error) => setState(() {
+        myProgressCg = '0';
+      }),
+    );
+
+  }
+
+  void getProgressScience(String uid) async {
+    var progress =
+    FirebaseFirestore.instance.collection("Profile").doc(uid);
+    await progress
+        .get()
+        .then(
+          (value) => setState(() {
+        myProgressScience = value["science"];
+        myProgress[1] = myProgressScience;
+      }),
+    )
+        .catchError(
+          (error) => setState(() {
+        myProgressScience = '0';
+      }),
+    );
+
+  }
+
+  void getProgressEnseirb(String uid) async {
+    var progress =
+    FirebaseFirestore.instance.collection("Profile").doc(uid);
+    await progress
+        .get()
+        .then(
+          (value) => setState(() {
+        myProgressEnseirb = value["enseirb"];
+        myProgress[2] = myProgressEnseirb;
+      }),
+    )
+        .catchError(
+          (error) => setState(() {
+        myProgressEnseirb = '0';
+      }),
+    );
   }
 
   Future<void> readJson(int selectedItem) async {
@@ -60,6 +123,9 @@ class _LoadJsonState extends State<Start> {
   @override
   Widget build(BuildContext context) {
     String? uid = getUser();
+    getProgressCg(uid!);
+    getProgressEnseirb(uid!);
+    getProgressScience(uid!);
     return Scaffold(
         appBar: AppBar(title: const Text("Welcome to Trivia Star")),
         body: Column(
@@ -127,7 +193,7 @@ class _LoadJsonState extends State<Start> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: const [Text("10/10")],
+                                  children:  [Text("${myProgress[index]}/${lengthQuestion[index]}")],
                                 ),
                               ],
                             ),

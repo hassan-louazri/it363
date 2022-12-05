@@ -22,9 +22,9 @@ class _MyProfileState extends State<MyProfile> {
 
   String profilePictureUrl = 'https://picsum.photos/seed/370/600';
   String userName = "Default-User";
-  String? myProgressCg;
-  String? myProgressScience;
-  String? myProgressEnseirb;
+  String? myProgressCg = "0";
+  String? myProgressScience = "0";
+  String? myProgressEnseirb = "0";
 
   void getProfilePictureByUid() async {
     var lastQuestion =
