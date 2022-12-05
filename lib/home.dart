@@ -105,7 +105,7 @@ class MyHomePageState extends State<MyHomePage> {
     return lastQuestion
         .doc(widget.uid)
         .set({
-          'progress': "$questionsAnswered",
+          widget.genre: "$questionsAnswered",
         }, SetOptions(merge: true))
         .then((value) => {
               logger.i("Progress added"),

@@ -22,7 +22,9 @@ class _MyProfileState extends State<MyProfile> {
 
   String profilePictureUrl = 'https://picsum.photos/seed/370/600';
   String userName = "Default-User";
-  String? myProgress;
+  String? myProgressCg;
+  String? myProgressScience;
+  String? myProgressEnseirb;
 
   void getProfilePictureByUid() async {
     var lastQuestion =
@@ -41,21 +43,57 @@ class _MyProfileState extends State<MyProfile> {
         );
   }
 
-  void getProgressByUid() async {
+
+
+  void getProgressCg() async {
     var progress =
-        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
     await progress
         .get()
         .then(
           (value) => setState(() {
-            myProgress = value["progress"];
-          }),
-        )
+        myProgressCg = value["cg"];
+      }),
+    )
         .catchError(
           (error) => setState(() {
-            myProgress = '0';
-          }),
-        );
+        myProgressCg = '0';
+      }),
+    );
+  }
+
+  void getProgressScience() async {
+    var progress =
+    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    await progress
+        .get()
+        .then(
+          (value) => setState(() {
+        myProgressScience = value["science"];
+      }),
+    )
+        .catchError(
+          (error) => setState(() {
+        myProgressScience = '0';
+      }),
+    );
+  }
+
+  void getProgressEnseirb() async {
+    var progress =
+    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+    await progress
+        .get()
+        .then(
+          (value) => setState(() {
+        myProgressEnseirb = value["enseirb"];
+      }),
+    )
+        .catchError(
+          (error) => setState(() {
+        myProgressEnseirb = '0';
+      }),
+    );
   }
 
   void getUserNameByUid() async {
@@ -79,7 +117,9 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     getProfilePictureByUid();
     getUserNameByUid();
-    getProgressByUid();
+   getProgressCg();
+   getProgressEnseirb();
+   getProgressScience();
     double width2 = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
@@ -323,7 +363,7 @@ class _MyProfileState extends State<MyProfile> {
                             )),
                             SelectionArea(
                                 child: Text(
-                              '38',
+                              '9',
                             )),
                           ],
                         ),
@@ -339,7 +379,7 @@ class _MyProfileState extends State<MyProfile> {
                             )),
                             SelectionArea(
                                 child: Text(
-                              myProgress!,
+                              myProgressCg!,
                             )),
                           ],
                         ),
@@ -396,14 +436,14 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                             SelectionArea(
                                 child: Text(
-                              '38',
+                              '9',
                             )),
                           ],
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            SelectionArea(
+                          children:  [
+                            const SelectionArea(
                                 child: Text(
                               'questions answered',
                               style: TextStyle(
@@ -412,7 +452,7 @@ class _MyProfileState extends State<MyProfile> {
                             )),
                             SelectionArea(
                                 child: Text(
-                              '38',
+                                  myProgressScience!,
                             )),
                           ],
                         ),
@@ -469,14 +509,14 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                             SelectionArea(
                                 child: Text(
-                              '38',
+                              '12',
                             )),
                           ],
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            SelectionArea(
+                          children:  [
+                            const SelectionArea(
                                 child: Text(
                               'questions answered',
                               style: TextStyle(
@@ -485,7 +525,7 @@ class _MyProfileState extends State<MyProfile> {
                             )),
                             SelectionArea(
                                 child: Text(
-                              '38',
+                                  myProgressEnseirb!,
                             )),
                           ],
                         ),
