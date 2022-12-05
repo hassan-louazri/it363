@@ -22,6 +22,8 @@ class _LoadJsonState extends State<Start> {
 
   var logger = Logger();
 
+  String genre = "";
+
   String? getUser() {
     final User? user = auth.currentUser;
     final String? uid = user?.uid;
@@ -35,12 +37,15 @@ class _LoadJsonState extends State<Start> {
     switch (selectedItem) {
       case 0:
         category = 'assets/cg.json';
+        genre = "cg";
         break;
       case 1:
         category = 'assets/science.json';
+        genre = "science";
         break;
       case 2:
         category = 'assets/enseirb.json';
+        genre = "enseirb";
         break;
       default:
     }
@@ -143,7 +148,7 @@ class _LoadJsonState extends State<Start> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyApp(items: items, uid: uid),
+                  builder: (context) => MyApp(items: items, uid: uid, genre:genre),
                 ),
               ),
             },

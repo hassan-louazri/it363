@@ -16,10 +16,11 @@ import 'question_widget.dart';
 import 'dart:math';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.items, required this.uid});
+  const MyApp({super.key, required this.items, required this.uid, required this.genre});
 
   final List items;
   final String? uid;
+  final String genre;
 
   // This widget is the root of your application.
   @override
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Charles Consel', items: items, uid: uid),
+      home: MyHomePage(title: 'Charles Consel', items: items, uid: uid, genre:genre),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage(
-      {super.key, required this.title, required this.items, required this.uid});
+      {super.key, required this.title, required this.items, required this.uid, required this.genre});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -55,6 +56,7 @@ class MyHomePage extends StatefulWidget {
 
   final List items;
   final String? uid;
+  final String genre;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -86,9 +88,8 @@ class MyHomePageState extends State<MyHomePage> {
         .doc(widget.uid)
         .set(
           {
-            'uid': "${widget.uid}",
-            'id': "$id",
-          },
+            widget.genre: "$id",
+          },SetOptions(merge: true)
         )
         .then(
           (value) => logger.i("Last question added"),
@@ -140,7 +141,7 @@ class MyHomePageState extends State<MyHomePage> {
         .collection("last-question-answered")
         .doc("${widget.uid}");
     lastQuestion.get().then((value) => setState(() {
-          id = int.parse(value["id"]);
+          id = int.parse(value[widget.genre]);
         }));
   }
 
@@ -685,7 +686,7 @@ class MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        MyProfile(items: widget.items, uid: widget.uid),
+                        MyProfile(items: widget.items, uid: widget.uid, genre:widget.genre),
                   ),
                 ),
                 child: const Icon(Icons.account_circle_rounded),

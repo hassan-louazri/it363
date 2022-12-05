@@ -112,7 +112,7 @@ class ImageUploadsState extends State<ImageUploads> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile settings'),
+        title: const Text('Profile settings '),
       ),
 
       body:

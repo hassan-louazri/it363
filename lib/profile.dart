@@ -7,9 +7,10 @@ import 'package:project_basic_quiz/home.dart';
 import 'upload_image.dart';
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({super.key, required this.items, required this.uid});
+  const MyProfile({super.key, required this.items, required this.uid, required this.genre});
   final List items;
   final String? uid;
+  final String genre;
 
   @override
   State<MyProfile> createState() => _MyProfileState();
@@ -101,6 +102,7 @@ class _MyProfileState extends State<MyProfile> {
                     title: userName,
                     items: widget.items,
                     uid: widget.uid,
+                    genre: widget.genre,
                   ),
                 ),
               );
