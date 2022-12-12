@@ -7,7 +7,8 @@ import 'package:project_basic_quiz/home.dart';
 import 'upload_image.dart';
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({super.key, required this.items, required this.uid, required this.genre});
+  const MyProfile(
+      {super.key, required this.items, required this.uid, required this.genre});
   final List items;
   final String? uid;
   final String genre;
@@ -43,57 +44,55 @@ class _MyProfileState extends State<MyProfile> {
         );
   }
 
-
-
   void getProgressCg() async {
     var progress =
-    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
     await progress
         .get()
         .then(
           (value) => setState(() {
-        myProgressCg = value["cg"];
-      }),
-    )
+            myProgressCg = value["cg"];
+          }),
+        )
         .catchError(
           (error) => setState(() {
-        myProgressCg = '0';
-      }),
-    );
+            myProgressCg = '0';
+          }),
+        );
   }
 
   void getProgressScience() async {
     var progress =
-    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
     await progress
         .get()
         .then(
           (value) => setState(() {
-        myProgressScience = value["science"];
-      }),
-    )
+            myProgressScience = value["science"];
+          }),
+        )
         .catchError(
           (error) => setState(() {
-        myProgressScience = '0';
-      }),
-    );
+            myProgressScience = '0';
+          }),
+        );
   }
 
   void getProgressEnseirb() async {
     var progress =
-    FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
+        FirebaseFirestore.instance.collection("Profile").doc("${widget.uid}");
     await progress
         .get()
         .then(
           (value) => setState(() {
-        myProgressEnseirb = value["enseirb"];
-      }),
-    )
+            myProgressEnseirb = value["enseirb"];
+          }),
+        )
         .catchError(
           (error) => setState(() {
-        myProgressEnseirb = '0';
-      }),
-    );
+            myProgressEnseirb = '0';
+          }),
+        );
   }
 
   void getUserNameByUid() async {
@@ -117,9 +116,9 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     getProfilePictureByUid();
     getUserNameByUid();
-   getProgressCg();
-   getProgressEnseirb();
-   getProgressScience();
+    getProgressCg();
+    getProgressEnseirb();
+    getProgressScience();
     double width2 = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
@@ -383,22 +382,6 @@ class _MyProfileState extends State<MyProfile> {
                             )),
                           ],
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            SelectionArea(
-                                child: Text(
-                              'Correct',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            )),
-                            SelectionArea(
-                                child: Text(
-                              '38',
-                            )),
-                          ],
-                        ),
                       ],
                     ),
                     const Divider(
@@ -442,33 +425,17 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children:  [
+                          children: [
                             const SelectionArea(
                                 child: Text(
-                              'questions answered',
+                              'Questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             )),
                             SelectionArea(
                                 child: Text(
-                                  myProgressScience!,
-                            )),
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            SelectionArea(
-                                child: Text(
-                              'Correct',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            )),
-                            SelectionArea(
-                                child: Text(
-                              '38',
+                              myProgressScience!,
                             )),
                           ],
                         ),
@@ -515,33 +482,17 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children:  [
+                          children: [
                             const SelectionArea(
                                 child: Text(
-                              'questions answered',
+                              'Questions answered',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             )),
                             SelectionArea(
                                 child: Text(
-                                  myProgressEnseirb!,
-                            )),
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            SelectionArea(
-                                child: Text(
-                              'Correct',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            )),
-                            SelectionArea(
-                                child: Text(
-                              '38',
+                              myProgressEnseirb!,
                             )),
                           ],
                         ),
