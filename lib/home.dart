@@ -12,11 +12,12 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'login.dart';
 import 'question_widget.dart';
-
+import 'finish.dart';
 import 'dart:math';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.items, required this.uid, required this.genre});
+  const MyApp(
+      {super.key, required this.items, required this.uid, required this.genre});
 
   final List items;
   final String? uid;
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Charles Consel', items: items, uid: uid, genre:genre),
+      home: MyHomePage(
+          title: 'Charles Consel', items: items, uid: uid, genre: genre),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -41,7 +43,11 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage(
-      {super.key, required this.title, required this.items, required this.uid, required this.genre});
+      {super.key,
+      required this.title,
+      required this.items,
+      required this.uid,
+      required this.genre});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -68,7 +74,7 @@ class MyHomePageState extends State<MyHomePage> {
   int id = 0;
   double myvalue = 0;
   int questionsAnswered = 0;
-  double? _ratingValue;
+  // double? _ratingValue;
   List<String> currentItem = ["1", "1", "1", "1"];
   String matrixTableQuestion = "";
   var rating = 0.0;
@@ -86,11 +92,9 @@ class MyHomePageState extends State<MyHomePage> {
         FirebaseFirestore.instance.collection('last-question-answered');
     return lastQuestion
         .doc(widget.uid)
-        .set(
-          {
-            widget.genre: "$id",
-          },SetOptions(merge: true)
-        )
+        .set({
+          widget.genre: "$id",
+        }, SetOptions(merge: true))
         .then(
           (value) => logger.i("Last question added"),
         )
@@ -163,18 +167,28 @@ class MyHomePageState extends State<MyHomePage> {
 
   void incrementId(String newId) {
     questionsAnswered++;
-    setState(() {
-      if (newId != "null") {
-        id = int.parse(newId) - 1;
-        logger.i("String Id is $id");
-      } else {
-        if (id < widget.items.length - 1) {
-          id++;
+    setState(
+      () {
+        if (newId != "null") {
+          id = int.parse(newId) - 1;
+          logger.i("String Id is $id");
         } else {
-          id = 1;
+          if (id < widget.items.length - 1) {
+            id++;
+          } else {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Finish(),
+                ));
+          }
         }
-      }
-    });
+      },
+    );
+  }
+
+  int getId() {
+    return id;
   }
 
   Widget answers(List items, double value) {
@@ -234,31 +248,29 @@ class MyHomePageState extends State<MyHomePage> {
             child: SafeArea(
               child: Center(
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: items[id]["answers"]
-                        .keys
-                        .toList()
-                        .map<Widget>((element) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          minimumSize: const Size.fromHeight(20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // <-- Radius
-                          ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:
+                      items[id]["answers"].keys.toList().map<Widget>((element) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        minimumSize: const Size.fromHeight(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), // <-- Radius
                         ),
-                        onPressed: () {
-                          incrementId(items[id]["answers"][element]);
-                        },
-                        child: Text(
-                          element,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      );
+                      ),
+                      onPressed: () {
+                        incrementId(items[id]["answers"][element]);
+                      },
+                      child: Text(
+                        element,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    );
 
-                      // const SizedBox(height: 20)
-                    }).toList()),
+                    // const SizedBox(height: 20)
+                  }).toList(),
+                ),
               ),
             ),
           )
@@ -488,7 +500,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 )),
                             onRatingUpdate: (value) {
                               setState(() {
-                                _ratingValue = value;
+                                // _ratingValue = value;
                               });
                             }),
                       ],
@@ -685,8 +697,10 @@ class MyHomePageState extends State<MyHomePage> {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        MyProfile(items: widget.items, uid: widget.uid, genre:widget.genre),
+                    builder: (context) => MyProfile(
+                        items: widget.items,
+                        uid: widget.uid,
+                        genre: widget.genre),
                   ),
                 ),
                 child: const Icon(Icons.account_circle_rounded),
@@ -712,25 +726,41 @@ class MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Questions(items: widget.items, id: id),
               answers(widget.items, myvalue),
-              const SizedBox(height: 50),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle:
-                        const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
-                    backgroundColor: Colors.deepPurple),
-                onPressed: () => {
-                  updateLastQuestion(id),
-                  updateProgressToProfile(id),
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 50.0,
-                  ),
-                  child: Text('Save progress'),
-                ),
-              ),
+              // const SizedBox(height: 50),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //       textStyle:
+              //           const TextStyle(fontSize: 20.0, fontFamily: 'Lato'),
+              //       backgroundColor: Colors.deepPurple),
+              //   onPressed: () => {
+              //     // updateLastQuestion(id),
+              //     // updateProgressToProfile(id),
+              //   },
+              //   child: const Padding(
+              //     padding: EdgeInsets.symmetric(
+              //       vertical: 10.0,
+              //       horizontal: 50.0,
+              //     ),
+              //     child: Text('Save progress'),
+              //   ),
+              // ),
             ],
+          ),
+        ),
+        bottomSheet: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 80,
+          child: ElevatedButton(
+            onPressed: () => {
+              updateLastQuestion(getId()),
+              updateProgressToProfile(getId()),
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purple,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0)),
+            ),
+            child: const Text('Save Progress'),
           ),
         ),
       ),

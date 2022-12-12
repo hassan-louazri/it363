@@ -19,8 +19,8 @@ class _LoadJsonState extends State<Start> {
   int selectedItem = -1;
   List categories = ["Culture générale", "Science", "Enseirb-matmeca"];
   List imgs = ["culture_generale.png", "science.jpeg", "enseirb_matmeca.jpg"];
-  List lengthQuestion = ["9","9","12"];
-  List myProgress = ["0","0","0" ];
+  List lengthQuestion = ["9", "9", "12"];
+  List myProgress = ["0", "0", "0"];
   String? myProgressCg = "0";
   String? myProgressScience = "0";
   String? myProgressEnseirb = "0";
@@ -40,59 +40,54 @@ class _LoadJsonState extends State<Start> {
   }
 
   void getProgressCg(String uid) async {
-    var progress=
-    FirebaseFirestore.instance.collection("Profile").doc(uid);
+    var progress = FirebaseFirestore.instance.collection("Profile").doc(uid);
     await progress
         .get()
         .then(
           (value) => setState(() {
-        myProgressCg = value["cg"];
-        myProgress[0] = myProgressCg;
-      }),
-    )
+            myProgressCg = value["cg"];
+            myProgress[0] = myProgressCg;
+          }),
+        )
         .catchError(
           (error) => setState(() {
-        myProgressCg = '0';
-      }),
-    );
-
+            myProgressCg = '0';
+          }),
+        );
   }
 
   void getProgressScience(String uid) async {
-    var progress =
-    FirebaseFirestore.instance.collection("Profile").doc(uid);
+    var progress = FirebaseFirestore.instance.collection("Profile").doc(uid);
     await progress
         .get()
         .then(
           (value) => setState(() {
-        myProgressScience = value["science"];
-        myProgress[1] = myProgressScience;
-      }),
-    )
+            myProgressScience = value["science"];
+            myProgress[1] = myProgressScience;
+          }),
+        )
         .catchError(
           (error) => setState(() {
-        myProgressScience = '0';
-      }),
-    );
-
+            myProgressScience = '0';
+          }),
+        );
   }
 
   void getProgressEnseirb(String uid) async {
-    var progress =
-    FirebaseFirestore.instance.collection("Profile").doc(uid);
+    var progress = FirebaseFirestore.instance.collection("Profile").doc(uid);
     await progress
         .get()
         .then(
           (value) => setState(() {
-        myProgressEnseirb = value["enseirb"];
-        myProgress[2] = myProgressEnseirb;
-      }),
-    )
+            myProgressEnseirb = value["enseirb"];
+            myProgress[2] = myProgressEnseirb;
+          }),
+        )
         .catchError(
           (error) => setState(() {
-        myProgressEnseirb = '0';
-      }),
-    );
+            myProgressEnseirb = '0';
+          }),
+        );
   }
 
   Future<void> readJson(int selectedItem) async {
@@ -124,10 +119,13 @@ class _LoadJsonState extends State<Start> {
   Widget build(BuildContext context) {
     String? uid = getUser();
     getProgressCg(uid!);
-    getProgressEnseirb(uid!);
-    getProgressScience(uid!);
+    getProgressEnseirb(uid);
+    getProgressScience(uid);
     return Scaffold(
-        appBar: AppBar(title: const Text("Welcome to Trivia Star")),
+        appBar: AppBar(
+          title: const Text("Welcome to Trivia Star"),
+          automaticallyImplyLeading: false,
+        ),
         body: Column(
           children: [
             const Padding(
@@ -193,7 +191,10 @@ class _LoadJsonState extends State<Start> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                  children:  [Text("${myProgress[index]}/${lengthQuestion[index]}")],
+                                  children: [
+                                    Text(
+                                        "${myProgress[index]}/${lengthQuestion[index]}")
+                                  ],
                                 ),
                               ],
                             ),
@@ -214,7 +215,8 @@ class _LoadJsonState extends State<Start> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyApp(items: items, uid: uid, genre:genre),
+                  builder: (context) =>
+                      MyApp(items: items, uid: uid, genre: genre),
                 ),
               ),
             },

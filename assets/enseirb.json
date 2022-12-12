@@ -93,32 +93,6 @@
             }
         },
         {
-            "id": "10",
-            "type": "matrixTableQuestions",
-            "description": "Quel est votre niveau de satisfaction concernant les options en 3éme année?",
-            "answers": {
-                "GLRT": "null",
-                "RSC": "null",
-                "I2SC": "null"
-            },
-            "choises" : {
-                "dissatisfied" : "null",
-                "neutral" : "null",
-                "satisfied" : "null"
-            }
-        },
-        {
-            "id": "11",
-            "type": "RankOrder",
-            "description": "Qelle est la meilleur filière à l'ENSEIRB?",
-            "answers": {
-                "Télécom": "null",
-                "Elec": "null",
-                "Info": "null",
-                "Matmeca" : "null"
-            }
-        },
-        {
             "id": "12",
             "type": "ratingQuestion",
             "description": "Notez les modules de l'option GLRT?",
