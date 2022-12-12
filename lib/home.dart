@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(
-          title: 'Charles Consel', items: items, uid: uid, genre: genre),
+          title: 'Default-User', items: items, uid: uid, genre: genre),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -113,7 +113,16 @@ class MyHomePageState extends State<MyHomePage> {
         }, SetOptions(merge: true))
         .then((value) => {
               logger.i("Progress added"),
-              Alert(context: context, title: "Progress saved ").show()
+              Alert(context: context, title: "Progress saved ",buttons: [
+                DialogButton(
+                  onPressed: () => Navigator.pop(context),
+                  width: 120,
+                  child:  const Text(
+                    "OK",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                )
+              ],).show()
             })
         .catchError(
           (error) => logger.e("Progress wasn't added succefully."),
@@ -124,6 +133,7 @@ class MyHomePageState extends State<MyHomePage> {
     await FirebaseAuth.instance
         .signOut()
         .then(
+
           (value) => {
             Navigator.of(context).pop(),
             Navigator.push(
@@ -133,6 +143,7 @@ class MyHomePageState extends State<MyHomePage> {
               ),
             ),
             logger.i("logged out successfully"),
+
           },
         )
         .catchError(

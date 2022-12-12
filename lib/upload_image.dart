@@ -39,7 +39,16 @@ class ImageUploadsState extends State<ImageUploads> {
       'profileUrl': url,
     },SetOptions(merge: true))
         .then((value) =>
-        Alert(context: context, title: "Profile Picture updated").show())
+        Alert(context: context, title: "Profile Picture updated",buttons: [
+          DialogButton(
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+            child:  const Text(
+              "OK",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ],).show())
         .catchError(
             (error) => logger.e("Profile url wasn't added."));
   }
@@ -53,7 +62,16 @@ class ImageUploadsState extends State<ImageUploads> {
       'userName': userName,
     },SetOptions(merge: true))
         .then((value) =>
-        Alert(context: context, title: "User name updated").show())
+        Alert(context: context, title: "User name updated",buttons: [
+          DialogButton(
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+            child:  const Text(
+              "OK",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ],).show())
         .catchError(
             (error) => logger.e("User name not added."));
   }

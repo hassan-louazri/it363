@@ -172,7 +172,16 @@ class _MyRegisterState extends State<MyRegister> {
   void success() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const MyLogin()));
-    Alert(context: context, title: "Register success").show();
+    Alert(context: context, title: "Register success",buttons: [
+      DialogButton(
+        onPressed: () => Navigator.pop(context),
+        width: 120,
+        child:  const Text(
+          "OK",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      )
+    ],).show();
   }
 
   Future signUpFunction() async {
@@ -183,7 +192,16 @@ class _MyRegisterState extends State<MyRegister> {
         .catchError((error) => {
               Alert(
                       context: context,
-                      title: "Password must be 4 characters minimum")
+                      title: "Password must be 4 characters minimum",buttons: [
+                      DialogButton(
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                      child:  const Text(
+                      "OK",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      )
+                      ],)
                   .show()
             });
   }

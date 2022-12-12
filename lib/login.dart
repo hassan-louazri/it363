@@ -183,6 +183,15 @@ class _MyLoginState extends State<MyLogin> {
                   MaterialPageRoute(builder: (context) => const Start())),
             })
         .catchError((error) =>
-            {Alert(context: context, title: "Wrong email or password").show()});
+            {Alert(context: context, title: "Wrong email or password",buttons: [
+              DialogButton(
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+                child:  const Text(
+                  "OK",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              )
+            ],).show()});
   }
 }
